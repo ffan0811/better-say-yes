@@ -1,6 +1,8 @@
 import { GeistSans } from "geist/font/sans";
+import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
+import Navigation from "@/components/Navigation";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -21,9 +23,11 @@ export default function RootLayout({
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
         <ThemeProvider attribute="class" defaultTheme="dark">
-          <main className="min-h-screen flex flex-col items-center">
+          <main className="min-h-screen flex flex-col items-center gap-20">
+            <Navigation />
             {children}
           </main>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
