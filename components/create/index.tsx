@@ -9,11 +9,11 @@ import CreateAfterYes from "./AfterYes";
 export default function CreateContainer() {
   const [selected, setSelected] = useAtom(selectedAtom);
 
-  if (selected === SidebarMenuType.MAIN_PAGE) {
-    return <CreateMain />;
-  }
-  if (selected === SidebarMenuType.AFTER_YES_PAGE) {
-    return <CreateAfterYes />;
-  }
-  return <CreateGeneral />;
+  const comp = {
+    [SidebarMenuType.GENERAL]: <CreateGeneral />,
+    [SidebarMenuType.MAIN_PAGE]: <CreateMain />,
+    [SidebarMenuType.AFTER_YES_PAGE]: <CreateAfterYes />,
+  };
+
+  return <div>{comp[selected as SidebarMenuType]}</div>;
 }
