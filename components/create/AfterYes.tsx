@@ -9,9 +9,34 @@ import {
 import { TextareaWithLabel } from "../ui/textarea";
 import { contentsAtom } from "@/atoms/content";
 import { InputWithLabel } from "../ui/input";
+import UploadImage from "../uploadImage";
+import { Label } from "../ui/label";
 
 export default function CreateAfterYes() {
   const [contents, setContents] = useAtom(contentsAtom);
+
+  const handleImages = (files: File[]) => {
+    if (files.length > 0) {
+      const images = [];
+
+      for (let i = 0; i < files.length; i++) {
+        images.push(files[i]);
+      }
+      setContents({
+        ...contents,
+        images,
+      });
+    }
+  };
+
+  const handleDeleteImage = (index: number, value: string) => {
+    const images = contents.images || [];
+    const filtered = images.toSpliced(index, 1);
+    setContents({
+      ...contents,
+      images: filtered,
+    });
+  };
   return (
     <div>
       <CardHeader>
@@ -50,6 +75,14 @@ export default function CreateAfterYes() {
             setContents({ ...contents, afterYesButtonLink: e.target.value })
           }
         />
+        <div className="gap-2">
+          <Label>Images</Label>
+          <UploadImage
+            data={[]}
+            handleImages={handleImages}
+            handleDeleteImage={handleDeleteImage}
+          />
+        </div>
       </CardContent>
     </div>
   );

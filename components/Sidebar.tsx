@@ -2,7 +2,7 @@
 import { ReactNode } from "react";
 import Logo from "./Logo";
 import Link from "next/link";
-import { Button, buttonVariants } from "./ui/button";
+import { Button } from "./ui/button";
 import { ArrowLeftIcon } from "lucide-react";
 import { SidebarMenuLabels } from "@/constants/sidebar";
 import { SidebarMenuType } from "@/types/sidebar";
@@ -44,6 +44,10 @@ const Sidebar = () => {
         </ul>
       </div>
       <div className="space-y-2">
+        <Link href="/dashboard" className={`w-full py-2 flex items-center`}>
+          <ArrowLeftIcon className="w-4 h-4 mr-1" />
+          Go back
+        </Link>
         <Button
           className="w-full"
           variant="outline"
@@ -52,15 +56,6 @@ const Sidebar = () => {
           Preview
         </Button>
         <Button className="w-full">Launch</Button>
-        {/* <Link
-          href="/dashboard"
-          className={`w-full flex items-center ${buttonVariants({
-            variant: "default",
-          })}`}
-        >
-          <ArrowLeftIcon className="w-4 h-4 mr-1" />
-          Go back
-        </Link> */}
       </div>
     </div>
   );

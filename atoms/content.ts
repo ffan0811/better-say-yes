@@ -8,7 +8,7 @@ export const contentsAtom = atom<{
   afterYesButtonText?: string;
   afterYesButtonLink?: string;
   secretCode?: string;
-  images: [];
+  images: File[];
 }>({
   question: "",
   alertAfterYes: "",

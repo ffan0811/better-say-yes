@@ -1,6 +1,23 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
+
+export const validateImage = (file: File) => {
+  const ACCEPTED_IMAGE_TYPES = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/gif",
+  ];
+
+  let error = "";
+  if (file instanceof File === false) {
+    error = "Expected a file";
+  } else if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
+    error = "Only these types are allowed .jpg, .jpeg, and .png";
+  }
+  return error;
+};
