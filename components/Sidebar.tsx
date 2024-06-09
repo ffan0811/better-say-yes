@@ -16,7 +16,7 @@ const Sidebar = () => {
   const [preview, setPreview] = useAtom(previewAtom);
 
   const previewState = {
-    [SidebarMenuType.GENERAL]: PageStepType.SECRET,
+    [SidebarMenuType.GENERAL]: PageStepType.MAIN,
     [SidebarMenuType.MAIN_PAGE]: PageStepType.MAIN,
     [SidebarMenuType.AFTER_YES_PAGE]: PageStepType.AFTER_YES,
   };
@@ -53,7 +53,7 @@ const Sidebar = () => {
       <div className="space-y-2">
         <Link href="/dashboard" className={`w-full py-2 flex items-center`}>
           <ArrowLeftIcon className="w-4 h-4 mr-1" />
-          Go back
+          Leave the current page
         </Link>
         <Button
           className="w-full"
