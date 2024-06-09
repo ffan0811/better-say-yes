@@ -29,7 +29,7 @@ export default function CreateMain() {
           }
         />
         <TextareaWithLabel
-          label="(Optional) Message after clicking the yes button"
+          label="(Optional) Message after clicking yes button"
           value={contents.alertAfterYes}
           onChange={(e) =>
             setContents({ ...contents, alertAfterYes: e.target.value })
