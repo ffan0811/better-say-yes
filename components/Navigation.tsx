@@ -7,7 +7,9 @@ export default function Navigation() {
     <nav className="container py-8">
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-16">
-          <Logo className="w-28 h-auto" />
+          <Link href="/">
+            <Logo className="w-28 h-auto" />
+          </Link>
           <ul className="flex items-center space-x-8">
             <li>
               <Link href="/templates">Templates</Link>

@@ -19,9 +19,15 @@ export default async function AuthButton() {
   };
 
   return user ? (
-    <form action={signOut}>
-      <Button className="">Create</Button>
-    </form>
+    // <form action={signOut}>
+    //   <Button className="">Create</Button>
+    // </form>
+    <Link
+      href="/dashboard"
+      className={`${buttonVariants({ variant: "default" })}`}
+    >
+      Dashboard
+    </Link>
   ) : (
     <Link href="/login" className={`${buttonVariants({ variant: "default" })}`}>
       Get Stared
