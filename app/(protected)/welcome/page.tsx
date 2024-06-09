@@ -1,5 +1,5 @@
 import AccountForm from "@/components/AccountForm";
-import ResponsiveWrapper from "@/components/responsiveWrapper";
+import ResponsiveWrapper from "@/components/ResponsiveWrapper";
 import {
   Card,
   CardContent,
