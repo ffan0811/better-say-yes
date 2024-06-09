@@ -1,11 +1,10 @@
 "use client";
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import { type User } from "@supabase/supabase-js";
-import { InputWithLabel, LABEL_WRAPPER_CLASSES } from "./ui/input";
+import { InputWithLabel } from "./ui/input";
 import { Button } from "./ui/button";
-import { Label } from "./ui/label";
 import {
   ERROR_DEFAULT_DESCRIPTION,
   ERROR_DEFAULT_TITLE,
@@ -22,8 +21,8 @@ export default function AccountForm({
 }) {
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
-  const [username, setFullName] = useState<string | null>(
-    user?.user_metadata.full_name
+  const [username, setUsername] = useState<string | null>(
+    user?.user_metadata.username
   );
   const [isEmailNoSubscribed, setIsNoSubscribed] = useState<boolean>(false);
 
@@ -49,19 +48,15 @@ export default function AccountForm({
         },
       });
       if (error) throw error;
-      // if (window?.ReactNativeWebView) {
-      //   router.push("/welcome/notifications");
-      // } else {
-      //   router.push("/welcome/search");
-      // }
+      router.push("/dashboard");
     } catch (error) {
       toast({
         variant: "destructive",
         title: ERROR_DEFAULT_TITLE,
         description: ERROR_DEFAULT_DESCRIPTION,
       });
-      setLoading(false);
     } finally {
+      setLoading(false);
     }
   }
 
@@ -92,7 +87,7 @@ export default function AccountForm({
         type="text"
         value={username || ""}
         required
-        onChange={(e) => setFullName(e.target.value)}
+        onChange={(e) => setUsername(e.target.value)}
       />
 
       <div>
@@ -104,7 +99,7 @@ export default function AccountForm({
         />
       </div>
       <div className="pt-4">
-        <Button className="w-full" type="submit" disabled={loading}>
+        <Button className="w-full" type="submit" isLoading={loading}>
           {buttonText}
         </Button>
       </div>

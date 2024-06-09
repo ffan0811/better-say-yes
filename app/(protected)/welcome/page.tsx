@@ -20,7 +20,7 @@ export default async function WelcomePage() {
       <Card>
         <CardHeader>
           <CardTitle>
-            Welcome, {user?.user_metadata?.full_name || user?.email || ""}
+            Welcome, {user?.user_metadata?.username || user?.email || ""}
           </CardTitle>
           <CardDescription>
             Tell us a bit about yourself for a better experience on our
