@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "../ui/label";
+import ColorPicker from "../ColorPicker";
 
 export default function CreateGeneral() {
   return (
@@ -24,9 +25,15 @@ export default function CreateGeneral() {
           You can set fonts, background colors and optionally language.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <Label className="block mb-1">Font</Label>
-        <FontSelect />
+      <CardContent className="flex">
+        <div className="space-y-1 w-1/2">
+          <Label>Font</Label>
+          <FontSelect />
+        </div>
+        <div className="space-y-1 w-1/2">
+          <Label>Background</Label>
+          <ColorPicker />
+        </div>
       </CardContent>
     </div>
   );

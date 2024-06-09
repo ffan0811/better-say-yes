@@ -4,6 +4,7 @@ import "./globals.css";
 // import Navigation from "@/components/Navigation";
 import SessionProvider from "@/components/session-provider";
 import { FontProvider } from "@/components/font-provider";
+import { ColorProvider } from "@/components/color-provider";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -22,14 +23,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-background text-foreground">
+      <body className="bg-background text-foreground min-h-screen">
         <SessionProvider>
-          <FontProvider>
-            <ThemeProvider attribute="class" defaultTheme="dark">
-              {children}
-              <Toaster />
-            </ThemeProvider>
-          </FontProvider>
+          <ColorProvider>
+            <FontProvider>
+              <ThemeProvider attribute="class" defaultTheme="dark">
+                {children}
+                <Toaster />
+              </ThemeProvider>
+            </FontProvider>
+          </ColorProvider>
         </SessionProvider>
       </body>
     </html>

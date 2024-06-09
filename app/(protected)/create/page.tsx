@@ -1,13 +1,18 @@
 "use client";
 import Sidebar from "@/components/Sidebar";
+import { useColor } from "@/components/color-provider";
 import CreateContainer from "@/components/create";
 import { useFont } from "@/components/font-provider";
 
 export default function CreatePage() {
   const { fontClassName } = useFont();
+  const { color } = useColor();
 
   return (
-    <div className={fontClassName}>
+    <div
+      className={`min-h-screen ${fontClassName}`}
+      style={{ background: color }}
+    >
       <Sidebar />
       <div className="ml-64 p-8">
         <CreateContainer />
