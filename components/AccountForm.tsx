@@ -98,7 +98,7 @@ export default function AccountForm({
       <div>
         <CheckboxWithText
           id="isEmailNoSubscribed"
-          title="I don&#39;t want to receive emails about CreateYesOrYes and feature updates, marketing best practices, and promotions from CreateYesOrYes. By not checking the box, I agree to be opted in by default."
+          title="I don&#39;t want to receive emails about BetterSayYes and feature updates, marketing best practices, and promotions from BetterSayYes. By not checking the box, I agree to be opted in by default."
           checked={isEmailNoSubscribed}
           onCheckedChange={(checked) => setIsNoSubscribed(checked as boolean)}
         />
