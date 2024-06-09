@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 

@@ -3,7 +3,7 @@ import { useSearchParams } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 import ResponsiveWrapper from "@/components/ResponsiveWrapper";
 
 export default function VerifyRequestPage({

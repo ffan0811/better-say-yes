@@ -13,10 +13,10 @@ export default function Preview() {
   const [contents, setContents] = useAtom(contentsAtom);
 
   return (
-    <div className="container relative mx-auto">
+    <div className="p-4">
       <Button
         onClick={() => setPreview({ ...preview, isOpen: false })}
-        className="absolute right-4 top-4"
+        className="absolute right-4 top-4 z-50"
       >
         Close
       </Button>

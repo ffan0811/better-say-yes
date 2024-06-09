@@ -1,7 +1,7 @@
 "use client";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 import { type User } from "@supabase/supabase-js";
 import { InputWithLabel } from "./ui/input";
 import { Button } from "./ui/button";
