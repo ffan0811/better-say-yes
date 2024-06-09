@@ -1,13 +1,17 @@
 "use client";
-import { useState } from "react";
+import { ReactNode } from "react";
 import Logo from "./Logo";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import { ArrowLeftIcon } from "lucide-react";
-
-const MENU_COMMON_CLASSES = "text-xl cursor-pointer";
+import { SidebarMenuLabels } from "@/constants/sidebar";
+import { SidebarMenuType } from "@/types/sidebar";
+import { useAtom } from "jotai";
+import { selectedAtom } from "@/atoms/sidebar";
 
 const Sidebar = () => {
+  const [selected, setSelected] = useAtom(selectedAtom);
+
   return (
     <div className="w-64 h-screen bg-neutral-800 text-white fixed left-0 top-0 p-5 flex flex-col justify-between">
       <div>
@@ -15,12 +19,26 @@ const Sidebar = () => {
           <Logo className="w-20 h-auto mb-8" />
         </Link>
         <ul className="space-y-4">
-          <li className={MENU_COMMON_CLASSES}>General</li>
-          <ul className="space-y-2">
+          <SidebarItem
+            isActive={selected === SidebarMenuType.GENERAL}
+            onClick={() => setSelected(SidebarMenuType.GENERAL)}
+          >
+            {SidebarMenuLabels[SidebarMenuType.GENERAL]}
+          </SidebarItem>
+          <div className="space-y-2">
             <p className="text-neutral-400 text-sm">Pages</p>
-            <li className={MENU_COMMON_CLASSES}>Main</li>
-            <li className={MENU_COMMON_CLASSES}>After Yes</li>
-          </ul>
+            {Object.values(SidebarMenuType)
+              .filter((type) => type !== SidebarMenuType.GENERAL)
+              .map((type) => (
+                <SidebarItem
+                  key={type}
+                  isActive={selected === type}
+                  onClick={() => setSelected(type)}
+                >
+                  {SidebarMenuLabels[type]}
+                </SidebarItem>
+              ))}
+          </div>
         </ul>
       </div>
       <Link
@@ -33,6 +51,25 @@ const Sidebar = () => {
         Go back
       </Link>
     </div>
+  );
+};
+
+const SidebarItem = ({
+  isActive,
+  children,
+  onClick,
+}: {
+  isActive?: boolean;
+  children: ReactNode;
+  onClick?: () => void;
+}) => {
+  return (
+    <li
+      className={`text-xl cursor-pointer ${isActive ? "text-red-300" : ""}`}
+      onClick={onClick}
+    >
+      {children}
+    </li>
   );
 };
 
