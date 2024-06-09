@@ -1,4 +1,5 @@
 import AccountForm from "@/components/AccountForm";
+import Layout from "@/components/Layout";
 import ResponsiveWrapper from "@/components/ResponsiveWrapper";
 import {
   Card,
@@ -8,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 
 export default async function WelcomePage() {
   const supabase = createClient();
@@ -15,22 +17,26 @@ export default async function WelcomePage() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  if (!user) return redirect("/");
+
   return (
-    <ResponsiveWrapper>
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            Welcome, {user?.user_metadata?.username || user?.email || ""}
-          </CardTitle>
-          <CardDescription>
-            Tell us a bit about yourself for a better experience on our
-            platform!
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <AccountForm user={user} />
-        </CardContent>
-      </Card>
-    </ResponsiveWrapper>
+    <Layout hasGap>
+      <ResponsiveWrapper>
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              Welcome, {user?.user_metadata?.username || user?.email || ""}
+            </CardTitle>
+            <CardDescription>
+              Tell us a bit about yourself for a better experience on our
+              platform!
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <AccountForm user={user} />
+          </CardContent>
+        </Card>
+      </ResponsiveWrapper>
+    </Layout>
   );
 }
