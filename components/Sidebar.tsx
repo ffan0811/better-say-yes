@@ -13,7 +13,7 @@ const Sidebar = () => {
   const [selected, setSelected] = useAtom(selectedAtom);
 
   return (
-    <div className="w-64 h-screen bg-neutral-800 text-white fixed left-0 top-0 p-5 flex flex-col justify-between">
+    <div className="w-64 h-screen fixed left-0 top-0 p-5 flex flex-col justify-between">
       <div>
         <Link href="/dashboard">
           <Logo className="w-20 h-auto mb-8" />
@@ -26,7 +26,7 @@ const Sidebar = () => {
             {SidebarMenuLabels[SidebarMenuType.GENERAL]}
           </SidebarItem>
           <div className="space-y-2">
-            <p className="text-neutral-400 text-sm">Pages</p>
+            <p className="opacity-50 text-sm">Pages</p>
             {Object.values(SidebarMenuType)
               .filter((type) => type !== SidebarMenuType.GENERAL)
               .map((type) => (
@@ -65,7 +65,7 @@ const SidebarItem = ({
 }) => {
   return (
     <li
-      className={`text-xl cursor-pointer ${isActive ? "text-red-300" : ""}`}
+      className={`text-xl cursor-pointer ${isActive ? "underline" : ""}`}
       onClick={onClick}
     >
       {children}

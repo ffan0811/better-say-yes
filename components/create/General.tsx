@@ -14,25 +14,32 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "../ui/label";
-import ColorPicker from "../ColorPicker";
+import BackgroundColorPicker from "../BackgroundColorPicker";
+import FontColorPicker from "../FontColorPicker";
 
 export default function CreateGeneral() {
   return (
     <div>
       <CardHeader>
         <CardTitle>General</CardTitle>
-        <CardDescription>
+        <CardDescription className="text-inherit dark:text-inherit opacity-70">
           You can set fonts, background colors and optionally language.
         </CardDescription>
       </CardHeader>
       <CardContent className="flex">
-        <div className="space-y-1 w-1/2">
-          <Label>Font</Label>
-          <FontSelect />
+        <div className="space-y-10 w-1/2">
+          <div className="space-y-1">
+            <Label>Font</Label>
+            <FontSelect />
+          </div>
+          <div className="space-y-1">
+            <Label>Font Color</Label>
+            <FontColorPicker />
+          </div>
         </div>
         <div className="space-y-1 w-1/2">
           <Label>Background</Label>
-          <ColorPicker />
+          <BackgroundColorPicker />
         </div>
       </CardContent>
     </div>

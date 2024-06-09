@@ -41,7 +41,7 @@ const FontSelect = () => {
 
   return (
     <Select onValueChange={handleFontChange}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-[180px] text-white">
         <SelectValue placeholder="Select Font" />
       </SelectTrigger>
       <SelectContent>
@@ -50,7 +50,7 @@ const FontSelect = () => {
           <SelectItem
             key={ele.value}
             value={ele.value}
-            className={`${getFontClasses(ele.value)}`}
+            className={`${getFontClasses(ele.value)} `}
           >
             {ele.label}
           </SelectItem>

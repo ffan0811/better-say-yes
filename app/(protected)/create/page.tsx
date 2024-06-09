@@ -6,12 +6,12 @@ import { useFont } from "@/components/font-provider";
 
 export default function CreatePage() {
   const { fontClassName } = useFont();
-  const { color } = useColor();
+  const { fontColor, backgroundColor } = useColor();
 
   return (
     <div
       className={`min-h-screen ${fontClassName}`}
-      style={{ background: color }}
+      style={{ background: backgroundColor, color: fontColor }}
     >
       <Sidebar />
       <div className="ml-64 p-8">
