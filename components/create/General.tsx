@@ -6,13 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Label } from "../ui/label";
 import BackgroundColorPicker from "../BackgroundColorPicker";
 import FontColorPicker from "../FontColorPicker";
@@ -26,8 +19,8 @@ export default function CreateGeneral() {
           You can set fonts, background colors and optionally language.
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex">
-        <div className="space-y-10 w-1/2">
+      <CardContent className="flex justify-between">
+        <div className="space-y-10 w-5/12">
           <div className="space-y-1">
             <Label>Font</Label>
             <FontSelect />
@@ -37,7 +30,7 @@ export default function CreateGeneral() {
             <FontColorPicker />
           </div>
         </div>
-        <div className="space-y-1 w-1/2">
+        <div className="space-y-1 w-5/12">
           <Label>Background</Label>
           <BackgroundColorPicker />
         </div>

@@ -41,7 +41,7 @@ const FontSelect = () => {
 
   return (
     <Select onValueChange={handleFontChange}>
-      <SelectTrigger className="w-[180px] text-white">
+      <SelectTrigger className="w-full text-white">
         <SelectValue placeholder="Select Font" />
       </SelectTrigger>
       <SelectContent>
