@@ -1,10 +1,6 @@
-import Layout from "@/components/Layout";
-import ResponsiveWrapper from "@/components/ResponsiveWrapper";
 import Sidebar from "@/components/Sidebar";
-import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import CreateContainer from "@/components/create";
 import { createClient } from "@/utils/supabase/server";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function CreatePage() {
@@ -18,7 +14,9 @@ export default async function CreatePage() {
   return (
     <div>
       <Sidebar />
-      <div className="ml-64 p-8">content</div>
+      <div className="ml-64 p-8">
+        <CreateContainer />
+      </div>
     </div>
   );
 }
