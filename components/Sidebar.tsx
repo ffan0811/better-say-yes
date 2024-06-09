@@ -2,15 +2,17 @@
 import { ReactNode } from "react";
 import Logo from "./Logo";
 import Link from "next/link";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { ArrowLeftIcon } from "lucide-react";
 import { SidebarMenuLabels } from "@/constants/sidebar";
 import { SidebarMenuType } from "@/types/sidebar";
 import { useAtom } from "jotai";
 import { selectedAtom } from "@/atoms/sidebar";
+import { previewAtom } from "@/atoms/preview";
 
 const Sidebar = () => {
   const [selected, setSelected] = useAtom(selectedAtom);
+  const [preview, setPreview] = useAtom(previewAtom);
 
   return (
     <div className="w-64 h-screen fixed left-0 top-0 p-5 flex flex-col justify-between">
@@ -41,15 +43,25 @@ const Sidebar = () => {
           </div>
         </ul>
       </div>
-      <Link
-        href="/dashboard"
-        className={`w-full flex items-center ${buttonVariants({
-          variant: "default",
-        })}`}
-      >
-        <ArrowLeftIcon className="w-4 h-4 mr-1" />
-        Go back
-      </Link>
+      <div className="space-y-2">
+        <Button
+          className="w-full"
+          variant="outline"
+          onClick={() => setPreview({ ...preview, isOpen: true })}
+        >
+          Preview
+        </Button>
+        <Button className="w-full">Launch</Button>
+        {/* <Link
+          href="/dashboard"
+          className={`w-full flex items-center ${buttonVariants({
+            variant: "default",
+          })}`}
+        >
+          <ArrowLeftIcon className="w-4 h-4 mr-1" />
+          Go back
+        </Link> */}
+      </div>
     </div>
   );
 };

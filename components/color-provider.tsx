@@ -11,7 +11,9 @@ interface ColorContextType {
 const ColorContext = createContext<ColorContextType | undefined>(undefined);
 
 export const ColorProvider = ({ children }: { children: ReactNode }) => {
-  const [backgroundColor, setBackgroundColor] = useState<string>("");
+  const [backgroundColor, setBackgroundColor] = useState<string>(
+    "linear-gradient(45deg, rgb(23, 26, 29) 4%, rgb(21, 39, 58) 46%, rgb(23, 84, 148) 100%)"
+  );
   const [fontColor, setFontColor] = useState<string>("");
 
   return (
