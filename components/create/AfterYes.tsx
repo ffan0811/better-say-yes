@@ -9,34 +9,52 @@ import {
 import { TextareaWithLabel } from "../ui/textarea";
 import { contentsAtom } from "@/atoms/content";
 import { InputWithLabel } from "../ui/input";
-import UploadImage from "../uploadImage";
+import UploadImage, { LIMIT_IMAGE_NUMBER } from "../UploadImage";
 import { Label } from "../ui/label";
 
 export default function CreateAfterYes() {
   const [contents, setContents] = useAtom(contentsAtom);
 
-  const handleImages = (files: File[]) => {
-    if (files.length > 0) {
-      const images = [];
+  const addImages = (newFiles: File[]) => {
+    const uniqueFiles = newFiles.filter(
+      (file) =>
+        !contents.images.some((existingFile) => existingFile.name === file.name)
+    );
+    const totalImages = contents.images.length + uniqueFiles.length;
 
-      for (let i = 0; i < files.length; i++) {
-        images.push(files[i]);
-      }
+    if (totalImages > LIMIT_IMAGE_NUMBER) {
+      const allowed = LIMIT_IMAGE_NUMBER - contents.images.length;
+      const allowedFiles = uniqueFiles.slice(0, allowed);
       setContents({
         ...contents,
-        images,
+        images: contents.images.concat(allowedFiles),
       });
+      if (allowedFiles.length < uniqueFiles.length) {
+        alert(`You can only add ${allowed} more images.`);
+      }
+    } else {
+      setContents({ ...contents, images: contents.images.concat(uniqueFiles) });
     }
   };
 
+  const handleImages = (files: FileList | null) => {
+    const newFiles = files ? Array.from(files) : [];
+    addImages(newFiles);
+  };
+
+  const handleExtraImages = (files: FileList | null) => {
+    const newFiles = files ? Array.from(files) : [];
+    addImages(newFiles);
+  };
+
   const handleDeleteImage = (index: number, value: string) => {
-    const images = contents.images || [];
-    const filtered = images.toSpliced(index, 1);
+    const filtered = contents.images.filter((_, i) => i !== index);
     setContents({
       ...contents,
       images: filtered,
     });
   };
+
   return (
     <div>
       <CardHeader>
@@ -78,8 +96,9 @@ export default function CreateAfterYes() {
         <div className="gap-2">
           <Label>Images</Label>
           <UploadImage
-            data={[]}
+            data={contents.images}
             handleImages={handleImages}
+            handleExtraImages={handleExtraImages}
             handleDeleteImage={handleDeleteImage}
           />
         </div>
