@@ -1,11 +1,17 @@
 "use client";
 import { useAtom } from "jotai";
 import { Button } from "../ui/button";
-import PreviewMain from "./Main";
 import { previewAtom } from "@/atoms/preview";
+// import ProductionSecret from "../Production/Secret";
+import ProductionMain from "../Production/Main";
+import { contentsAtom } from "@/atoms/content";
+import { PageStepType } from "@/types/status";
+import ProductionAfterYes from "../Production/AfterYes";
 
 export default function Preview() {
   const [preview, setPreview] = useAtom(previewAtom);
+  const [contents, setContents] = useAtom(contentsAtom);
+
   return (
     <div className="container relative mx-auto">
       <Button
@@ -14,7 +20,24 @@ export default function Preview() {
       >
         Close
       </Button>
-      <PreviewMain />
+      {/* {preview.stage === PageStepType.SECRET && <ProductionSecret />} */}
+      {preview.stage === PageStepType.MAIN && (
+        <ProductionMain
+          question={contents.question}
+          alertAfterYes={contents.alertAfterYes}
+          isPreview
+        />
+      )}
+      {preview.stage === PageStepType.AFTER_YES && (
+        <ProductionAfterYes
+          afterYesTitle={contents.afterYesTitle}
+          afterYesDescription={contents.afterYesDescription}
+          afterYesButtonText={contents.afterYesButtonText}
+          afterYesButtonLink={contents.afterYesButtonLink}
+          images={contents.images}
+          isPreview
+        />
+      )}
     </div>
   );
 }

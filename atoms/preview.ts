@@ -1,6 +1,7 @@
+import { PageStepType } from "@/types/status";
 import { atom } from "jotai";
 
 export const previewAtom = atom<{
   isOpen: boolean;
-  stage?: "secret" | "main" | "afterYes";
+  stage?: PageStepType;
 }>({ isOpen: false });

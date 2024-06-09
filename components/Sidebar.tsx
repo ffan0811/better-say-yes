@@ -9,10 +9,17 @@ import { SidebarMenuType } from "@/types/sidebar";
 import { useAtom } from "jotai";
 import { selectedAtom } from "@/atoms/sidebar";
 import { previewAtom } from "@/atoms/preview";
+import { PageStepType } from "@/types/status";
 
 const Sidebar = () => {
   const [selected, setSelected] = useAtom(selectedAtom);
   const [preview, setPreview] = useAtom(previewAtom);
+
+  const previewState = {
+    [SidebarMenuType.GENERAL]: PageStepType.SECRET,
+    [SidebarMenuType.MAIN_PAGE]: PageStepType.MAIN,
+    [SidebarMenuType.AFTER_YES_PAGE]: PageStepType.AFTER_YES,
+  };
 
   return (
     <div className="w-64 h-screen fixed left-0 top-0 p-5 flex flex-col justify-between">
@@ -51,7 +58,13 @@ const Sidebar = () => {
         <Button
           className="w-full"
           variant="outline"
-          onClick={() => setPreview({ ...preview, isOpen: true })}
+          onClick={() =>
+            setPreview({
+              stage: previewState[selected as keyof typeof previewState],
+              // stage: contents.secretCode ? "secret" : "main",
+              isOpen: true,
+            })
+          }
         >
           Preview
         </Button>
