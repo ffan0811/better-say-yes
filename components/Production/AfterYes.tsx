@@ -56,7 +56,7 @@ export default function ProductionAfterYes({
           <h1 className="mb-4 text-base font-bold uppercase tracking-widest">
             {afterYesTitle}
           </h1>
-          <p className="max-w-[40ch] text-white/75 sm:max-w-[32ch]">
+          <p className="max-w-[40ch] whitespace-pre text-white/75 sm:max-w-[32ch]">
             {afterYesDescription}
           </p>
           {afterYesButtonText ? (

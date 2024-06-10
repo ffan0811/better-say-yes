@@ -2,19 +2,13 @@
 "use client";
 import { useState, useEffect, Fragment } from "react";
 import { ImagePlusIcon, XCircleIcon } from "lucide-react";
-import { useToast } from "./ui/use-toast";
-
-import { validateImage } from "@/lib/utils";
-// import { AWS_S3_BASE_URL } from "@/constants";
-
 import { buttonVariants } from "@/components/ui/button";
-import { useAtom } from "jotai";
+
 interface UploadImageType {
   data: File[];
   handleImages: (files: FileList | null) => void;
   handleExtraImages: (files: FileList | null) => void;
   handleDeleteImage: (index: number, img: string) => void;
-  // previews?: string[]
 }
 
 export const LIMIT_IMAGE_NUMBER = 5;
