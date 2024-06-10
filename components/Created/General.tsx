@@ -8,7 +8,7 @@ import {
 } from "../ui/card";
 import { Label } from "../ui/label";
 import BackgroundColorPicker from "../BackgroundColorPicker";
-import ColorPicker from "@/components/ColorPicker";
+import FontColorPicker from "../ColorPicker";
 
 export default function CreateGeneral() {
   return (
@@ -16,22 +16,18 @@ export default function CreateGeneral() {
       <CardHeader>
         <CardTitle>General</CardTitle>
         <CardDescription className="text-inherit dark:text-inherit opacity-70">
-          You can customize theme of your website
+          You can set fonts, background colors and optionally language.
         </CardDescription>
       </CardHeader>
       <CardContent className="flex justify-between">
-        <div className="space-y-8 w-5/12">
+        <div className="space-y-10 w-5/12">
           <div className="space-y-1">
             <Label>Font</Label>
             <FontSelect />
           </div>
           <div className="space-y-1">
             <Label>Font Color</Label>
-            <ColorPicker type="font" />
-          </div>
-          <div className="space-y-1">
-            <Label>Button Color</Label>
-            <ColorPicker type="button" />
+            <FontColorPicker />
           </div>
         </div>
         <div className="space-y-1 w-5/12">

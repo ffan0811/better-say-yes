@@ -60,7 +60,7 @@ export default function CreateAfterYes() {
       <CardHeader>
         <CardTitle>AfterYes Page</CardTitle>
         <CardDescription className="text-inherit dark:text-inherit opacity-70">
-          Edit contents for the page after clicking yes button
+          the AfterYes Page will be shown once users click the yes button
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-10">

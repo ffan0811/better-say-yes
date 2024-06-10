@@ -17,7 +17,8 @@ export default function CreateMain() {
       <CardHeader>
         <CardTitle>Main Page</CardTitle>
         <CardDescription className="text-inherit dark:text-inherit opacity-70">
-          Edit contents for the main page which people will encounter first
+          the Main page is where users will face as soon as they visit your
+          website
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-10">

@@ -15,10 +15,13 @@ export default function BackgroundColorPicker() {
 
   return (
     <ColorPickerLibrary
+      hideOpacity
       hideEyeDrop
       hideAdvancedSliders
       hideColorGuide
       hideInputType
+      hidePresets
+      hideInputs
       value={backgroundColor}
       onChange={setBackgroundColor}
     />

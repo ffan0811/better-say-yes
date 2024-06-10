@@ -2,13 +2,19 @@
 import ColorPickerLibrary from "react-best-gradient-color-picker";
 import { useColor } from "./color-provider";
 
-export default function FontColorPicker() {
-  const { fontColor, setFontColor } = useColor();
+type ColorPickerProps = {
+  type: "font" | "button";
+};
+
+export default function ColorPicker({ type }: ColorPickerProps) {
+  const { buttonColor, fontColor, setButtonColor, setFontColor } = useColor();
+  const color = type === "font" ? fontColor : buttonColor;
+  const setColor = type === "font" ? setFontColor : setButtonColor;
 
   return (
     <ColorPickerLibrary
-      value={fontColor}
-      onChange={setFontColor}
+      value={color}
+      onChange={setColor}
       hideInputs
       hideOpacity
       //   hideHue
