@@ -4,7 +4,7 @@ import { useState, useEffect, Fragment } from "react";
 import { ImagePlusIcon, XCircleIcon } from "lucide-react";
 import { useToast } from "./ui/use-toast";
 
-import { validateImage } from "@/utils";
+import { validateImage } from "@/lib/utils";
 // import { AWS_S3_BASE_URL } from "@/constants";
 
 import { buttonVariants } from "@/components/ui/button";

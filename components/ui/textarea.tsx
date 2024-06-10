@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 import { LABEL_WRAPPER_CLASSES } from "./input";
 import { Label } from "./label";
 

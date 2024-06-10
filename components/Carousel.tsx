@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import useKeypress from "react-use-keypress";
 import type { ImageProps } from "@/types/image";
-import { useLastViewedPhoto } from "@/utils/useLastViewedPhoto";
+import { useLastViewedPhoto } from "@/lib/utils/useLastViewedPhoto";
 import SharedModal from "./SharedModal";
 
 export default function Carousel({

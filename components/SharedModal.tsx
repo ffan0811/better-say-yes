@@ -10,9 +10,9 @@ import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 import { useSwipeable } from "react-swipeable";
-import { variants } from "../utils/animationVariants";
-import downloadPhoto from "../utils/downloadPhoto";
-import { range } from "../utils/range";
+import { variants } from "../lib/utils/animationVariants";
+import downloadPhoto from "../lib/utils/downloadPhoto";
+import { range } from "../lib/utils/range";
 import type { ImageProps, SharedModalProps } from "@/types/image";
 // import Twitter from "./Icons/Twitter";
 

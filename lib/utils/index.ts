@@ -21,3 +21,8 @@ export const validateImage = (file: File) => {
   }
   return error;
 };
+
+export function getRandomElementInArray(array: string[]): string {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+}

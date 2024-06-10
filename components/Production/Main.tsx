@@ -1,6 +1,17 @@
 "use client";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { answerNoLists } from "@/constants/message";
 import { Button } from "../ui/button";
-import { InputWithLabel } from "../ui/input";
+import { getRandomElementInArray } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 export default function ProductionMain({
   question,
@@ -11,9 +22,15 @@ export default function ProductionMain({
   alertAfterYes?: string;
   isPreview?: boolean;
 }) {
-  const handleNo = () => {
-    alert("Are you sure? Think again!");
-  };
+  const [open, setOpen] = useState<boolean>(false);
+  const [msg, setMsg] = useState<string>("");
+
+  useEffect(() => {
+    if (open) {
+      const data = getRandomElementInArray(answerNoLists);
+      setMsg(data);
+    }
+  }, [open]);
 
   const handleYes = () => {
     if (alertAfterYes) {
@@ -26,12 +43,31 @@ export default function ProductionMain({
   return (
     <div className="flex justify-center items-center h-screen w-screen container flex-col">
       <div className="w-1/2 space-y-4">
-        <p className="text-3xl text-center break-words mb-8">{question}</p>
-        <div className="flex space-x-4">
-          <Button variant="outline" onClick={handleNo} className="w-full">
-            No
-          </Button>
-          <Button onClick={handleYes} className="w-full">
+        <p className="text-3xl text-center break-words mb-8 whitespace-pre">
+          {question}
+        </p>
+        <div className="flex space-x-4 justify-center">
+          <AlertDialog open={open} onOpenChange={setOpen}>
+            <Button
+              variant="outline"
+              className="min-w-40"
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
+              No
+            </Button>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Hmm,,,</AlertDialogTitle>
+                <AlertDialogDescription>{msg}</AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Okay...</AlertDialogCancel>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+          <Button onClick={handleYes} className="min-w-40">
             Yes
           </Button>
         </div>

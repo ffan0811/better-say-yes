@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { Button, buttonVariants } from "../ui/button";
 import { InputWithLabel } from "../ui/input";
-import { useLastViewedPhoto } from "@/utils/useLastViewedPhoto";
+import { useLastViewedPhoto } from "@/lib/utils/useLastViewedPhoto";
 import { useEffect, useRef } from "react";
 import Modal from "../Modal";
 import Link from "next/link";

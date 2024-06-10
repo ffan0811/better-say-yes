@@ -3,7 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { useColor } from "../color-provider";
 
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 import Spinner from "@/components/Spinner";
 import { useColorPicker } from "react-best-gradient-color-picker";
 
@@ -38,7 +38,7 @@ const buttonVariants = cva(
   }
 );
 
-const styles = (
+export const styles = (
   variant: string,
   buttonColor: string,
   backgroundColor?: string
