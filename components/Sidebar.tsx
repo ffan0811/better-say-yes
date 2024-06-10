@@ -10,6 +10,7 @@ import { useAtom } from "jotai";
 import { selectedAtom } from "@/atoms/sidebar";
 import { previewAtom } from "@/atoms/preview";
 import { PageStepType } from "@/types/status";
+import PaymentButton from "./Payment/button";
 
 const Sidebar = () => {
   const [selected, setSelected] = useAtom(selectedAtom);
@@ -68,7 +69,7 @@ const Sidebar = () => {
         >
           Preview
         </Button>
-        <Button className="w-full">Launch</Button>
+        <PaymentButton />
       </div>
     </div>
   );

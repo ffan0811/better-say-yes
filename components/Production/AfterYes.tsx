@@ -1,10 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { Button, buttonVariants } from "../ui/button";
-import { InputWithLabel } from "../ui/input";
+import { Button } from "../ui/button";
+import { buttonVariants } from "../ui/button/utils";
 import { useLastViewedPhoto } from "@/lib/utils/useLastViewedPhoto";
 import { useEffect, useRef } from "react";
-import Modal from "../Modal";
 import Link from "next/link";
 import Image from "next/image";
 import { ImageProps } from "@/types/image";

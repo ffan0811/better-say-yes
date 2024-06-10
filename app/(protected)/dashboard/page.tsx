@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 import ResponsiveWrapper from "@/components/ResponsiveWrapper";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";

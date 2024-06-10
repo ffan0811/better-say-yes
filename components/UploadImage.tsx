@@ -2,7 +2,7 @@
 "use client";
 import { useState, useEffect, Fragment } from "react";
 import { ImagePlusIcon, XCircleIcon } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button/utils";
 
 interface UploadImageType {
   data: File[];

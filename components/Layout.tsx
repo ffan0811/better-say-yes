@@ -1,3 +1,4 @@
+import Footer from "./Footer";
 import Navigation from "./Navigation";
 import { ReactNode } from "react";
 
@@ -22,6 +23,7 @@ export default function Layout({
     >
       <Navigation isMinimize={isNavMinimize} />
       {children}
+      <Footer />
     </main>
   );
 }
