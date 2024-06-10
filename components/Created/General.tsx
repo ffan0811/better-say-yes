@@ -8,7 +8,7 @@ import {
 } from "../ui/card";
 import { Label } from "../ui/label";
 import BackgroundColorPicker from "../BackgroundColorPicker";
-import FontColorPicker from "../ColorPicker";
+import ColorPicker from "../ColorPicker";
 
 export default function CreateGeneral() {
   return (
@@ -27,7 +27,7 @@ export default function CreateGeneral() {
           </div>
           <div className="space-y-1">
             <Label>Font Color</Label>
-            <FontColorPicker />
+            <ColorPicker type="font" />
           </div>
         </div>
         <div className="space-y-1 w-5/12">

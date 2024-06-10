@@ -13,6 +13,9 @@ import {
   Lemonada,
   Roboto_Mono,
   Playfair_Display,
+  Caveat,
+  Playpen_Sans,
+  Pixelify_Sans,
 } from "next/font/google";
 import { FontType } from "@/types/font";
 
@@ -41,12 +44,30 @@ const playfairDisplay = Playfair_Display({
   display: "swap",
 });
 
+const caveat = Caveat({
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const playpenSans = Playpen_Sans({
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const pixelifySans = Pixelify_Sans({
+  subsets: ["latin"],
+  display: "swap",
+});
+
 const fonts = {
   [FontType.GRANDSTANDER]: grandstander,
   [FontType.INTER]: inter,
   [FontType.LEMONADA]: lemonada,
   [FontType.ROBOTO_MONO]: robotoMono,
   [FontType.PLAYFAIR_DISPLAY]: playfairDisplay,
+  [FontType.CAVEAT]: caveat,
+  [FontType.PLAYPEN_SANS]: playpenSans,
+  [FontType.PIXELIFY_SANS]: pixelifySans,
 };
 
 interface FontContextType {

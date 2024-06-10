@@ -15,20 +15,32 @@ const items = [
     label: "Inter",
   },
   {
+    value: FontType.ROBOTO_MONO,
+    label: "Roboto Mono",
+  },
+  {
     value: FontType.GRANDSTANDER,
     label: "Grandstander",
+  },
+  {
+    value: FontType.PLAYPEN_SANS,
+    label: "Playpen Sans",
   },
   {
     value: FontType.LEMONADA,
     label: "Lemonada",
   },
   {
-    value: FontType.ROBOTO_MONO,
-    label: "Roboto Mono",
+    value: FontType.CAVEAT,
+    label: "Caveat",
   },
   {
     value: FontType.PLAYFAIR_DISPLAY,
     label: "Playfair Display",
+  },
+  {
+    value: FontType.PIXELIFY_SANS,
+    label: "Pixelify Sans",
   },
 ];
 
