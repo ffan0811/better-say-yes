@@ -14,8 +14,13 @@ import CreateBackground from "@/components/Create/Background";
 import CreateTheme from "@/components/Create/Theme";
 import CreateFont from "@/components/Create/Font";
 import PageSwitcher from "@/components/PageSwitcher";
+import CreateImages from "@/components/Create/Images";
 
 const sidebarMenu = [
+  {
+    label: "Font",
+    value: SidebarMenuType.FONT,
+  },
   {
     label: "Background",
     value: SidebarMenuType.BACKGROUND,
@@ -25,21 +30,21 @@ const sidebarMenu = [
     value: SidebarMenuType.THEME_COLOR,
   },
   {
-    label: "Font",
-    value: SidebarMenuType.FONT,
+    label: "Images",
+    value: SidebarMenuType.IMAGES,
   },
 ];
 
 export default function CreatePage() {
   const comp = {
+    [SidebarMenuType.FONT]: <CreateFont />,
     [SidebarMenuType.BACKGROUND]: <CreateBackground />,
     [SidebarMenuType.THEME_COLOR]: <CreateTheme />,
-    [SidebarMenuType.FONT]: <CreateFont />,
+    [SidebarMenuType.IMAGES]: <CreateImages />,
   };
 
   return (
-    // <div className="h-[calc(100vh-5rem)] overflow-y-hidden">
-    <div className="h-screen overflow-y-hidden">
+    <>
       <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500">
         <div className="flex justify-between items-center w-full px-5">
           <div className="flex items-center space-x-16">
@@ -69,6 +74,6 @@ export default function CreatePage() {
         <CreateContainer />
       </div>
       <PageSwitcher />
-    </div>
+    </>
   );
 }

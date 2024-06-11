@@ -1,7 +1,8 @@
 "use client";
 import { useColor } from "@/components/color-provider";
 import { useFont } from "@/components/font-provider";
-import { ReactNode } from "react";
+import { getContrastingColor } from "@/lib/utils";
+import { ReactNode, useEffect, useState } from "react";
 import styled from "styled-components";
 
 type ProductionWrapperProps = {
@@ -9,9 +10,13 @@ type ProductionWrapperProps = {
   children: ReactNode;
 };
 
-const StyledDiv = styled.div<{ $themeColor: string }>`
+const StyledDiv = styled.div<{
+  $themeColor: string;
+  $contrastingColor: string;
+}>`
   .btn-default {
     background-color: ${(props) => props.$themeColor || ""};
+    color: ${(props) => props.$contrastingColor || ""};
   }
   .btn-outline {
     border-color: ${(props) => props.$themeColor || ""};
@@ -23,12 +28,13 @@ export default function ProductionWrapper({
   children,
 }: ProductionWrapperProps) {
   const { fontClassName } = useFont();
-  const { themeColor, backgroundColor } = useColor();
+  const { contrastingColor, themeColor, backgroundColor } = useColor();
 
   return (
     <StyledDiv
       $themeColor={themeColor}
-      className={`flex justify-center items-center p-4 ${fontClassName} ${className}`}
+      $contrastingColor={contrastingColor}
+      className={`flex justify-center p-4 ${fontClassName} ${className}`}
       style={{
         background: backgroundColor,
         color: themeColor,

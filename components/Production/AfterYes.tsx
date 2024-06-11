@@ -41,7 +41,7 @@ export default function ProductionAfterYes({
   }, [photoId, lastViewedPhoto, setLastViewedPhoto]);
 
   return (
-    <div className="">
+    <div className="w-full h-full">
       {/* {photoId && (
         <Modal
           images={images}
@@ -51,11 +51,11 @@ export default function ProductionAfterYes({
         />
       )} */}
       <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
-        <div className="relative mb-5 flex h-[300px] flex-col items-center justify-center gap-4 overflow-hidden rounded-lg bg-white/10 px-6 text-center text-white shadow-highlight">
-          <h1 className="mb-4 text-base font-bold uppercase tracking-widest">
+        <div className="relative mb-5 flex flex-col items-center justify-center gap-4 overflow-hidden rounded-lg bg-white/10 p-6 text-center text-white shadow-highlight">
+          <h1 className="text-base font-bold uppercase tracking-widest">
             {afterYesTitle}
           </h1>
-          <p className="max-w-[40ch] whitespace-pre text-white/75 sm:max-w-[32ch]">
+          <p className="break-words whitespace-pre-line text-white/75">
             {afterYesDescription}
           </p>
           {afterYesButtonText ? (
@@ -76,21 +76,30 @@ export default function ProductionAfterYes({
           ? images.map((ele) => {
               const src = URL.createObjectURL(ele);
               return (
-                <Image
+                <Link
                   key={ele.name}
-                  alt="Next.js Conf photo"
-                  className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
-                  style={{ transform: "translate3d(0, 0, 0)" }}
-                  placeholder="blur"
-                  blurDataURL={src}
-                  src={src}
-                  width={720}
-                  height={480}
-                  sizes="(max-width: 640px) 100vw,
+                  href={`/?photoId=${ele.name}`}
+                  as={`/p/${ele.name}`}
+                  // ref={ele.name === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
+                  shallow
+                  className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
+                >
+                  <Image
+                    key={ele.name}
+                    alt="Next.js Conf photo"
+                    className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
+                    style={{ transform: "translate3d(0, 0, 0)" }}
+                    placeholder="blur"
+                    blurDataURL={src}
+                    src={src}
+                    width={720}
+                    height={480}
+                    sizes="(max-width: 640px) 100vw,
               (max-width: 1280px) 50vw,
               (max-width: 1536px) 33vw,
               25vw"
-                />
+                  />
+                </Link>
               );
             })
           : newImages.map(({ id, public_id, format, blurDataUrl }) => (

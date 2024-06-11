@@ -15,21 +15,11 @@ import { PageStepType } from "@/types/status";
 import ProductionAfterYes from "../Production/AfterYes";
 
 export default function CreateContainer() {
-  const [selected, setSelected] = useAtom(selectedAtom);
   const [contents, setContents] = useAtom(contentsAtom);
   const [preview, setPreview] = useAtom(previewAtom);
 
-  const { fontClassName } = useFont();
-  const { themeColor, backgroundColor } = useColor();
-
-  const comp = {
-    // [SidebarMenuType.THEME]: <CreateGeneral />,
-    // [SidebarMenuType.MAIN_PAGE]: <CreateMain />,
-    // [SidebarMenuType.AFTER_YES_PAGE]: <CreateAfterYes />,
-  };
-
   return (
-    <ProductionWrapper className={`h-[calc(100vh-5rem)]`}>
+    <ProductionWrapper className={`min-h-[calc(100vh-5rem)]`}>
       {preview.stage === PageStepType.MAIN && (
         <ProductionMain
           question={contents.question}

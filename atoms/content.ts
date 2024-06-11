@@ -12,10 +12,11 @@ export const contentsAtom = atom<{
 }>({
   question: "Do you wanna go out with me?",
   alertAfterYes: "",
-  afterYesTitle: "",
-  afterYesDescription: "",
-  afterYesButtonText: "",
-  afterYesButtonLink: "",
+  afterYesTitle: "Hello World",
+  afterYesDescription:
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+  afterYesButtonText: "❤️",
+  afterYesButtonLink: "https://bettersayyes.com",
   secretCode: "",
   images: [],
 });

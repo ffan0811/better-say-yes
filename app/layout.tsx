@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-background text-foreground min-h-screen">
+      <body className="bg-background text-foreground">
         <SessionProvider>
           <ColorProvider>
             <FontProvider>
