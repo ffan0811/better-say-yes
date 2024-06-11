@@ -73,7 +73,7 @@ export default function ProductionAfterYes({
           ) : null}
         </div>
         {isPreview
-          ? images.map((ele) => {
+          ? (images || []).map((ele) => {
               const src = URL.createObjectURL(ele);
               return (
                 <Link

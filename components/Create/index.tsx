@@ -6,10 +6,43 @@ import ProductionWrapper from "../Production/Wrapper";
 import { previewAtom } from "@/atoms/preview";
 import { PageStepType } from "@/types/status";
 import ProductionAfterYes from "../Production/AfterYes";
+import { useEffect } from "react";
+import { useColor } from "../color-provider";
+import { useFont } from "../font-provider";
 
-export default function CreateContainer() {
+type CreateContainerProps = {
+  contentsData: any;
+};
+
+export default function CreateContainer({
+  contentsData,
+}: CreateContainerProps) {
   const [contents, setContents] = useAtom(contentsAtom);
   const [preview, setPreview] = useAtom(previewAtom);
+  const { setThemeColor, setBackgroundColor } = useColor();
+  const { setFont } = useFont();
+
+  useEffect(() => {
+    if (!contentsData) return;
+
+    setContents({
+      ...preview,
+      question: contentsData.question,
+      alertAfterYes: contentsData.alert_after_yes,
+      afterYesTitle: contentsData.after_yes_title,
+      afterYesDescription: contentsData.after_yes_description,
+      afterYesButtonText: contentsData.after_yes_button_text,
+      afterYesButtonLink: contentsData.after_yes_button_link,
+      secretCode: contentsData.secret_code,
+      fontFamily: contentsData.font_family,
+      themeColor: contentsData.theme_color,
+      backgroundColor: contentsData.background_color,
+    });
+
+    setThemeColor(contentsData.theme_color);
+    setBackgroundColor(contentsData.background_color);
+    setFont(contentsData.font_family);
+  }, [contentsData]);
 
   return (
     <ProductionWrapper className={`min-h-[calc(100vh-5rem)]`}>

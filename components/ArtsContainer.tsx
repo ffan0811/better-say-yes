@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CreateButton from "./Create/CreateButton";
 import Link from "next/link";
 
-const MAX_DRAFT_COUNT = 4;
+const MAX_DRAFT_COUNT = 3;
 
 export const ITEM_COMMON_CLASSES =
   "border w-full h-40 text-lg rounded-md flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity";

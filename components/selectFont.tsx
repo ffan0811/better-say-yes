@@ -10,6 +10,7 @@ import {
 import { FontType } from "@/types/font";
 import { useAtom } from "jotai";
 import { contentsAtom } from "@/atoms/content";
+import { useEffect } from "react";
 
 const items = [
   {
@@ -47,7 +48,7 @@ const items = [
 ];
 
 const SelectFont = () => {
-  const { setFont, getFontClasses } = useFont();
+  const { font, setFont, getFontClasses } = useFont();
   const [contents, setContents] = useAtom(contentsAtom);
 
   const handleFontChange = (font: FontType) => {
@@ -59,7 +60,7 @@ const SelectFont = () => {
   };
 
   return (
-    <Select onValueChange={handleFontChange}>
+    <Select value={font} onValueChange={handleFontChange}>
       <SelectTrigger className="w-full text-white focus:ring-0">
         <SelectValue placeholder="Select Font" />
       </SelectTrigger>

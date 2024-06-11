@@ -15,6 +15,7 @@ import CreateFont from "@/components/Create/Font";
 import PageSwitcher from "@/components/PageSwitcher";
 import CreateImages from "@/components/Create/Images";
 import SaveButton from "@/components/Create/SaveButton";
+import { createClient } from "@/lib/supabase/server";
 
 const sidebarMenu = [
   {
@@ -35,11 +36,27 @@ const sidebarMenu = [
   },
 ];
 
-export default function CreatePage({
+export default async function CreatePage({
   searchParams,
 }: {
   searchParams: { id: string };
 }) {
+  const supabase = createClient();
+
+  const { data: contentsData, error } = await supabase
+    .from("contents")
+    .select("*")
+    .eq("id", searchParams.id)
+    .single();
+
+  if (error) {
+    return (
+      <div className="h-screen w-full flex items-center justify-center">
+        <p className="text-3xl">Failed to fetch data</p>
+      </div>
+    );
+  }
+
   const comp = {
     [SidebarMenuType.FONT]: <CreateFont />,
     [SidebarMenuType.BACKGROUND]: <CreateBackground />,
@@ -79,7 +96,7 @@ export default function CreatePage({
         </Accordion>
       </div>
       <div className="ml-80 mt-20">
-        <CreateContainer />
+        <CreateContainer contentsData={contentsData} />
       </div>
       <PageSwitcher />
     </>
