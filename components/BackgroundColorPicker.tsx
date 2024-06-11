@@ -20,8 +20,8 @@ export default function BackgroundColorPicker() {
       hideAdvancedSliders
       hideColorGuide
       hideInputType
-      hidePresets
       hideInputs
+      // presets={}
       value={backgroundColor}
       onChange={setBackgroundColor}
     />

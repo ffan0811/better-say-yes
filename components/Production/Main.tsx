@@ -26,10 +26,8 @@ export default function ProductionMain({
   const [msg, setMsg] = useState<string>("");
 
   useEffect(() => {
-    if (open) {
-      const data = getRandomElementInArray(answerNoLists);
-      setMsg(data);
-    }
+    const data = getRandomElementInArray(answerNoLists);
+    setMsg(data);
   }, [open]);
 
   const handleYes = () => {

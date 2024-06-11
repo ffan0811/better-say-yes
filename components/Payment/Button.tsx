@@ -61,9 +61,5 @@ export default function PaymentButton() {
     }
   };
 
-  return (
-    <Button className="w-full" onClick={handlePayment}>
-      Pay and Launch
-    </Button>
-  );
+  return <Button onClick={handlePayment}>Pay and Launch</Button>;
 }
