@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ImageProps } from "@/types/image";
+import { DefaultButton } from "./Button";
 
 export default function ProductionAfterYes({
   afterYesTitle,
@@ -68,7 +69,7 @@ export default function ProductionAfterYes({
                 {afterYesButtonText}
               </Link>
             ) : (
-              <Button className="">{afterYesButtonText}</Button>
+              <DefaultButton>{afterYesButtonText}</DefaultButton>
             )
           ) : null}
         </div>

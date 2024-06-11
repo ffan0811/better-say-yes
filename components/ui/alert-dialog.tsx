@@ -131,17 +131,10 @@ const AlertDialogCancel = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Cancel>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>
 >(({ className, ...props }, ref) => {
-  const { themeColor, contrastingColor } = useColor();
-
   return (
     <AlertDialogPrimitive.Cancel
       ref={ref}
-      className={cn(
-        buttonVariants({ variant: "default" }),
-        "mt-2 sm:mt-0",
-        className
-      )}
-      style={{ backgroundColor: themeColor, color: contrastingColor }}
+      className={"mt-2 sm:mt-0"}
       {...props}
     />
   );

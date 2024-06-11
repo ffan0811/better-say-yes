@@ -17,6 +17,7 @@ import { previewAtom } from "@/atoms/preview";
 import { PageStepType } from "@/types/status";
 import { contentsAtom } from "@/atoms/content";
 import DynamicHeightTextarea from "@/components/DynamicHeightTextarea";
+import { DefaultButton, OutlineButton } from "./Button";
 
 const QUESTION_COMMON_CLASSES =
   "leading-9 text-center break-words text-3xl whitespace-pre";
@@ -69,7 +70,7 @@ export default function ProductionMain({
         )}
         <div className="flex space-x-4 justify-center">
           <AlertDialog open={open} onOpenChange={setOpen}>
-            <Button
+            <OutlineButton
               variant="outline"
               className="min-w-40"
               onClick={() => {
@@ -77,20 +78,22 @@ export default function ProductionMain({
               }}
             >
               No
-            </Button>
+            </OutlineButton>
             <AlertDialogContent>
               <AlertDialogHeader>
                 <AlertDialogTitle>Hmm,,,</AlertDialogTitle>
                 <AlertDialogDescription>{msg}</AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Okay...</AlertDialogCancel>
+                <AlertDialogCancel asChild>
+                  <DefaultButton>Okay...</DefaultButton>
+                </AlertDialogCancel>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-          <Button onClick={handleYes} className="min-w-40">
+          <DefaultButton onClick={handleYes} className="min-w-40">
             Yes
-          </Button>
+          </DefaultButton>
         </div>
       </div>
     </div>

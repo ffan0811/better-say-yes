@@ -29,7 +29,8 @@ export default function ArtsContainer({ userId }: { userId: string }) {
       .from("contents")
       .select("id, background_color, theme_color, name, created_at, updated_at")
       .eq("user_id", userId)
-      .eq("status", "draft");
+      .eq("status", "draft")
+      .order("created_at", { ascending: true });
     if (data) {
       setDraftsData(data);
     }
