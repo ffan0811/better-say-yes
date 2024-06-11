@@ -4,6 +4,7 @@ import { createContent } from "@/actions/content";
 import { useToast } from "../ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { ITEM_COMMON_CLASSES } from "../ArtsContainer";
 
 export default function CreateButton() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -23,12 +24,17 @@ export default function CreateButton() {
     if (result) {
       router.push(`/create?id=${result.id}`);
     }
-    setIsLoading(false);
   };
 
   return (
-    <Button className="w-20" isLoading={isLoading} onClick={handleSubmit}>
-      Create
+    <Button
+      variant="outline"
+      spinnerColor="stroke-neutral-50"
+      className={ITEM_COMMON_CLASSES}
+      isLoading={isLoading}
+      onClick={handleSubmit}
+    >
+      + Create
     </Button>
   );
 }
