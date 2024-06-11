@@ -23,7 +23,7 @@ export default function SaveButton({ contentId }: { contentId: string }) {
     try {
       const formData = new FormData();
       formData.append("contentId", contentId || "");
-      data.forEach((ele) => {
+      (data || []).forEach((ele) => {
         formData.append("images", ele);
       });
       const response = await fetch(`/api/contents`, {

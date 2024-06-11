@@ -62,7 +62,7 @@ export default function CreatePage({
           <div className="flex items-center space-x-2">
             {/* <RefreshCcwIcon className="mr-4 opacity-80" /> */}
             <SaveButton contentId={searchParams.id} />
-            <PaymentButton />
+            <PaymentButton contentId={searchParams.id} />
           </div>
         </div>
       </nav>

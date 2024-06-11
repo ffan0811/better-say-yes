@@ -6,14 +6,22 @@ import type { Stripe } from "stripe";
 
 import { stripe } from "@/lib/stripe/stripe";
 import { handleError } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const { userId } = await request.json();
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-    console.log("userId", userId);
+    if (!user) {
+      return NextResponse.json({ message: "please login" }, { status: 400 });
+    }
 
-    if (!userId) {
+    const { userId, contentId } = await request.json();
+
+    if (!userId || !contentId) {
       return NextResponse.json({ message: "bad request" }, { status: 400 });
     }
 
@@ -32,7 +40,7 @@ export async function POST(request: NextRequest) {
       success_url: `${headers().get(
         "origin"
       )}/payment/complete?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${headers().get("origin")}/create`,
+      cancel_url: `${headers().get("origin")}/create?id=${contentId}`,
     };
 
     const checkoutSession: Stripe.Checkout.Session =
