@@ -9,21 +9,21 @@ type ProductionWrapperProps = {
   children: ReactNode;
 };
 
+const StyledDiv = styled.div<{ $themeColor: string }>`
+  .btn-default {
+    background-color: ${(props) => props.$themeColor || ""};
+  }
+  .btn-outline {
+    border-color: ${(props) => props.$themeColor || ""};
+  }
+`;
+
 export default function ProductionWrapper({
   className,
   children,
 }: ProductionWrapperProps) {
   const { fontClassName } = useFont();
   const { themeColor, backgroundColor } = useColor();
-
-  const StyledDiv = styled.div<{ $themeColor: string }>`
-    .btn-default {
-      background-color: ${(props) => props.$themeColor || ""};
-    }
-    .btn-outline {
-      border-color: ${(props) => props.$themeColor || ""};
-    }
-  `;
 
   return (
     <StyledDiv
