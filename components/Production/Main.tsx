@@ -39,8 +39,8 @@ export default function ProductionMain({
     }
   };
   return (
-    <div className="flex justify-center items-center h-screen w-screen container flex-col">
-      <div className="w-1/2 space-y-4">
+    <div className="flex justify-center items-center flex-col">
+      <div className="space-y-4">
         <p className="text-3xl text-center break-words mb-8 whitespace-pre">
           {question}
         </p>

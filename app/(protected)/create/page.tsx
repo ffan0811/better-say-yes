@@ -13,6 +13,7 @@ import {
 import CreateBackground from "@/components/Create/Background";
 import CreateTheme from "@/components/Create/Theme";
 import CreateFont from "@/components/Create/Font";
+import PageSwitcher from "@/components/PageSwitcher";
 
 const sidebarMenu = [
   {
@@ -37,7 +38,8 @@ export default function CreatePage() {
   };
 
   return (
-    <div>
+    // <div className="h-[calc(100vh-5rem)] overflow-y-hidden">
+    <div className="h-screen overflow-y-hidden">
       <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500">
         <div className="flex justify-between items-center w-full px-5">
           <div className="flex items-center space-x-16">
@@ -46,7 +48,7 @@ export default function CreatePage() {
             </Link>
           </div>
           <div className="flex space-x-2">
-            <Button>Save</Button>
+            <Button variant="outline">Save</Button>
             <PaymentButton />
           </div>
         </div>
@@ -54,7 +56,7 @@ export default function CreatePage() {
       <div className="w-80 h-screen overflow-y-auto bg-neutral-900 flex justify-between fixed z-30 left-0 top-0">
         <Accordion type="multiple" className="w-full mt-20">
           {sidebarMenu.map((ele) => (
-            <AccordionItem className="px-5" value={ele.value}>
+            <AccordionItem key={ele.value} className="px-5" value={ele.value}>
               <AccordionTrigger>{ele.label}</AccordionTrigger>
               <AccordionContent className="pt-2 pb-5">
                 {comp[ele.value]}
@@ -66,6 +68,7 @@ export default function CreatePage() {
       <div className="ml-80 mt-20">
         <CreateContainer />
       </div>
+      <PageSwitcher />
     </div>
   );
 }

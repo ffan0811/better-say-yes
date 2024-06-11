@@ -4,4 +4,4 @@ import { atom } from "jotai";
 export const previewAtom = atom<{
   isOpen: boolean;
   stage?: PageStepType;
-}>({ isOpen: false });
+}>({ isOpen: false, stage: PageStepType.MAIN });

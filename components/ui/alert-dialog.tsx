@@ -4,10 +4,8 @@ import * as React from "react";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 
 import { cn } from "@/lib/utils";
-import { styles } from "@/components/ui/button";
-import { buttonVariants } from "@/components/ui/button/utils";
+import { buttonVariants } from "@/components/ui/button";
 import { useColor } from "@/components/color-provider";
-import { useColorPicker } from "react-best-gradient-color-picker";
 
 const AlertDialog = AlertDialogPrimitive.Root;
 
@@ -21,7 +19,7 @@ const AlertDialogOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Overlay
     className={cn(
-      "fixed inset-0 z-50 bg-black/30  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className
     )}
     {...props}
@@ -34,7 +32,7 @@ const AlertDialogContent = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>
 >(({ className, ...props }, ref) => {
-  const { backgroundColor, fontColor } = useColor();
+  const { backgroundColor, themeColor } = useColor();
 
   return (
     <AlertDialogPortal>
@@ -47,7 +45,7 @@ const AlertDialogContent = React.forwardRef<
         )}
         style={{
           background: backgroundColor,
-          color: fontColor,
+          color: themeColor,
         }}
         {...props}
       />
@@ -100,7 +98,7 @@ const AlertDialogDescription = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>
 >(({ className, ...props }, ref) => {
-  const { fontColor } = useColor();
+  const { themeColor } = useColor();
 
   return (
     <AlertDialogPrimitive.Description
@@ -109,7 +107,7 @@ const AlertDialogDescription = React.forwardRef<
         "text-sm text-neutral-500 dark:text-neutral-400",
         className
       )}
-      style={{ color: fontColor }}
+      style={{ color: themeColor }}
       {...props}
     />
   );
@@ -133,11 +131,7 @@ const AlertDialogCancel = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Cancel>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>
 >(({ className, ...props }, ref) => {
-  const { buttonColor, backgroundColor, setBackgroundColor } = useColor();
-  const { valueToHex } = useColorPicker(backgroundColor, setBackgroundColor);
-  const bgColorHex = valueToHex();
-
-  const buttonStyles = styles("default", buttonColor, bgColorHex);
+  const { themeColor } = useColor();
 
   return (
     <AlertDialogPrimitive.Cancel
@@ -147,7 +141,7 @@ const AlertDialogCancel = React.forwardRef<
         "mt-2 sm:mt-0",
         className
       )}
-      style={buttonStyles}
+      style={{ backgroundColor: themeColor }}
       {...props}
     />
   );

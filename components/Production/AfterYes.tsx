@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
-import { buttonVariants } from "../ui/button/utils";
+import { buttonVariants } from "../ui/button";
 import { useLastViewedPhoto } from "@/lib/utils/useLastViewedPhoto";
 import { useEffect, useRef } from "react";
 import Link from "next/link";

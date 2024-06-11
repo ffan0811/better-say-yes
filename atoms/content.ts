@@ -10,7 +10,7 @@ export const contentsAtom = atom<{
   secretCode?: string;
   images: File[];
 }>({
-  question: "",
+  question: "Do you wanna go out with me?",
   alertAfterYes: "",
   afterYesTitle: "",
   afterYesDescription: "",

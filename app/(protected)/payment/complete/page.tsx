@@ -2,12 +2,11 @@ import type { Stripe } from "stripe";
 import Link from "next/link";
 
 import { stripe } from "@/lib/stripe/stripe";
-import { Button } from "@/components/ui/button";
 import { HeartIcon } from "lucide-react";
 import Layout from "@/components/Layout";
 import ResponsiveWrapper from "@/components/ResponsiveWrapper";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { buttonVariants } from "@/components/ui/button/utils";
+import { buttonVariants } from "@/components/ui/button";
 // import DonationDetector from "@/app/_components/donationDetector";
 
 export default async function PaymentCompleted({
