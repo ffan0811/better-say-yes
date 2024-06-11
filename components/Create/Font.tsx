@@ -1,9 +1,9 @@
-import FontSelect from "../selectFont";
+import SelectFont from "../selectFont";
 
 export default function CreateFont() {
   return (
     <div className="flex justify-center">
-      <FontSelect />
+      <SelectFont />
     </div>
   );
 }

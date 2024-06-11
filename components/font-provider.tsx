@@ -73,14 +73,14 @@ const fonts = {
 interface FontContextType {
   font: string;
   fontClassName: string;
-  setFont: (font: string) => void;
+  setFont: (font: FontType) => void;
   getFontClasses: (font: keyof typeof fonts) => void;
 }
 
 const FontContext = createContext<FontContextType | undefined>(undefined);
 
 export const FontProvider = ({ children }: { children: ReactNode }) => {
-  const [font, setFont] = useState("Roboto");
+  const [font, setFont] = useState<FontType | null>(null);
   const [fontClassName, setFontClassName] = useState("");
 
   useEffect(() => {

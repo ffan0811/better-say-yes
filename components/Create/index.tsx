@@ -1,12 +1,5 @@
 "use client";
-import { selectedAtom } from "@/atoms/sidebar";
-import { SidebarMenuType } from "@/types/sidebar";
 import { useAtom } from "jotai";
-import CreateGeneral from "./General";
-import CreateMain from "./Main";
-import CreateAfterYes from "./AfterYes";
-import { useColor } from "@/components/color-provider";
-import { useFont } from "@/components/font-provider";
 import ProductionMain from "../Production/Main";
 import { contentsAtom } from "@/atoms/content";
 import ProductionWrapper from "../Production/Wrapper";

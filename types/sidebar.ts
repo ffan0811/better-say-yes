@@ -4,7 +4,3 @@ export enum SidebarMenuType {
   FONT = "font",
   IMAGES = "images",
 }
-
-export enum DesignType {
-  THEME = "theme",
-}

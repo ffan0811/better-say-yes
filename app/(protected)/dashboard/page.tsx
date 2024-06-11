@@ -1,4 +1,5 @@
 import ArtsContainer from "@/components/ArtsContainer";
+import CreateButton from "@/components/Create/CreateButton";
 import Layout from "@/components/Layout";
 import ResponsiveWrapper from "@/components/ResponsiveWrapper";
 import { buttonVariants } from "@/components/ui/button";
@@ -24,12 +25,7 @@ export default async function DashboardPage() {
           </CardHeader>
           <CardContent>
             <ArtsContainer userId={user.id} />
-            <Link
-              href="/create"
-              className={buttonVariants({ variant: "default" })}
-            >
-              Create
-            </Link>
+            <CreateButton />
           </CardContent>
         </Card>
       </div>

@@ -27,15 +27,13 @@ export default function UploadImage({
   const [previews, setPreviews] = useState<string[]>([]);
 
   useEffect(() => {
-    if (data && data.length > 0) {
-      let images: string[] = [];
+    let images: string[] = [];
 
-      for (let i = 0; i < data.length; i++) {
-        const preview = URL.createObjectURL(data[i]);
-        images.push(preview);
-      }
-      setPreviews(images);
+    for (let i = 0; i < (data || []).length; i++) {
+      const preview = URL.createObjectURL(data[i]);
+      images.push(preview);
     }
+    setPreviews(images);
   }, [data]);
 
   return (

@@ -1,7 +1,6 @@
 import CreateContainer from "@/components/Create";
 import Logo from "@/components/Logo";
 import PaymentButton from "@/components/Payment/Button";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SidebarMenuType } from "@/types/sidebar";
 import {
@@ -15,6 +14,7 @@ import CreateTheme from "@/components/Create/Theme";
 import CreateFont from "@/components/Create/Font";
 import PageSwitcher from "@/components/PageSwitcher";
 import CreateImages from "@/components/Create/Images";
+import SaveButton from "@/components/Create/SaveButton";
 
 const sidebarMenu = [
   {
@@ -35,7 +35,11 @@ const sidebarMenu = [
   },
 ];
 
-export default function CreatePage() {
+export default function CreatePage({
+  searchParams,
+}: {
+  searchParams: { id: string };
+}) {
   const comp = {
     [SidebarMenuType.FONT]: <CreateFont />,
     [SidebarMenuType.BACKGROUND]: <CreateBackground />,
@@ -48,12 +52,16 @@ export default function CreatePage() {
       <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500">
         <div className="flex justify-between items-center w-full px-5">
           <div className="flex items-center space-x-16">
-            <Link href="/">
+            <Link
+              href="/dashboard
+            "
+            >
               <Logo className="h-auto w-20" />
             </Link>
           </div>
-          <div className="flex space-x-2">
-            <Button variant="outline">Save</Button>
+          <div className="flex items-center space-x-2">
+            {/* <RefreshCcwIcon className="mr-4 opacity-80" /> */}
+            <SaveButton contentId={searchParams.id} />
             <PaymentButton />
           </div>
         </div>

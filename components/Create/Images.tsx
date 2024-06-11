@@ -2,12 +2,16 @@
 import { contentsAtom } from "@/atoms/content";
 import UploadImage, { LIMIT_IMAGE_NUMBER } from "../UploadImage";
 import { useAtom } from "jotai";
+import { compressImages } from "@/lib/compress";
 
 export default function CreateImages() {
   const [contents, setContents] = useAtom(contentsAtom);
 
-  const addImages = (newFiles: File[]) => {
-    const uniqueFiles = newFiles.filter(
+  const addImages = async (files: File[]) => {
+    let compressedImages: File[] = [];
+    compressedImages = await compressImages(files);
+
+    const uniqueFiles = compressedImages.filter(
       (file) =>
         !contents.images.some((existingFile) => existingFile.name === file.name)
     );

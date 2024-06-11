@@ -8,6 +8,8 @@ import {
   SelectItem,
 } from "./ui/select";
 import { FontType } from "@/types/font";
+import { useAtom } from "jotai";
+import { contentsAtom } from "@/atoms/content";
 
 const items = [
   {
@@ -44,11 +46,16 @@ const items = [
   },
 ];
 
-const FontSelect = () => {
+const SelectFont = () => {
   const { setFont, getFontClasses } = useFont();
+  const [contents, setContents] = useAtom(contentsAtom);
 
-  const handleFontChange = (font: string) => {
+  const handleFontChange = (font: FontType) => {
     setFont(font);
+    setContents({
+      ...contents,
+      fontFamily: font,
+    });
   };
 
   return (
@@ -57,7 +64,7 @@ const FontSelect = () => {
         <SelectValue placeholder="Select Font" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="system">User System</SelectItem>
+        <SelectItem value={null}>User System</SelectItem>
         {items.map((ele) => (
           <SelectItem
             key={ele.value}
@@ -72,4 +79,4 @@ const FontSelect = () => {
   );
 };
 
-export default FontSelect;
+export default SelectFont;

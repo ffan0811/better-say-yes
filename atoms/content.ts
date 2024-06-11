@@ -1,15 +1,7 @@
+import { ContentsType } from "@/types/content";
 import { atom } from "jotai";
 
-export const contentsAtom = atom<{
-  question: string;
-  alertAfterYes?: string;
-  afterYesTitle: string;
-  afterYesDescription: string;
-  afterYesButtonText?: string;
-  afterYesButtonLink?: string;
-  secretCode?: string;
-  images: File[];
-}>({
+export const contentsAtom = atom<ContentsType>({
   question: "Do you wanna go out with me?",
   alertAfterYes: "",
   afterYesTitle: "Hello World",
@@ -19,4 +11,7 @@ export const contentsAtom = atom<{
   afterYesButtonLink: "https://bettersayyes.com",
   secretCode: "",
   images: [],
+  fontFamily: "",
+  themeColor: "",
+  backgroundColor: "",
 });
