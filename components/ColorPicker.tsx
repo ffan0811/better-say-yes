@@ -2,19 +2,15 @@
 import ColorPickerLibrary from "react-best-gradient-color-picker";
 import { useColor } from "./color-provider";
 
-type ColorPickerProps = {
-  type: "font" | "button";
-};
+type ColorPickerProps = {};
 
-export default function ColorPicker({ type }: ColorPickerProps) {
-  const { buttonColor, fontColor, setButtonColor, setFontColor } = useColor();
-  const color = type === "font" ? fontColor : buttonColor;
-  const setColor = type === "font" ? setFontColor : setButtonColor;
+export default function ColorPicker({}: ColorPickerProps) {
+  const { themeColor, setThemeColor } = useColor();
 
   return (
     <ColorPickerLibrary
-      value={color}
-      onChange={setColor}
+      value={themeColor}
+      onChange={setThemeColor}
       hideInputs
       hideOpacity
       //   hideHue
@@ -29,6 +25,7 @@ export default function ColorPicker({ type }: ColorPickerProps) {
       hideGradientAngle
       hideGradientStop
       hideGradientControls
+      width={270}
     />
   );
 }

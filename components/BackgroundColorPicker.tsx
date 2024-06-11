@@ -24,6 +24,7 @@ export default function BackgroundColorPicker() {
       // presets={}
       value={backgroundColor}
       onChange={setBackgroundColor}
+      width={270}
     />
   );
 }

@@ -16,7 +16,7 @@ export default function CreateContainer() {
   const { fontColor, backgroundColor } = useColor();
 
   const comp = {
-    [SidebarMenuType.GENERAL]: <CreateGeneral />,
+    [SidebarMenuType.THEME]: <CreateGeneral />,
     [SidebarMenuType.MAIN_PAGE]: <CreateMain />,
     [SidebarMenuType.AFTER_YES_PAGE]: <CreateAfterYes />,
   };

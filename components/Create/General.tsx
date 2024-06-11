@@ -33,11 +33,11 @@ export default function CreateGeneral() {
             </div>
             <div className="space-y-1">
               <Label>Font Color</Label>
-              <ColorPicker type="font" />
+              {/* <ColorPicker type="font" /> */}
             </div>
             <div className="space-y-1">
               <Label>Button Color</Label>
-              <ColorPicker type="button" />
+              {/* <ColorPicker type="button" /> */}
             </div>
           </div>
           <div className="w-5/12">preview</div>

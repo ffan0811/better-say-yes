@@ -1,5 +1,9 @@
 export enum SidebarMenuType {
-  GENERAL = "general",
-  MAIN_PAGE = "main",
-  AFTER_YES_PAGE = "afterYes",
+  BACKGROUND = "background",
+  THEME_COLOR = "themeColor",
+  FONT = "font",
+}
+
+export enum DesignType {
+  THEME = "theme",
 }

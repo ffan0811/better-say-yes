@@ -3,11 +3,9 @@ import { createContext, useState, useContext, ReactNode } from "react";
 
 interface ColorContextType {
   backgroundColor: string;
-  buttonColor: string;
-  fontColor: string;
+  themeColor: string;
   setBackgroundColor: (backgroundColor: string) => void;
-  setButtonColor: (buttonColor: string) => void;
-  setFontColor: (fontColor: string) => void;
+  setThemeColor: (color: string) => void;
 }
 
 const ColorContext = createContext<ColorContextType | undefined>(undefined);
@@ -16,18 +14,15 @@ export const ColorProvider = ({ children }: { children: ReactNode }) => {
   const [backgroundColor, setBackgroundColor] = useState<string>(
     "linear-gradient(45deg, rgb(23, 26, 29) 4%, rgb(21, 39, 58) 46%, rgb(23, 84, 148) 100%)"
   );
-  const [fontColor, setFontColor] = useState<string>("");
-  const [buttonColor, setButtonColor] = useState<string>("");
+  const [themeColor, setThemeColor] = useState<string>("");
 
   return (
     <ColorContext.Provider
       value={{
         backgroundColor,
-        buttonColor,
-        fontColor,
+        themeColor,
         setBackgroundColor,
-        setButtonColor,
-        setFontColor,
+        setThemeColor,
       }}
     >
       {children}
