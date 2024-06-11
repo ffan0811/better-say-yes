@@ -1,13 +1,11 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { Button } from "../ui/button";
-import { buttonVariants } from "../ui/button";
 import { useLastViewedPhoto } from "@/lib/utils/useLastViewedPhoto";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ImageProps } from "@/types/image";
-import { DefaultButton } from "./Button";
+import { DefaultButton, DefaultLink } from "./Button";
 
 export default function ProductionAfterYes({
   afterYesTitle,
@@ -61,13 +59,9 @@ export default function ProductionAfterYes({
           </p>
           {afterYesButtonText ? (
             afterYesButtonLink ? (
-              <Link
-                className={buttonVariants({ variant: "default" })}
-                href={afterYesButtonLink}
-                target="_blank"
-              >
+              <DefaultLink href={afterYesButtonLink} target="_blank">
                 {afterYesButtonText}
-              </Link>
+              </DefaultLink>
             ) : (
               <DefaultButton>{afterYesButtonText}</DefaultButton>
             )
