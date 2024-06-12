@@ -45,7 +45,7 @@ export default function ProductionAfterYes({
   afterYesDescription: string;
   afterYesButtonText?: string;
   afterYesButtonLink?: string;
-  images: string[];
+  images: { src: string; blurDataUrl?: string }[];
   isPreview?: boolean;
 }) {
   const [contents, setContents] = useAtom(contentsAtom);
@@ -147,19 +147,21 @@ export default function ProductionAfterYes({
           ) : null}
         </div>
         {(images || []).map((ele) => {
-          let src = ele;
-          if (ele.includes("blob")) {
+          console.log("ele", ele);
+          let src = ele.src;
+          if (ele.src.includes("blob")) {
           } else {
-            src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/contents/${contentId}/${ele}`;
+            src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/contents/${contentId}/${ele.src}`;
           }
+          console.log("src", ele.blurDataUrl);
           return (
             <Image
-              key={ele}
+              key={ele.src}
               alt="better say yes images"
               className="mb-5 transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
               style={{ transform: "translate3d(0, 0, 0)" }}
               placeholder="blur"
-              blurDataURL={`${src}?quality=10`}
+              blurDataURL={ele?.blurDataUrl || ""}
               src={src}
               width={720}
               height={480}

@@ -11,10 +11,11 @@ import { useToast } from "./ui/use-toast";
 import { sendImagesToDB } from "@/fetch/contents";
 import { handleError } from "@/lib/utils";
 import { deleteImage } from "@/actions/content";
+import { getBase64ImageFromUrl } from "@/lib/utils/image";
 
 interface ImageContextType {
-  viewableImages: string[];
-  setViewableImages: (data: string[]) => void;
+  viewableImages: { src: string; blurDataUrl?: string }[];
+  setViewableImages: (data: { src: string; blurDataUrl?: string }[]) => void;
   setImages: ({
     action,
     data,
@@ -40,7 +41,9 @@ export const ImageProvider = ({
     action: "add" | "delete" | "reset";
     data: (string | File)[];
   } | null>(null);
-  const [viewableImages, setViewableImages] = useState<string[]>([]);
+  const [viewableImages, setViewableImages] = useState<
+    { src: string; blurDataUrl?: string }[]
+  >([]);
 
   const initialize = async (id: string) => {
     const { data, error } = await supabase.storage.from("contents").list(id, {
@@ -49,8 +52,15 @@ export const ImageProvider = ({
       sortBy: { column: "name", order: "asc" },
     });
     if (data) {
-      const imageNames = data.map((ele) => ele.name);
-      setViewableImages(imageNames);
+      const imagePromises = data.map(async (ele) => {
+        const blurDataUrl = await getBase64ImageFromUrl(
+          `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/contents/${id}/${ele.name}`
+        );
+        return { src: ele.name, blurDataUrl };
+      });
+
+      const imageNames = await Promise.all(imagePromises);
+      setViewableImages(imageNames as { src: string; blurDartUrl?: string }[]);
     }
     if (error) {
       toast({
@@ -75,7 +85,7 @@ export const ImageProvider = ({
         const blob = URL.createObjectURL(ele);
         if (blob) {
           setViewableImages((prev) => {
-            return [...prev, blob];
+            return prev.concat({ src: blob, blurDataUrl: "" });
           });
         }
       });
@@ -106,7 +116,9 @@ export const ImageProvider = ({
       // NOTE: the images.data length is always 1
 
       // Update viewableImages
-      const filtered = viewableImages.filter((ele) => ele !== images.data[0]);
+      const filtered = viewableImages.filter(
+        (ele) => ele.src !== images.data[0]
+      );
       setViewableImages(filtered);
 
       // Delete image in storage

@@ -6,7 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 
 interface UploadImageType {
   contentId: string;
-  data: string[];
+  data: { src: string; blurDataUrl?: string }[];
   handleImages: (files: FileList | null) => void;
   handleExtraImages: (files: FileList | null) => void;
   handleDeleteImage: (index: number, img: string) => void;
@@ -51,10 +51,10 @@ export default function UploadImage({
       {data.length > 0 ? (
         <Fragment>
           {data.map((img, i) => {
-            let src = img;
-            if (img.includes("blob")) {
+            let src = img.src;
+            if (img.src.includes("blob")) {
             } else {
-              src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/contents/${contentId}/${img}?quality=50`;
+              src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/contents/${contentId}/${img.src}?quality=50`;
             }
             return (
               <div
@@ -65,7 +65,7 @@ export default function UploadImage({
                 <button
                   className="absolute flex items-center justify-center w-full h-full z-20"
                   type="button"
-                  onClick={() => handleDeleteImage(i, img)}
+                  onClick={() => handleDeleteImage(i, img.src)}
                 >
                   <XCircleIcon className="w-8 h-8 text-inherit cursor-pointer hover:opacity-70" />
                 </button>
