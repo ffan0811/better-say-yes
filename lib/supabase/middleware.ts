@@ -13,7 +13,7 @@ export const updateSession = async (request: NextRequest) => {
     });
 
     const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      `https://${process.env.NEXT_PUBLIC_SUPABASE_HOST!}`,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
         cookies: {
@@ -57,7 +57,7 @@ export const updateSession = async (request: NextRequest) => {
             });
           },
         },
-      },
+      }
     );
 
     // This will refresh session if expired - required for Server Components

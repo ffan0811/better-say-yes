@@ -5,6 +5,7 @@ import "./globals.css";
 import SessionProvider from "@/components/session-provider";
 import { FontProvider } from "@/components/font-provider";
 import { ColorProvider } from "@/components/color-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -28,7 +29,9 @@ export default function RootLayout({
           <ColorProvider>
             <FontProvider>
               <ThemeProvider attribute="class" defaultTheme="dark">
-                {children}
+                <TooltipProvider delayDuration={100}>
+                  {children}
+                </TooltipProvider>
                 <Toaster />
               </ThemeProvider>
             </FontProvider>

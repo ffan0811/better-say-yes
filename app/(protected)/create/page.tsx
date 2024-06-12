@@ -96,7 +96,10 @@ export default async function CreatePage({
         </Accordion>
       </div>
       <div className="ml-80 mt-20">
-        <CreateContainer contentsData={contentsData} />
+        <CreateContainer
+          contentId={searchParams.id}
+          contentsData={contentsData}
+        />
       </div>
       <PageSwitcher />
     </>

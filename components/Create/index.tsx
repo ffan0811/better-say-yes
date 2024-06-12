@@ -9,34 +9,40 @@ import ProductionAfterYes from "../Production/AfterYes";
 import { useEffect } from "react";
 import { useColor } from "../color-provider";
 import { useFont } from "../font-provider";
+import useFetchImages from "../useFetchImages";
 
 type CreateContainerProps = {
+  contentId: string;
   contentsData: any;
 };
 
 export default function CreateContainer({
+  contentId,
   contentsData,
 }: CreateContainerProps) {
   const [contents, setContents] = useAtom(contentsAtom);
   const [preview, setPreview] = useAtom(previewAtom);
   const { setThemeColor, setBackgroundColor } = useColor();
   const { setFont } = useFont();
+  useFetchImages({ contentId });
 
   useEffect(() => {
     if (!contentsData) return;
 
-    setContents({
-      ...preview,
-      question: contentsData.question,
-      alertAfterYes: contentsData.alert_after_yes,
-      afterYesTitle: contentsData.after_yes_title,
-      afterYesDescription: contentsData.after_yes_description,
-      afterYesButtonText: contentsData.after_yes_button_text,
-      afterYesButtonLink: contentsData.after_yes_button_link,
-      secretCode: contentsData.secret_code,
-      fontFamily: contentsData.font_family,
-      themeColor: contentsData.theme_color,
-      backgroundColor: contentsData.background_color,
+    setContents((prev) => {
+      return {
+        ...prev,
+        question: contentsData.question,
+        alertAfterYes: contentsData.alert_after_yes,
+        afterYesTitle: contentsData.after_yes_title,
+        afterYesDescription: contentsData.after_yes_description,
+        afterYesButtonText: contentsData.after_yes_button_text,
+        afterYesButtonLink: contentsData.after_yes_button_link,
+        secretCode: contentsData.secret_code,
+        fontFamily: contentsData.font_family,
+        themeColor: contentsData.theme_color,
+        backgroundColor: contentsData.background_color,
+      };
     });
 
     setThemeColor(contentsData.theme_color);
@@ -55,6 +61,7 @@ export default function CreateContainer({
       )}
       {preview.stage === PageStepType.AFTER_YES && (
         <ProductionAfterYes
+          contentId={contentId}
           afterYesTitle={contents.afterYesTitle}
           afterYesDescription={contents.afterYesDescription}
           afterYesButtonText={contents.afterYesButtonText}
