@@ -18,9 +18,30 @@ export const ITEM_COMMON_CLASSES =
 
 export default function ArtsContainer({ userId }: { userId: string }) {
   const supabase = createClient();
+  const [templatesData, setTemplatesData] = useState([]);
   const [draftsData, setDraftsData] = useState([]);
   const [activeData, setActiveData] = useState([]);
   const { toast } = useToast();
+
+  const getTemplates = async () => {
+    if (!userId) return;
+
+    const { data, error } = await supabase
+      .from("contents")
+      .select("id, background_color, theme_color, name, created_at, updated_at")
+      .eq("status", "template")
+      .order("updated_at", { ascending: false });
+    if (data) {
+      setTemplatesData(data);
+    }
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Failed to fetch templates",
+        description: ERROR_DEFAULT_DESCRIPTION,
+      });
+    }
+  };
 
   const getDrafts = async () => {
     if (!userId) return;
@@ -37,7 +58,7 @@ export default function ArtsContainer({ userId }: { userId: string }) {
     if (error) {
       toast({
         variant: "destructive",
-        title: ERROR_DEFAULT_TITLE,
+        title: "Failed to fetch drafts",
         description: ERROR_DEFAULT_DESCRIPTION,
       });
     }
@@ -59,7 +80,7 @@ export default function ArtsContainer({ userId }: { userId: string }) {
     if (error) {
       toast({
         variant: "destructive",
-        title: ERROR_DEFAULT_TITLE,
+        title: "Failed to fetch active arts",
         description: ERROR_DEFAULT_DESCRIPTION,
       });
     }
@@ -68,9 +89,31 @@ export default function ArtsContainer({ userId }: { userId: string }) {
   useEffect(() => {
     getDrafts();
     getActives();
+    getTemplates();
   }, []);
   return (
     <div className="space-y-4">
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle>Start with Templates</CardTitle>
+        </CardHeader>
+        <CardContent className="snap-mandatory snap-x flex gap-6 overflow-x-auto">
+          {templatesData.map((ele, idx) => (
+            <Link
+              key={ele.id}
+              href={`/create?id=${ele.id}`}
+              className={`${ITEM_COMMON_CLASSES} snap-center shrink-0 max-w-xs`}
+              style={{
+                background: ele.background_color,
+                color: ele.theme_color,
+                borderColor: ele.theme_color,
+              }}
+            >
+              {ele.name || `Draft ${idx}`}
+            </Link>
+          ))}
+        </CardContent>
+      </Card>
       <Item title="Drafts" data={draftsData}>
         {draftsData.length > MAX_DRAFT_COUNT ? null : <CreateButton />}
       </Item>
