@@ -18,6 +18,7 @@ import { PageStepType } from "@/types/status";
 import { contentsAtom } from "@/atoms/content";
 import DynamicHeightTextarea from "@/components/DynamicHeightTextarea";
 import { DefaultButton, OutlineButton } from "./Button";
+import { EDITABLE_INPUT_CLASSES } from "@/constants";
 
 const QUESTION_COMMON_CLASSES =
   "leading-9 text-center break-words text-3xl whitespace-pre";
@@ -59,7 +60,7 @@ export default function ProductionMain({
       <div className="space-y-8 w-full">
         {isPreview ? (
           <DynamicHeightTextarea
-            className={`w-full h-0 bg-transparent outline-none focus:border border-dashed border-neutral-500 ${QUESTION_COMMON_CLASSES}`}
+            className={`w-full h-0 ${EDITABLE_INPUT_CLASSES} ${QUESTION_COMMON_CLASSES}`}
             value={question}
             onChange={(e) => {
               setContents({ ...contents, question: e.target.value });

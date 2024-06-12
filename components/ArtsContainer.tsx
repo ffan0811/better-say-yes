@@ -73,7 +73,7 @@ export default function ArtsContainer({ userId }: { userId: string }) {
       <Item title="Drafts" data={draftsData}>
         {draftsData.length > MAX_DRAFT_COUNT ? null : <CreateButton />}
       </Item>
-      <Item title="Active" data={activeData} />
+      {/* <Item title="Active" data={activeData} /> */}
     </div>
   );
 }
@@ -87,7 +87,7 @@ function Item({
   data: any[];
   children?: ReactNode;
 }) {
-  if ((data || []).length === 0) return;
+  // if ((data || []).length === 0) return;
   return (
     <Card className="w-full">
       <CardHeader>

@@ -6,6 +6,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { ImageProps } from "@/types/image";
 import { DefaultButton, DefaultLink } from "./Button";
+import { EDITABLE_INPUT_CLASSES } from "@/constants";
+import { contentsAtom } from "@/atoms/content";
+import { useAtom } from "jotai";
+import DynamicHeightTextarea from "../DynamicHeightTextarea";
+
+const TITLE_COMMON_CLASSES =
+  "text-center text-base font-bold uppercase tracking-widest";
+
+const DESCRIPTION_COMMON_CLASSES =
+  "text-center break-words whitespace-pre-line text-white/75";
 
 export default function ProductionAfterYes({
   afterYesTitle,
@@ -26,6 +36,7 @@ export default function ProductionAfterYes({
   // const { photoId } = router.query;
   const photoId = "";
   const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto();
+  const [contents, setContents] = useAtom(contentsAtom);
 
   const lastViewedPhotoRef = useRef<HTMLAnchorElement>(null);
 
@@ -51,13 +62,33 @@ export default function ProductionAfterYes({
       )} */}
       <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
         <div className="relative mb-5 flex flex-col items-center justify-center gap-4 overflow-hidden rounded-lg bg-white/10 p-6 text-center text-white shadow-highlight">
-          <h1 className="text-base font-bold uppercase tracking-widest">
-            {afterYesTitle}
-          </h1>
-          <p className="break-words whitespace-pre-line text-white/75">
-            {afterYesDescription}
-          </p>
-          {afterYesButtonText ? (
+          {isPreview ? (
+            <input
+              className={`${TITLE_COMMON_CLASSES} ${EDITABLE_INPUT_CLASSES}`}
+              value={afterYesTitle}
+              onChange={(e) => {
+                setContents({ ...contents, afterYesTitle: e.target.value });
+              }}
+            />
+          ) : (
+            <h1 className={TITLE_COMMON_CLASSES}>{afterYesTitle}</h1>
+          )}
+          {isPreview ? (
+            <DynamicHeightTextarea
+              className={`w-full h-0 ${DESCRIPTION_COMMON_CLASSES} ${EDITABLE_INPUT_CLASSES}`}
+              value={afterYesDescription}
+              onChange={(e) => {
+                setContents({
+                  ...contents,
+                  afterYesDescription: e.target.value,
+                });
+              }}
+            />
+          ) : (
+            <p className={DESCRIPTION_COMMON_CLASSES}>{afterYesDescription}</p>
+          )}
+
+          {isPreview ? null : afterYesButtonText ? (
             afterYesButtonLink ? (
               <DefaultLink href={afterYesButtonLink} target="_blank">
                 {afterYesButtonText}
