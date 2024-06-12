@@ -1,10 +1,6 @@
 import ArtsContainer from "@/components/ArtsContainer";
-import CreateButton from "@/components/Create/CreateButton";
 import Layout from "@/components/Layout";
-import ResponsiveWrapper from "@/components/ResponsiveWrapper";
-import { buttonVariants } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
@@ -19,7 +15,6 @@ export default async function DashboardPage() {
     <Layout>
       <div className="container">
         <ArtsContainer userId={user.id} />
-        {/* <CreateButton /> */}
       </div>
     </Layout>
   );

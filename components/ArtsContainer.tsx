@@ -8,7 +8,7 @@ import {
   ERROR_DEFAULT_TITLE,
 } from "@/constants/message";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import CreateButton from "./Create/CreateButton";
+import CreateButton from "./CreateContainer/CreateButton";
 import Link from "next/link";
 
 const MAX_DRAFT_COUNT = 5;
@@ -30,7 +30,7 @@ export default function ArtsContainer({ userId }: { userId: string }) {
       .select("id, background_color, theme_color, name, created_at, updated_at")
       .eq("user_id", userId)
       .eq("status", "draft")
-      .order("created_at", { ascending: true });
+      .order("updated_at", { ascending: false });
     if (data) {
       setDraftsData(data);
     }
@@ -50,7 +50,8 @@ export default function ArtsContainer({ userId }: { userId: string }) {
       .from("contents")
       .select("id, background_color, theme_color, name, created_at, updated_at")
       .eq("user_id", userId)
-      .eq("status", "active");
+      .eq("status", "active")
+      .order("updated_at", { ascending: false });
 
     if (data) {
       setActiveData(draftsData);
@@ -73,7 +74,7 @@ export default function ArtsContainer({ userId }: { userId: string }) {
       <Item title="Drafts" data={draftsData}>
         {draftsData.length > MAX_DRAFT_COUNT ? null : <CreateButton />}
       </Item>
-      {/* <Item title="Active" data={activeData} /> */}
+      {activeData.length > 0 && <Item title="Active" data={activeData} />}
     </div>
   );
 }

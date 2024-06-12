@@ -1,4 +1,4 @@
-import CreateContainer from "@/components/Create";
+import CreateContainer from "@/components/CreateContainer";
 import Logo from "@/components/Logo";
 import PaymentButton from "@/components/Payment/Button";
 import Link from "next/link";
@@ -9,12 +9,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import CreateBackground from "@/components/Create/Background";
-import CreateTheme from "@/components/Create/Theme";
-import CreateFont from "@/components/Create/Font";
+import CreateBackground from "@/components/CreateContainer/Background";
+import CreateTheme from "@/components/CreateContainer/Theme";
+import CreateFont from "@/components/CreateContainer/Font";
 import PageSwitcher from "@/components/PageSwitcher";
-import CreateImages from "@/components/Create/Images";
-import SaveButton from "@/components/Create/SaveButton";
+import CreateImages from "@/components/CreateContainer/Images";
+import SaveButton from "@/components/CreateContainer/SaveButton";
 import { createClient } from "@/lib/supabase/server";
 import { ImageProvider } from "@/components/image-provider";
 
