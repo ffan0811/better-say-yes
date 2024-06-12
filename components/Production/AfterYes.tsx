@@ -88,7 +88,8 @@ export default function ProductionAfterYes({
             <p className={DESCRIPTION_COMMON_CLASSES}>{afterYesDescription}</p>
           )}
 
-          {isPreview ? null : afterYesButtonText ? (
+          {/* {isPreview ? null : } */}
+          {afterYesButtonText ? (
             afterYesButtonLink ? (
               <DefaultLink href={afterYesButtonLink} target="_blank">
                 {afterYesButtonText}
