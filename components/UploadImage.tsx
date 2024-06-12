@@ -11,7 +11,7 @@ interface UploadImageType {
   handleDeleteImage: (index: number, img: string) => void;
 }
 
-export const LIMIT_IMAGE_NUMBER = 5;
+export const LIMIT_IMAGE_NUMBER = 20;
 const IMAGE_COMMON_CLASSES = `w-20 h-20 min-w-20 min-h-20 cursor-pointer ${buttonVariants(
   {
     variant: "outline",
