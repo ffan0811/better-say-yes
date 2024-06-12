@@ -11,24 +11,26 @@ export default function CreateImages() {
     let compressedImages: File[] = [];
     compressedImages = await compressImages(files);
 
+    const currentImages = contents?.images || [];
+
     const uniqueFiles = compressedImages.filter(
       (file) =>
-        !contents.images.some((existingFile) => existingFile.name === file.name)
+        !currentImages.some((existingFile) => existingFile.name === file.name)
     );
-    const totalImages = contents.images.length + uniqueFiles.length;
+    const totalImages = currentImages.length + uniqueFiles.length;
 
     if (totalImages > LIMIT_IMAGE_NUMBER) {
-      const allowed = LIMIT_IMAGE_NUMBER - contents.images.length;
+      const allowed = LIMIT_IMAGE_NUMBER - currentImages.length;
       const allowedFiles = uniqueFiles.slice(0, allowed);
       setContents({
         ...contents,
-        images: contents.images.concat(allowedFiles),
+        images: currentImages.concat(allowedFiles),
       });
       if (allowedFiles.length < uniqueFiles.length) {
         alert(`You can only add ${allowed} more images.`);
       }
     } else {
-      setContents({ ...contents, images: contents.images.concat(uniqueFiles) });
+      setContents({ ...contents, images: currentImages.concat(uniqueFiles) });
     }
   };
 
