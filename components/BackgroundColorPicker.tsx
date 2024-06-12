@@ -11,6 +11,9 @@ export default function BackgroundColorPicker() {
 
   useEffect(() => {
     if (!backgroundColor) return;
+    const isGradient = backgroundColor.includes("gradient");
+    if (!isGradient) return;
+
     setDegrees(45);
   }, []);
 
