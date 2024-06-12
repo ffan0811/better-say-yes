@@ -51,11 +51,11 @@ export default function UploadImage({
       {data.length > 0 ? (
         <Fragment>
           {data.map((img, i) => {
-            let src = img.src;
-            if (img.src.includes("blob")) {
-            } else {
-              src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/contents/${contentId}/${img.src}?quality=50`;
-            }
+            // let src = img.src;
+            // if (img.src.includes("blob")) {
+            // } else {
+            //   src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/contents/${contentId}/${img.src}`;
+            // }
             return (
               <div
                 key={i}
@@ -69,7 +69,11 @@ export default function UploadImage({
                 >
                   <XCircleIcon className="w-8 h-8 text-inherit cursor-pointer hover:opacity-70" />
                 </button>
-                <img src={src} alt={"image-" + i} className="w-full h-full" />
+                <img
+                  src={img.blurDataUrl}
+                  alt={"image-" + i}
+                  className="w-full h-full"
+                />
               </div>
             );
           })}

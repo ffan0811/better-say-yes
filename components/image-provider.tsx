@@ -10,8 +10,7 @@ import {
 import { useToast } from "./ui/use-toast";
 import { sendImagesToDB } from "@/fetch/contents";
 import { handleError } from "@/lib/utils";
-import { deleteImage } from "@/actions/content";
-import { getBase64ImageFromUrl } from "@/lib/utils/image";
+import { deleteImage, getImageUrls } from "@/actions/content";
 
 interface ImageContextType {
   viewableImages: { src: string; blurDataUrl?: string }[];
@@ -34,7 +33,6 @@ export const ImageProvider = ({
   contentId: string;
   children: ReactNode;
 }) => {
-  const supabase = createClient();
   const { toast } = useToast();
 
   const [images, setImages] = useState<{
@@ -46,22 +44,8 @@ export const ImageProvider = ({
   >([]);
 
   const initialize = async (id: string) => {
-    const { data, error } = await supabase.storage.from("contents").list(id, {
-      limit: 100,
-      offset: 0,
-      sortBy: { column: "name", order: "asc" },
-    });
-    if (data) {
-      const imagePromises = data.map(async (ele) => {
-        const blurDataUrl = await getBase64ImageFromUrl(
-          `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/contents/${id}/${ele.name}`
-        );
-        return { src: ele.name, blurDataUrl };
-      });
-
-      const imageNames = await Promise.all(imagePromises);
-      setViewableImages(imageNames as { src: string; blurDartUrl?: string }[]);
-    }
+    const { result, error } = await getImageUrls(id);
+    setViewableImages(result as { src: string; blurDartUrl?: string }[]);
     if (error) {
       toast({
         variant: "destructive",

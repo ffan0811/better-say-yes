@@ -1,26 +1,36 @@
-import imagemin from "imagemin";
-import imageminJpegtran from "imagemin-jpegtran";
-import type { ImageProps } from "@/types/image";
+"use server";
+import { ImageProps } from "@/types/image";
+import sharp from "sharp";
 
 const cache = new Map<ImageProps, string>();
 
+// TODO: make it usable globally, For example, do not have contentId. instead, get just url
 export default async function getBase64ImageUrl(
+  contentId: string,
   image: ImageProps
 ): Promise<string> {
-  let url = cache.get(image);
-  // if (url) {
-  //   return url;
-  // }
-  // const response = await fetch(
-  //   `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/f_jpg,w_8,q_70/${image.public_id}.${image.format}`,
-  // );
-  // const buffer = await response.arrayBuffer();
-  // const minified = await imagemin.buffer(Buffer.from(buffer), {
-  //   plugins: [imageminJpegtran()],
-  // });
+  try {
+    let url = cache.get(image);
+    if (url) {
+      return url;
+    }
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/contents/${contentId}/${image.src}`
+    );
 
-  // url = `data:image/jpeg;base64,${Buffer.from(minified).toString("base64")}`;
-  // cache.set(image, url);
-  url = "";
-  return url;
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image: ${response.statusText}`);
+    }
+
+    const buffer = await response.arrayBuffer();
+
+    // Use sharp to process the image
+    const minifiedBuffer = await sharp(Buffer.from(buffer)).blur(20).toBuffer();
+
+    const base64 = minifiedBuffer.toString("base64");
+    const mimeType = image.src.endsWith(".png") ? "image/png" : "image/jpeg";
+    url = `data:${mimeType};base64,${base64}`;
+    cache.set(image, url);
+    return url;
+  } catch (error) {}
 }

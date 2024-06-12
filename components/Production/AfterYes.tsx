@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { ImageProps } from "@/types/image";
 import { DefaultButton, DefaultLink } from "./Button";
 import { EDITABLE_INPUT_CLASSES } from "@/constants";
 import { contentsAtom } from "@/atoms/content";
@@ -23,13 +22,12 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { buttonVariants } from "../ui/button";
-import Link from "next/link";
 
 const TITLE_COMMON_CLASSES =
   "text-center text-base font-bold uppercase tracking-widest";
 
 const DESCRIPTION_COMMON_CLASSES =
-  "text-center break-words whitespace-pre-line text-white/75";
+  "text-center break-words whitespace-pre-line";
 
 export default function ProductionAfterYes({
   contentId,
@@ -51,14 +49,12 @@ export default function ProductionAfterYes({
   const [contents, setContents] = useAtom(contentsAtom);
   const [tempLink, setTempLink] = useState<string>("");
 
-  const newImages: ImageProps[] = [];
-
   console.log("contents", contents);
 
   return (
     <div className="w-full h-full">
       <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
-        <div className="relative mb-5 flex flex-col items-center justify-center gap-4 overflow-hidden rounded-lg bg-white/10 p-6 text-center text-white shadow-highlight">
+        <div className="relative mb-5 flex flex-col items-center justify-center gap-4 overflow-hidden rounded-lg bg-white/10 p-6 text-center shadow-highlight">
           {isPreview ? (
             <input
               className={`${TITLE_COMMON_CLASSES} ${EDITABLE_INPUT_CLASSES}`}
@@ -147,13 +143,11 @@ export default function ProductionAfterYes({
           ) : null}
         </div>
         {(images || []).map((ele) => {
-          console.log("ele", ele);
           let src = ele.src;
           if (ele.src.includes("blob")) {
           } else {
             src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/contents/${contentId}/${ele.src}`;
           }
-          console.log("src", ele.blurDataUrl);
           return (
             <Image
               key={ele.src}

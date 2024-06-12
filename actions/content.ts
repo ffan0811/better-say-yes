@@ -1,7 +1,7 @@
 "use server";
 import { createClient } from "@/lib/supabase/server";
 import { handleError } from "@/lib/utils";
-import { createImageFileNames } from "@/lib/utils/image";
+import getBase64ImageUrl from "@/lib/utils/generateBlurPlaceholder";
 import { ContentsType } from "@/types/content";
 import { ErrorType } from "@/types/global";
 
@@ -76,6 +76,41 @@ export async function deleteImage({
     if (error) {
       throw new Error(error.message);
     }
+  } catch (e) {
+    const err = handleError(e);
+    error = err;
+  }
+
+  return { result, error };
+}
+
+export async function getImageUrls(contentId: string) {
+  let result,
+    error: ErrorType = null;
+  try {
+    const supabase = createClient();
+    const { data, error } = await supabase.storage
+      .from("contents")
+      .list(contentId, {
+        limit: 100,
+        offset: 0,
+        sortBy: { column: "created_at", order: "asc" },
+      });
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    const imagePromises = data.map(async (ele) => {
+      const blurDataUrl = await getBase64ImageUrl(contentId, {
+        src: ele.name,
+        blurDataUrl: "",
+      });
+      return { src: ele.name, blurDataUrl };
+    });
+
+    const imageNames = await Promise.all(imagePromises);
+
+    result = imageNames;
   } catch (e) {
     const err = handleError(e);
     error = err;
