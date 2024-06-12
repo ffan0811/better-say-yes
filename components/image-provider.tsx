@@ -10,10 +10,11 @@ import { useToast } from "./ui/use-toast";
 import { sendImagesToDB } from "@/fetch/contents";
 import { handleError } from "@/lib/utils";
 import { deleteImage, getImageUrls } from "@/actions/content";
+import { ImageProps } from "@/types/image";
 
 interface ImageContextType {
-  viewableImages: { src: string; blurDataUrl?: string }[];
-  setViewableImages: (data: { src: string; blurDataUrl?: string }[]) => void;
+  viewableImages: ImageProps[];
+  setViewableImages: (data: ImageProps[]) => void;
   setImages: ({
     action,
     data,
@@ -38,9 +39,7 @@ export const ImageProvider = ({
     action: "add" | "delete" | "reset";
     data: (string | File)[];
   } | null>(null);
-  const [viewableImages, setViewableImages] = useState<
-    { src: string; blurDataUrl?: string }[]
-  >([]);
+  const [viewableImages, setViewableImages] = useState<ImageProps[]>([]);
 
   const initialize = async (id: string) => {
     const { result, error } = await getImageUrls(id);

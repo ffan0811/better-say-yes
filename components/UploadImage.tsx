@@ -70,7 +70,7 @@ export default function UploadImage({
                   <XCircleIcon className="w-8 h-8 text-inherit cursor-pointer hover:opacity-70" />
                 </button>
                 <img
-                  src={img.blurDataUrl}
+                  src={img?.blurDataUrl || img.src}
                   alt={"image-" + i}
                   className="w-full h-full"
                 />
