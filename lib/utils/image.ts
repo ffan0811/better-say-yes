@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
-import fetch from "node-fetch";
-import sharp from "sharp";
+// import fetch from "node-fetch";
+// import sharp from "sharp";
 
 export const validateImage = (file: File) => {
   const ACCEPTED_IMAGE_TYPES = [
@@ -48,26 +48,26 @@ export const createImageFileNames = (images: File | File[]) => {
 };
 
 // NOTE: only works in server
-export async function getBlurDataURL(
-  publicUrl: string
-): Promise<string | null> {
-  try {
-    const response = await fetch(publicUrl);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch image: ${response.statusText}`);
-    }
-    const arrayBuffer = await response.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+// export async function getBlurDataURL(
+//   publicUrl: string
+// ): Promise<string | null> {
+//   try {
+//     const response = await fetch(publicUrl);
+//     if (!response.ok) {
+//       throw new Error(`Failed to fetch image: ${response.statusText}`);
+//     }
+//     const arrayBuffer = await response.arrayBuffer();
+//     const buffer = Buffer.from(arrayBuffer);
 
-    const resizedImageBuffer = await sharp(buffer)
-      .resize(10) // Resize to 10px
-      .blur() // Apply blur
-      .toBuffer();
+//     const resizedImageBuffer = await sharp(buffer)
+//       .resize(10) // Resize to 10px
+//       .blur() // Apply blur
+//       .toBuffer();
 
-    const base64Image = resizedImageBuffer.toString("base64");
-    return `data:image/jpeg;base64,${base64Image}`;
-  } catch (error) {
-    console.error("Error generating blurDataURL:", error);
-    return null;
-  }
-}
+//     const base64Image = resizedImageBuffer.toString("base64");
+//     return `data:image/jpeg;base64,${base64Image}`;
+//   } catch (error) {
+//     console.error("Error generating blurDataURL:", error);
+//     return null;
+//   }
+// }
