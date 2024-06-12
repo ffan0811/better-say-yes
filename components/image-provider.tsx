@@ -1,0 +1,146 @@
+"use client";
+import { createClient } from "@/lib/supabase/client";
+import {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
+import { useToast } from "./ui/use-toast";
+import { sendImagesToDB } from "@/fetch/contents";
+import { handleError } from "@/lib/utils";
+import { deleteImage } from "@/actions/content";
+
+interface ImageContextType {
+  viewableImages: string[];
+  setViewableImages: (data: string[]) => void;
+  setImages: ({
+    action,
+    data,
+  }: {
+    action: "add" | "delete" | "reset";
+    data: (string | File)[];
+  }) => void;
+}
+
+const ImageContext = createContext<ImageContextType | undefined>(undefined);
+
+export const ImageProvider = ({
+  contentId,
+  children,
+}: {
+  contentId: string;
+  children: ReactNode;
+}) => {
+  const supabase = createClient();
+  const { toast } = useToast();
+
+  const [images, setImages] = useState<{
+    action: "add" | "delete" | "reset";
+    data: (string | File)[];
+  } | null>(null);
+  const [viewableImages, setViewableImages] = useState<string[]>([]);
+
+  const initialize = async (id: string) => {
+    const { data, error } = await supabase.storage.from("contents").list(id, {
+      limit: 100,
+      offset: 0,
+      sortBy: { column: "name", order: "asc" },
+    });
+    if (data) {
+      const imageNames = data.map((ele) => ele.name);
+      setViewableImages(imageNames);
+    }
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Failed to fetch images",
+        description: error.message,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!contentId) return;
+    initialize(contentId);
+  }, [contentId]);
+
+  useEffect(() => {
+    if (!contentId || !images) return;
+
+    if (images.action === "add") {
+      // Update viewableImages
+      images.data.forEach((ele: File) => {
+        const blob = URL.createObjectURL(ele);
+        if (blob) {
+          setViewableImages((prev) => {
+            return [...prev, blob];
+          });
+        }
+      });
+
+      // Upload images to storage
+      const saveImages = async () => {
+        try {
+          const { error } = await sendImagesToDB({
+            contentId,
+            data: images.data as File[],
+          });
+          if (error) {
+            throw new Error(error.message);
+          }
+        } catch (e) {
+          const err = handleError(e);
+          toast({
+            variant: "destructive",
+            title: "Failed to upload images",
+            description: err.message,
+          });
+        }
+      };
+
+      saveImages();
+    }
+    if (images.action === "delete") {
+      // NOTE: the images.data length is always 1
+
+      // Update viewableImages
+      const filtered = viewableImages.filter((ele) => ele !== images.data[0]);
+      setViewableImages(filtered);
+
+      // Delete image in storage
+      if (!(images.data[0] as string).includes("blob")) {
+        const deleteImageInDB = async () => {
+          await deleteImage({ contentId, imageName: images.data[0] as string });
+        };
+
+        deleteImageInDB();
+      }
+    }
+
+    if (images.action === "reset") {
+      // delete folder
+    }
+  }, [images]);
+
+  return (
+    <ImageContext.Provider
+      value={{
+        viewableImages,
+        setViewableImages,
+        setImages,
+      }}
+    >
+      {children}
+    </ImageContext.Provider>
+  );
+};
+
+export const useImages = () => {
+  const context = useContext(ImageContext);
+  if (!context) {
+    throw new Error("useImages must be used within ImageProvider");
+  }
+  return context;
+};

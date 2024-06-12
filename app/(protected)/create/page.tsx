@@ -16,6 +16,7 @@ import PageSwitcher from "@/components/PageSwitcher";
 import CreateImages from "@/components/Create/Images";
 import SaveButton from "@/components/Create/SaveButton";
 import { createClient } from "@/lib/supabase/server";
+import { ImageProvider } from "@/components/image-provider";
 
 const sidebarMenu = [
   {
@@ -61,11 +62,11 @@ export default async function CreatePage({
     [SidebarMenuType.FONT]: <CreateFont />,
     [SidebarMenuType.BACKGROUND]: <CreateBackground />,
     [SidebarMenuType.THEME_COLOR]: <CreateTheme />,
-    [SidebarMenuType.IMAGES]: <CreateImages />,
+    [SidebarMenuType.IMAGES]: <CreateImages contentId={searchParams.id} />,
   };
 
   return (
-    <>
+    <ImageProvider contentId={searchParams.id}>
       <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500">
         <div className="flex justify-between items-center w-full px-5">
           <div className="flex items-center space-x-16">
@@ -102,6 +103,6 @@ export default async function CreatePage({
         />
       </div>
       <PageSwitcher />
-    </>
+    </ImageProvider>
   );
 }

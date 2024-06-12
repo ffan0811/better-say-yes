@@ -69,55 +69,6 @@ export default function PaymentButton({ contentId }: { contentId: string }) {
     }
   };
 
-  // TODO: avoid duplicate functions
-  const sendImagesToDB = async ({
-    contentId,
-    data,
-  }: {
-    contentId: string;
-    data: File[];
-  }) => {
-    try {
-      const formData = new FormData();
-      formData.append("contentId", contentId || "");
-      (data || []).forEach((ele) => {
-        formData.append("images", ele);
-      });
-      const response = await fetch(`/api/contents`, {
-        method: "POST",
-        body: formData,
-      });
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-    } catch (e) {
-      const error = handleError(e);
-      toast({
-        variant: "destructive",
-        title: "Failed to upload images",
-        description: error.message,
-      });
-    }
-  };
-
-  const sendContentsToDB = async ({
-    contentId,
-    data,
-  }: {
-    contentId: string;
-    data: ContentsType;
-  }) => {
-    delete data["images"];
-    const { error } = await saveContents({ id: contentId, contents: data });
-    if (error) {
-      toast({
-        variant: "destructive",
-        title: "Failed to save data",
-        description: error.message,
-      });
-    }
-  };
-
   const handleSubmit = async () => {
     if (!user) {
       alert("Please log in");
@@ -125,10 +76,18 @@ export default function PaymentButton({ contentId }: { contentId: string }) {
 
     try {
       setIsLoading(true);
-      await sendImagesToDB({ contentId, data: contents.images });
-      await sendContentsToDB({ contentId, data: contents });
+      const { error } = await saveContents({ id: contentId, contents });
+      if (error) {
+        throw new Error(error.message);
+      }
       await handlePayment();
-    } catch (error) {
+    } catch (e) {
+      const err = handleError(e);
+      toast({
+        variant: "destructive",
+        title: "Failed to save data",
+        description: err.message,
+      });
     } finally {
       setIsLoading(false);
     }

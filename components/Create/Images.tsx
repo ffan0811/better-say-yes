@@ -1,61 +1,38 @@
 "use client";
-import { contentsAtom } from "@/atoms/content";
-import UploadImage, { LIMIT_IMAGE_NUMBER } from "../UploadImage";
-import { useAtom } from "jotai";
+import UploadImage from "../UploadImage";
 import { compressImages } from "@/lib/compress";
+import { useImages } from "../image-provider";
 
-export default function CreateImages() {
-  const [contents, setContents] = useAtom(contentsAtom);
+export default function CreateImages({ contentId }: { contentId: string }) {
+  const { viewableImages, setImages } = useImages();
 
-  const addImages = async (files: File[]) => {
-    let compressedImages: File[] = [];
-    compressedImages = await compressImages(files);
+  const compressImagesFunc = async (files: FileList | null) => {
+    const newFiles = files ? Array.from(files) : [];
 
-    const currentImages = contents?.images || [];
-
-    const uniqueFiles = compressedImages.filter(
-      (file) =>
-        !currentImages.some((existingFile) => existingFile.name === file.name)
-    );
-    const totalImages = currentImages.length + uniqueFiles.length;
-
-    if (totalImages > LIMIT_IMAGE_NUMBER) {
-      const allowed = LIMIT_IMAGE_NUMBER - currentImages.length;
-      const allowedFiles = uniqueFiles.slice(0, allowed);
-      setContents({
-        ...contents,
-        images: currentImages.concat(allowedFiles),
-      });
-      if (allowedFiles.length < uniqueFiles.length) {
-        alert(`You can only add ${allowed} more images.`);
-      }
-    } else {
-      setContents({ ...contents, images: currentImages.concat(uniqueFiles) });
-    }
+    let result: File[] = [];
+    result = await compressImages(newFiles);
+    return result;
   };
 
-  const handleImages = (files: FileList | null) => {
-    const newFiles = files ? Array.from(files) : [];
-    addImages(newFiles);
+  const handleImages = async (files: FileList | null) => {
+    const data = await compressImagesFunc(files);
+    setImages({ action: "add", data });
   };
 
-  const handleExtraImages = (files: FileList | null) => {
-    const newFiles = files ? Array.from(files) : [];
-    addImages(newFiles);
+  const handleExtraImages = async (files: FileList | null) => {
+    const data = await compressImagesFunc(files);
+    setImages({ action: "add", data });
   };
 
   const handleDeleteImage = (index: number, value: string) => {
-    const filtered = contents.images.filter((_, i) => i !== index);
-    setContents({
-      ...contents,
-      images: filtered,
-    });
+    setImages({ action: "delete", data: [value] });
   };
 
   return (
     <div className="flex justify-center">
       <UploadImage
-        data={contents.images}
+        contentId={contentId}
+        data={viewableImages}
         handleImages={handleImages}
         handleExtraImages={handleExtraImages}
         handleDeleteImage={handleDeleteImage}

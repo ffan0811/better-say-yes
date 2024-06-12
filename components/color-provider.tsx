@@ -7,7 +7,6 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-import { useColorPicker } from "react-best-gradient-color-picker";
 
 interface ColorContextType {
   backgroundColor: string;

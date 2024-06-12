@@ -9,7 +9,7 @@ import ProductionAfterYes from "../Production/AfterYes";
 import { useEffect } from "react";
 import { useColor } from "../color-provider";
 import { useFont } from "../font-provider";
-import useFetchImages from "../useFetchImages";
+import { useImages } from "../image-provider";
 
 type CreateContainerProps = {
   contentId: string;
@@ -24,7 +24,7 @@ export default function CreateContainer({
   const [preview, setPreview] = useAtom(previewAtom);
   const { setThemeColor, setBackgroundColor } = useColor();
   const { setFont } = useFont();
-  useFetchImages({ contentId });
+  const { viewableImages } = useImages();
 
   useEffect(() => {
     if (!contentsData) return;
@@ -66,7 +66,7 @@ export default function CreateContainer({
           afterYesDescription={contents.afterYesDescription}
           afterYesButtonText={contents.afterYesButtonText}
           afterYesButtonLink={contents.afterYesButtonLink}
-          images={contents.images}
+          images={viewableImages}
           isPreview
         />
       )}

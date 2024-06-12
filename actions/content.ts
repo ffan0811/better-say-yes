@@ -59,6 +59,32 @@ export async function saveContents({
   return { result, error };
 }
 
+export async function deleteImage({
+  contentId,
+  imageName,
+}: {
+  contentId: string;
+  imageName: string;
+}) {
+  let result,
+    error: ErrorType = null;
+  try {
+    const supabase = createClient();
+    const { error } = await supabase.storage
+      .from(`contents`)
+      .remove([`${contentId}/${imageName}`]);
+    if (error) {
+      throw new Error(error.message);
+    }
+  } catch (e) {
+    const err = handleError(e);
+    error = err;
+  }
+
+  return { result, error };
+}
+
+// NOTE: cannot pass images unless its in FormData
 // export async function saveImages({
 //   contentId,
 //   images,

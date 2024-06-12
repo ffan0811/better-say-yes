@@ -9,7 +9,6 @@ export const contentsAtom = atom<ContentsType>({
   afterYesButtonText: "",
   afterYesButtonLink: "",
   secretCode: "",
-  images: [],
   fontFamily: "",
   themeColor: "",
   backgroundColor: "",

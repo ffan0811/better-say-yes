@@ -6,7 +6,6 @@ export type ContentsType = {
   afterYesButtonText?: string;
   afterYesButtonLink?: string;
   secretCode?: string;
-  images?: (File | string)[];
   fontFamily?: string;
   themeColor?: string;
   backgroundColor?: string;

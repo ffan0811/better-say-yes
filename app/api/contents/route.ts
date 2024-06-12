@@ -14,12 +14,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: "bad request" }, { status: 400 });
     }
 
-    const { error: removeError } = await supabase.storage
-      .from("contents")
-      .remove([`${contentId}/*`]);
-    if (removeError) {
-      throw new Error(removeError.message);
-    }
+    // const { error: removeError } = await supabase.storage
+    //   .from("contents")
+    //   .remove([`${contentId}/*`]);
+    // if (removeError) {
+    //   throw new Error(removeError.message);
+    // }
 
     const fileNames = createImageFileNames(images) as string[];
 
