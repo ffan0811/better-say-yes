@@ -10,6 +10,7 @@ export default function BackgroundColorPicker() {
   const { setDegrees } = useColorPicker(backgroundColor, setBackgroundColor);
 
   useEffect(() => {
+    if (!backgroundColor) return;
     setDegrees(45);
   }, []);
 
