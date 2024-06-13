@@ -14,8 +14,6 @@ export const ColorProvider = ({ children }: { children: ReactNode }) => {
   const [backgroundColor, setBackgroundColor] = useState<string>("");
   const [themeColor, setThemeColor] = useState<string>("");
 
-  console.log("g", backgroundColor);
-
   return (
     <ColorContext.Provider
       value={{

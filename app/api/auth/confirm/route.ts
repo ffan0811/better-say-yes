@@ -21,8 +21,6 @@ export async function GET(request: Request) {
     }
   }
 
-  console.log("origin", origin);
-
   // if (redirectTo) {
   //   return NextResponse.redirect(redirectTo);
   // }

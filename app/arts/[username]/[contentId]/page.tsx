@@ -8,8 +8,6 @@ export default async function ArtDetailsPage({
 }) {
   const supabase = createClient();
 
-  console.log("ara", params.contentId);
-
   if (!params.contentId) {
     return <p>Incorrect URL</p>;
   }
@@ -19,7 +17,6 @@ export default async function ArtDetailsPage({
     .select("*")
     .eq("id", params.contentId)
     .single();
-  console.log("Data", data, error);
 
   if (error) {
     return <p>Error: {error.message}</p>;

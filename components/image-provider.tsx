@@ -46,13 +46,19 @@ export const ImageProvider = ({
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const initialize = async (id: string) => {
-    const { result, error } = await getImageUrls({ contentId: id, isTemplate });
-    setViewableImages(result as { src: string; blurDartUrl?: string }[]);
-    if (error) {
+    try {
+      const { result, error } = await getImageUrls({
+        contentId: id,
+        isTemplate,
+      });
+      setViewableImages(result as { src: string; blurDartUrl?: string }[]);
+      if (error) throw new Error(error.message);
+    } catch (e) {
+      const err = handleError(e);
       toast({
         variant: "destructive",
         title: "Failed to fetch images",
-        description: error.message,
+        description: err.message,
       });
     }
   };

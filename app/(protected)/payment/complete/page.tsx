@@ -32,8 +32,6 @@ export default async function PaymentCompleted({
 
   const userId = checkoutSession.client_reference_id;
 
-  console.log("userId", userId);
-
   return (
     <Layout hasGap>
       <ResponsiveWrapper>
