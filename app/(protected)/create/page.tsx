@@ -9,14 +9,17 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import CreateBackground from "@/components/CreateContainer/Background";
-import CreateTheme from "@/components/CreateContainer/Theme";
-import CreateFont from "@/components/CreateContainer/Font";
 import PageSwitcher from "@/components/PageSwitcher";
 import CreateImages from "@/components/CreateContainer/Images";
 import SaveButton from "@/components/CreateContainer/SaveButton";
 import { createClient } from "@/lib/supabase/server";
 import { ImageProvider } from "@/components/image-provider";
+import SelectFont from "@/components/selectFont";
+import BackgroundColorPicker from "@/components/BackgroundColorPicker";
+import ColorPicker from "@/components/ColorPicker";
+import ColorWrapper from "@/components/Production/ColorWrapper";
+import FontWrapper from "@/components/Production/FontWrapper";
+import { FontType } from "@/types/font";
 
 const sidebarMenu = [
   {
@@ -59,9 +62,21 @@ export default async function CreatePage({
   }
 
   const comp = {
-    [SidebarMenuType.FONT]: <CreateFont />,
-    [SidebarMenuType.BACKGROUND]: <CreateBackground />,
-    [SidebarMenuType.THEME_COLOR]: <CreateTheme />,
+    [SidebarMenuType.FONT]: (
+      <div className="flex justify-center">
+        <SelectFont />
+      </div>
+    ),
+    [SidebarMenuType.BACKGROUND]: (
+      <div className="flex justify-center">
+        <BackgroundColorPicker />
+      </div>
+    ),
+    [SidebarMenuType.THEME_COLOR]: (
+      <div className="flex justify-center">
+        <ColorPicker />
+      </div>
+    ),
     [SidebarMenuType.IMAGES]: <CreateImages contentId={searchParams.id} />,
   };
 

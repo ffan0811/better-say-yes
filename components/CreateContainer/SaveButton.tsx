@@ -15,6 +15,7 @@ export default function SaveButton({ contentId }: { contentId: string }) {
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
+      // TODO: get colors and font
       const { error } = await saveContents({ id: contentId, contents });
       if (error) {
         throw new Error(error.message);

@@ -7,7 +7,8 @@ const cache = new Map<ImageProps, string>();
 // TODO: make it usable globally, For example, do not have contentId. instead, get just url
 export default async function getBase64ImageUrl(
   contentId: string,
-  image: ImageProps
+  image: ImageProps,
+  isTemplate?: boolean
 ): Promise<string> {
   try {
     let url = cache.get(image);
@@ -15,7 +16,9 @@ export default async function getBase64ImageUrl(
       return url;
     }
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/contents/${contentId}/${image.src}`
+      `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${
+        isTemplate ? "templates" : "contents"
+      }/${contentId}/${image.src}`
     );
 
     if (!response.ok) {

@@ -1,0 +1,53 @@
+"use client";
+import { useAtom } from "jotai";
+import { previewAtom } from "@/atoms/preview";
+import { PageStepType } from "@/types/status";
+import { contentsAtom } from "@/atoms/content";
+import DynamicHeightTextarea from "@/components/DynamicHeightTextarea";
+import { DefaultButton, OutlineButton } from "../Production/Button";
+import { EDITABLE_INPUT_CLASSES } from "@/constants";
+import { useColor } from "../color-provider";
+import NoButton from "../Production/NoButton";
+import MainContents, {
+  QUESTION_COMMON_CLASSES,
+} from "../Production/MainContents";
+
+export default function CreateMain({}: {}) {
+  const [preview, setPreview] = useAtom(previewAtom);
+  const [contents, setContents] = useAtom(contentsAtom);
+  const { themeColor } = useColor();
+
+  const handleYes = () => {
+    if (contents.alertAfterYes) {
+      alert(contents.alertAfterYes);
+    }
+    setPreview({
+      ...preview,
+      stage: PageStepType.AFTER_YES,
+    });
+  };
+  return (
+    <div className="flex justify-center items-center flex-col w-full">
+      <MainContents
+        title={
+          <DynamicHeightTextarea
+            className={`w-full h-0 ${EDITABLE_INPUT_CLASSES} ${QUESTION_COMMON_CLASSES}`}
+            value={contents.question}
+            onChange={(e) => {
+              setContents({ ...contents, question: e.target.value });
+            }}
+          />
+        }
+        themeColor={themeColor}
+      >
+        <DefaultButton
+          themeColor={themeColor}
+          onClick={handleYes}
+          className="min-w-40"
+        >
+          Yes
+        </DefaultButton>
+      </MainContents>
+    </div>
+  );
+}

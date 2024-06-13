@@ -28,9 +28,11 @@ const ImageContext = createContext<ImageContextType | undefined>(undefined);
 
 export const ImageProvider = ({
   contentId,
+  isTemplate,
   children,
 }: {
   contentId: string;
+  isTemplate?: boolean;
   children: ReactNode;
 }) => {
   const { toast } = useToast();
@@ -42,7 +44,7 @@ export const ImageProvider = ({
   const [viewableImages, setViewableImages] = useState<ImageProps[]>([]);
 
   const initialize = async (id: string) => {
-    const { result, error } = await getImageUrls(id);
+    const { result, error } = await getImageUrls({ contentId: id, isTemplate });
     setViewableImages(result as { src: string; blurDartUrl?: string }[]);
     if (error) {
       toast({

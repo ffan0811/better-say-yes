@@ -84,13 +84,19 @@ export async function deleteImage({
   return { result, error };
 }
 
-export async function getImageUrls(contentId: string) {
+export async function getImageUrls({
+  contentId,
+  isTemplate,
+}: {
+  contentId: string;
+  isTemplate?: boolean;
+}) {
   let result,
     error: ErrorType = null;
   try {
     const supabase = createClient();
     const { data, error } = await supabase.storage
-      .from("contents")
+      .from(isTemplate ? "templates" : "contents")
       .list(contentId, {
         limit: 100,
         offset: 0,
@@ -101,10 +107,14 @@ export async function getImageUrls(contentId: string) {
     }
 
     const imagePromises = data.map(async (ele) => {
-      const blurDataUrl = await getBase64ImageUrl(contentId, {
-        src: ele.name,
-        blurDataUrl: "",
-      });
+      const blurDataUrl = await getBase64ImageUrl(
+        contentId,
+        {
+          src: ele.name,
+          blurDataUrl: "",
+        },
+        isTemplate
+      );
       return { src: ele.name, blurDataUrl };
     });
 

@@ -1,7 +1,10 @@
 import { DefaultLink } from "@/components/Production/Button";
 import ColorWrapper from "@/components/Production/ColorWrapper";
 import FontWrapper from "@/components/Production/FontWrapper";
-import MainContents from "@/components/Production/MainContents";
+import MainContents, {
+  QUESTION_COMMON_CLASSES,
+} from "@/components/Production/MainContents";
+import { ImageProvider } from "@/components/image-provider";
 import { createClient } from "@/lib/supabase/server";
 import { FontType } from "@/types/font";
 
@@ -41,9 +44,12 @@ export default async function ArtTemplateDetailsPage({
         themeColor={data.theme_color}
       >
         <div className="h-screen flex flex-col items-center justify-center">
-          <MainContents themeColor={data.theme_color} question={data.question}>
+          <MainContents
+            title={<p className={QUESTION_COMMON_CLASSES}>{data.question}</p>}
+            themeColor={data.theme_color}
+          >
             <DefaultLink
-              href={`/templates/${params.contentId}/yes`}
+              href={`/arts/templates/${params.contentId}/yes`}
               themeColor={data.theme_color}
               className="min-w-40"
             >
