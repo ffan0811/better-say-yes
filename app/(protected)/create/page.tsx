@@ -1,6 +1,6 @@
 import CreateContainer from "@/components/CreateContainer";
 import Logo from "@/components/Logo";
-import PaymentButton from "@/components/Payment/Button";
+import PaymentButton from "@/components/Payment/PaymentButton";
 import Link from "next/link";
 import { SidebarMenuType } from "@/types/sidebar";
 import {

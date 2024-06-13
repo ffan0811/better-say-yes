@@ -19,9 +19,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "please login" }, { status: 400 });
     }
 
-    const { userId, contentId } = await request.json();
+    const { contentId } = await request.json();
 
-    if (!userId || !contentId) {
+    if (!contentId) {
       return NextResponse.json({ message: "bad request" }, { status: 400 });
     }
 
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
           quantity: 1,
         },
       ],
-      client_reference_id: userId || undefined,
+      client_reference_id: contentId || undefined,
       success_url: `${headers().get(
         "origin"
       )}/payment/complete?session_id={CHECKOUT_SESSION_ID}`,

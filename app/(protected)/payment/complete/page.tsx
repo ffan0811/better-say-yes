@@ -2,11 +2,11 @@ import type { Stripe } from "stripe";
 import Link from "next/link";
 
 import { stripe } from "@/lib/stripe/stripe";
-import { HeartIcon } from "lucide-react";
 import Layout from "@/components/Layout";
 import ResponsiveWrapper from "@/components/ResponsiveWrapper";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/server";
 // import DonationDetector from "@/app/_components/donationDetector";
 
 export default async function PaymentCompleted({
@@ -14,6 +14,15 @@ export default async function PaymentCompleted({
 }: {
   searchParams: { session_id: string };
 }): Promise<JSX.Element> {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("Cannot find user data. Please login again.");
+  }
+
   if (!searchParams.session_id)
     throw new Error("Please provide a valid session_id (`cs_test_...`)");
 
@@ -30,26 +39,39 @@ export default async function PaymentCompleted({
     status: string;
   } = checkoutSession.payment_intent as Stripe.PaymentIntent;
 
-  const userId = checkoutSession.client_reference_id;
+  const contentId = checkoutSession?.client_reference_id || "undefined";
+
+  const { data, error } = await supabase
+    .from("contents")
+    .update({ status: "active" })
+    .eq("id", contentId);
 
   return (
-    <Layout hasGap>
+    <Layout>
       <ResponsiveWrapper>
         <Card>
           <CardHeader>
-            <CardTitle>Success! Your Custom Page is Ready</CardTitle>
+            <CardTitle>
+              {error ? "Failed" : "Success! Your Custom Page is Ready"}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-lg">
-              Thank you for your purchase. Your custom page has been
-              successfully created and is now live. You can open and share your
-              custom page by clicking the button below.
+              {error
+                ? "Your payment was successful! Unfortunately, the page didn't go live. Please refresh and try again. If the issue persists, contact us with your Order ID."
+                : "Thank you for your purchase! Your custom page is now live. Click the button below to open and share it."}
             </p>
-            <div className="mt-4 text-center">
-              <Link href="/" className={buttonVariants({ variant: "default" })}>
-                Open and Enjoy!
-              </Link>
-            </div>
+            {!error && (
+              <div className="mt-4 text-center">
+                <Link
+                  href={`/yes/${user.user_metadata.username}/${contentId}`}
+                  target="_blank"
+                  className={buttonVariants({ variant: "default" })}
+                >
+                  Open and Enjoy!
+                </Link>
+              </div>
+            )}
             <p className="mt-10 opacity-70">
               If you encounter any issues or have any questions, please don't
               hesitate to contact our support team. Make sure to include your

@@ -81,7 +81,7 @@ export default function ArtsContainer({ userId }: { userId: string }) {
     if (error) {
       toast({
         variant: "destructive",
-        title: "Failed to fetch active arts",
+        title: "Failed to fetch active contents",
         description: ERROR_DEFAULT_DESCRIPTION,
       });
     }
@@ -113,7 +113,7 @@ export default function ArtsContainer({ userId }: { userId: string }) {
               <div className="space-x-2 mt-4">
                 <Link
                   target="_blank"
-                  href={`/arts/templates/${ele.id}`}
+                  href={`/yes/templates/${ele.id}`}
                   className={`${buttonVariants({ variant: "outline" })}`}
                 >
                   Demo

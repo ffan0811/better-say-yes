@@ -9,5 +9,7 @@ export default function ResponsiveWrapper({
   className = "",
   children,
 }: ResponsiveWrapperProps) {
-  return <div className={`w-full md:max-w-lg ${className}`}>{children}</div>;
+  return (
+    <div className={`w-full md:max-w-lg flex-1 ${className}`}>{children}</div>
+  );
 }

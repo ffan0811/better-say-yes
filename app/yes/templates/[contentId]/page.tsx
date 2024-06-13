@@ -49,7 +49,7 @@ export default async function ArtTemplateDetailsPage({
             themeColor={data.theme_color}
           >
             <DefaultLink
-              href={`/arts/templates/${params.contentId}/yes`}
+              href={`/yes/templates/${params.contentId}/yes`}
               themeColor={data.theme_color}
               className="min-w-40"
             >

@@ -39,7 +39,6 @@ export default function PaymentButton({ contentId }: { contentId: string }) {
       const res = await fetch(`/api/checkout-sessions`, {
         method: "POST",
         body: JSON.stringify({
-          userId: user.id,
           contentId,
         }),
       });
