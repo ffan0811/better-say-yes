@@ -46,6 +46,7 @@ export const ImageProvider = ({
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const initialize = async (id: string) => {
+    console.log("init", id);
     try {
       const { result, error } = await getImageUrls({
         contentId: id,

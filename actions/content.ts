@@ -95,6 +95,7 @@ export async function getImageUrls({
     error: ErrorType = null;
   try {
     const supabase = createClient();
+    console.log("hello");
     const { data, error } = await supabase.storage
       .from(isTemplate ? "templates" : "contents")
       .list(contentId, {
@@ -102,6 +103,9 @@ export async function getImageUrls({
         offset: 0,
         sortBy: { column: "created_at", order: "asc" },
       });
+
+    console.log("data", data);
+
     if (error) {
       throw new Error(error.message);
     }
