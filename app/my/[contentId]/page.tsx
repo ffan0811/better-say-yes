@@ -20,7 +20,7 @@ export default async function ContentDetailsPage({
 
   const { data, error } = await supabase
     .from("contents")
-    .select("*")
+    .select("status,font_family,background_color,theme_color,question")
     .eq("id", params.contentId)
     .single();
 
