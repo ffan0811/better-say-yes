@@ -11,12 +11,13 @@ export type Database = {
     Tables: {
       contents: {
         Row: {
-          after_yes_buttonLink: string | null
-          after_yes_buttonText: string | null
+          after_yes_button_link: string | null
+          after_yes_button_text: string | null
           after_yes_description: string | null
           after_yes_title: string | null
           alert_after_yes: string | null
           background_color: string | null
+          contrasting_color: string | null
           created_at: string
           font_family: string | null
           id: string
@@ -29,12 +30,13 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
-          after_yes_buttonLink?: string | null
-          after_yes_buttonText?: string | null
+          after_yes_button_link?: string | null
+          after_yes_button_text?: string | null
           after_yes_description?: string | null
           after_yes_title?: string | null
           alert_after_yes?: string | null
           background_color?: string | null
+          contrasting_color?: string | null
           created_at?: string
           font_family?: string | null
           id?: string
@@ -47,12 +49,13 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
-          after_yes_buttonLink?: string | null
-          after_yes_buttonText?: string | null
+          after_yes_button_link?: string | null
+          after_yes_button_text?: string | null
           after_yes_description?: string | null
           after_yes_title?: string | null
           alert_after_yes?: string | null
           background_color?: string | null
+          contrasting_color?: string | null
           created_at?: string
           font_family?: string | null
           id?: string
@@ -127,6 +130,74 @@ export type Database = {
           },
         ]
       }
+      templates: {
+        Row: {
+          after_yes_button_link: string | null
+          after_yes_button_text: string | null
+          after_yes_description: string | null
+          after_yes_title: string | null
+          alert_after_yes: string | null
+          background_color: string | null
+          constrasting_color: string | null
+          created_at: string
+          font_family: string | null
+          id: string
+          name: string | null
+          question: string | null
+          secret_code: string | null
+          status: Database["public"]["Enums"]["content_status"]
+          theme_color: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          after_yes_button_link?: string | null
+          after_yes_button_text?: string | null
+          after_yes_description?: string | null
+          after_yes_title?: string | null
+          alert_after_yes?: string | null
+          background_color?: string | null
+          constrasting_color?: string | null
+          created_at?: string
+          font_family?: string | null
+          id?: string
+          name?: string | null
+          question?: string | null
+          secret_code?: string | null
+          status?: Database["public"]["Enums"]["content_status"]
+          theme_color?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          after_yes_button_link?: string | null
+          after_yes_button_text?: string | null
+          after_yes_description?: string | null
+          after_yes_title?: string | null
+          alert_after_yes?: string | null
+          background_color?: string | null
+          constrasting_color?: string | null
+          created_at?: string
+          font_family?: string | null
+          id?: string
+          name?: string | null
+          question?: string | null
+          secret_code?: string | null
+          status?: Database["public"]["Enums"]["content_status"]
+          theme_color?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "templates_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -135,7 +206,13 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      content_status: "draft" | "pending" | "blocked" | "active" | "inactive"
+      content_status:
+        | "draft"
+        | "pending"
+        | "blocked"
+        | "active"
+        | "inactive"
+        | "."
       currencies: "$"
     }
     CompositeTypes: {

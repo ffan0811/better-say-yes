@@ -10,6 +10,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CreateButton from "./CreateContainer/CreateButton";
 import Link from "next/link";
+import { Button, buttonVariants } from "./ui/button";
 
 const MAX_DRAFT_COUNT = 5;
 
@@ -27,9 +28,9 @@ export default function ArtsContainer({ userId }: { userId: string }) {
     if (!userId) return;
 
     const { data, error } = await supabase
-      .from("contents")
+      .from("templates")
       .select("id, background_color, theme_color, name, created_at, updated_at")
-      .eq("status", "template")
+      .eq("status", "active")
       .order("updated_at", { ascending: false });
     if (data) {
       setTemplatesData(data);
@@ -99,18 +100,27 @@ export default function ArtsContainer({ userId }: { userId: string }) {
         </CardHeader>
         <CardContent className="snap-mandatory snap-x flex gap-6 overflow-x-auto">
           {templatesData.map((ele, idx) => (
-            <Link
+            <div
               key={ele.id}
-              href={`/create?id=${ele.id}`}
-              className={`${ITEM_COMMON_CLASSES} snap-center shrink-0 max-w-xs`}
+              className={`${ITEM_COMMON_CLASSES} snap-center shrink-0 max-w-xs flex flex-col`}
               style={{
                 background: ele.background_color,
                 color: ele.theme_color,
                 borderColor: ele.theme_color,
               }}
             >
-              {ele.name || `Draft ${idx}`}
-            </Link>
+              <span className="block"> {ele.name || `Draft ${idx}`}</span>
+              <div className="space-x-2 mt-4">
+                <Link
+                  target="_blank"
+                  href={`/arts/templates/${ele.id}`}
+                  className={`${buttonVariants({ variant: "outline" })}`}
+                >
+                  Demo
+                </Link>
+                <Button>Start</Button>
+              </div>
+            </div>
           ))}
         </CardContent>
       </Card>

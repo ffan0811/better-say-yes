@@ -22,6 +22,7 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { buttonVariants } from "../ui/button";
+import { useColor } from "../color-provider";
 
 const TITLE_COMMON_CLASSES =
   "text-center text-base font-bold uppercase tracking-widest";
@@ -48,6 +49,7 @@ export default function ProductionAfterYes({
 }) {
   const [contents, setContents] = useAtom(contentsAtom);
   const [tempLink, setTempLink] = useState<string>("");
+  const { themeColor } = useColor();
 
   console.log("contents", contents);
 
@@ -86,7 +88,7 @@ export default function ProductionAfterYes({
               <Dialog>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <DefaultButton>
+                    <DefaultButton themeColor={themeColor}>
                       <DynamicInput
                         className="bg-transparent outline-none text-center"
                         onChange={(e) =>
@@ -134,11 +136,17 @@ export default function ProductionAfterYes({
             </>
           ) : afterYesButtonText ? (
             afterYesButtonLink ? (
-              <DefaultLink href={afterYesButtonLink} target="_blank">
+              <DefaultLink
+                themeColor={themeColor}
+                href={afterYesButtonLink}
+                target="_blank"
+              >
                 {afterYesButtonText}
               </DefaultLink>
             ) : (
-              <DefaultButton>{afterYesButtonText}</DefaultButton>
+              <DefaultButton themeColor={themeColor}>
+                {afterYesButtonText}
+              </DefaultButton>
             )
           ) : null}
         </div>

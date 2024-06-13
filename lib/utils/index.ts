@@ -127,13 +127,13 @@ export function getContrastingColor(rgbString: string): string {
   const { r, g, b } = parseRgbString(rgbString);
   let { h, s, l } = rgbToHsl(r, g, b);
 
-  // Adjust lightness based on the initial lightness
-  if (l > 0.8) {
-    l = 0.2; // If the background is very light, make the text very dark
-  } else if (l < 0.2) {
-    l = 0.8; // If the background is very dark, make the text very light
+  // Reverse the lightness completely
+  if (l === 1) {
+    l = 0; // If lightness is 1, make it 0
+  } else if (l === 0) {
+    l = 1; // If lightness is 0, make it 1
   } else {
-    l = l > 0.5 ? l - 0.5 : l + 0.5; // Otherwise, adjust lightness by 50%
+    l = 1 - l; // Reverse the lightness
   }
 
   const { r: cr, g: cg, b: cb } = hslToRgb(h, s, l);
