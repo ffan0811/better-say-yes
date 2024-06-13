@@ -51,6 +51,8 @@ export const ImageProvider = ({
         contentId: id,
         isTemplate,
       });
+      console.log("result", result);
+      console.log("error", error);
       setViewableImages(result as { src: string; blurDartUrl?: string }[]);
       if (error) throw new Error(error.message);
     } catch (e) {
