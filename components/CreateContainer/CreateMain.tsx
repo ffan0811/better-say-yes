@@ -27,7 +27,7 @@ export default function CreateMain({}: {}) {
     });
   };
   return (
-    <div className="flex justify-center items-center flex-col w-full">
+    <div className="flex justify-center items-center flex-col w-full h-[calc(100vh-5rem)]">
       <MainContents
         title={
           <DynamicHeightTextarea

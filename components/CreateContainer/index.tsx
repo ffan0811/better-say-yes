@@ -59,7 +59,7 @@ export default function CreateContainer({
   return (
     <FontWrapper fontFamily={font as FontType}>
       <ColorWrapper backgroundColor={backgroundColor} themeColor={themeColor}>
-        <div className="min-h-[calc(100vh-5rem)]">
+        <div className="">
           {preview.stage === PageStepType.MAIN && <CreateMain />}
           {preview.stage === PageStepType.AFTER_YES && (
             <CreateAfterYes contentId={contentId} />

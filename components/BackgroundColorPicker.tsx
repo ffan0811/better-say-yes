@@ -8,11 +8,10 @@ import { useEffect } from "react";
 export default function BackgroundColorPicker() {
   const { backgroundColor, setBackgroundColor } = useColor();
   const { setDegrees } = useColorPicker(backgroundColor, setBackgroundColor);
-
   useEffect(() => {
     if (!backgroundColor) return;
-    const isRadialGradient = backgroundColor.includes("radial");
-    if (isRadialGradient) return;
+    const isLinearGradient = backgroundColor.includes("linear");
+    if (!isLinearGradient) return;
 
     setDegrees(45);
   }, []);

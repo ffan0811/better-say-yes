@@ -10,7 +10,6 @@ import {
 import { FontType } from "@/types/font";
 import { useAtom } from "jotai";
 import { contentsAtom } from "@/atoms/content";
-import { useEffect } from "react";
 
 const items = [
   {
@@ -65,7 +64,7 @@ const SelectFont = () => {
         <SelectValue placeholder="Select Font" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value={null}>User System</SelectItem>
+        <SelectItem value={"system"}>User System</SelectItem>
         {items.map((ele) => (
           <SelectItem
             key={ele.value}

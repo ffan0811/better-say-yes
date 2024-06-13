@@ -29,9 +29,9 @@ export default function AfterYesContents({
   const { viewableImages } = useImages();
 
   return (
-    <div className={`w-full h-full ${className}`}>
+    <div className={`w-full h-full p-4 ${className}`}>
       <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
-        <div className="relative mb-5 flex flex-col items-center justify-center gap-4 overflow-hidden rounded-lg bg-white/10 p-6 text-center shadow-highlight">
+        <div className="relative mb-4 flex flex-col items-center justify-center gap-4 overflow-hidden rounded-lg bg-white/10 p-6 text-center shadow-highlight">
           {title}
           {description}
           {button}

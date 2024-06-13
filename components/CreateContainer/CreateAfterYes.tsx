@@ -36,79 +36,81 @@ export default function CreateAfterYes({ contentId }: { contentId: string }) {
   console.log("contents", contents);
 
   return (
-    <AfterYesContents
-      contentId={contentId}
-      title={
-        <input
-          className={`${TITLE_COMMON_CLASSES} ${EDITABLE_INPUT_CLASSES}`}
-          value={contents.afterYesTitle}
-          onChange={(e) => {
-            setContents({ ...contents, afterYesTitle: e.target.value });
-          }}
-        />
-      }
-      description={
-        <DynamicHeightTextarea
-          className={`w-full h-0 ${DESCRIPTION_COMMON_CLASSES} ${EDITABLE_INPUT_CLASSES}`}
-          value={contents.afterYesDescription}
-          onChange={(e) => {
-            setContents({
-              ...contents,
-              afterYesDescription: e.target.value,
-            });
-          }}
-        />
-      }
-      button={
-        <Dialog>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <DefaultButton themeColor={themeColor}>
-                <DynamicInput
-                  className="bg-transparent outline-none text-center"
-                  onChange={(e) =>
+    <div className="h-[calc(100vh-5rem)]">
+      <AfterYesContents
+        contentId={contentId}
+        title={
+          <input
+            className={`${TITLE_COMMON_CLASSES} ${EDITABLE_INPUT_CLASSES}`}
+            value={contents.afterYesTitle}
+            onChange={(e) => {
+              setContents({ ...contents, afterYesTitle: e.target.value });
+            }}
+          />
+        }
+        description={
+          <DynamicHeightTextarea
+            className={`w-full h-0 ${DESCRIPTION_COMMON_CLASSES} ${EDITABLE_INPUT_CLASSES}`}
+            value={contents.afterYesDescription}
+            onChange={(e) => {
+              setContents({
+                ...contents,
+                afterYesDescription: e.target.value,
+              });
+            }}
+          />
+        }
+        button={
+          <Dialog>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <DefaultButton themeColor={themeColor}>
+                  <DynamicInput
+                    className="bg-transparent outline-none text-center"
+                    onChange={(e) =>
+                      setContents({
+                        ...contents,
+                        afterYesButtonText: e.target.value,
+                      })
+                    }
+                    value={contents.afterYesButtonText}
+                  />
+                </DefaultButton>
+              </TooltipTrigger>
+              <TooltipContent className="flex items-center justify-center px-4 py-2">
+                <DialogTrigger>
+                  <LinkIcon className="w-full h-full max-w-5 max-h-5 hover:opacity-80 transition-opacity" />
+                </DialogTrigger>
+              </TooltipContent>
+            </Tooltip>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Link (Optional)</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4 flex flex-col">
+                <Input
+                  placeholder="https://bettersayyes.com"
+                  value={contents.afterYesButtonLink}
+                  onChange={(e) => setTempLink(e.target.value)}
+                />
+                <DialogTrigger
+                  className={`ml-auto ${buttonVariants({
+                    variant: "default",
+                  })}`}
+                  onClick={() =>
                     setContents({
                       ...contents,
-                      afterYesButtonText: e.target.value,
+                      afterYesButtonLink: tempLink,
                     })
                   }
-                  value={contents.afterYesButtonText}
-                />
-              </DefaultButton>
-            </TooltipTrigger>
-            <TooltipContent className="flex items-center justify-center px-4 py-2">
-              <DialogTrigger>
-                <LinkIcon className="w-full h-full max-w-5 max-h-5 hover:opacity-80 transition-opacity" />
-              </DialogTrigger>
-            </TooltipContent>
-          </Tooltip>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Link (Optional)</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4 flex flex-col">
-              <Input
-                placeholder="https://bettersayyes.com"
-                value={contents.afterYesButtonLink}
-                onChange={(e) => setTempLink(e.target.value)}
-              />
-              <DialogTrigger
-                className={`ml-auto ${buttonVariants({
-                  variant: "default",
-                })}`}
-                onClick={() =>
-                  setContents({
-                    ...contents,
-                    afterYesButtonLink: tempLink,
-                  })
-                }
-              >
-                Save
-              </DialogTrigger>
-            </div>
-          </DialogContent>
-        </Dialog>
-      }
-    />
+                >
+                  Save
+                </DialogTrigger>
+              </div>
+            </DialogContent>
+          </Dialog>
+        }
+      />
+    </div>
   );
 }
