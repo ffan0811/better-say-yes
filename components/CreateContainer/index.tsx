@@ -36,13 +36,16 @@ export default function CreateContainer({
     setContents((prev) => {
       return {
         ...prev,
-        question: contentsData?.question || "Do you wanna go out with me?",
+        question: contentsData?.question || "Click me to edit",
         alertAfterYes: contentsData?.alert_after_yes,
-        afterYesTitle: contentsData?.after_yes_title || "Hello World",
+        afterYesTitle:
+          contentsData?.after_yes_title || "Title: Click me to edit",
         afterYesDescription:
           contentsData?.after_yes_description ||
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-        afterYesButtonText: contentsData?.after_yes_button_text || "❤️",
+          "Description: Click me to edit",
+        afterYesButtonText:
+          contentsData?.after_yes_button_text ||
+          "Click me to edit\nHover me to add a link",
         afterYesButtonLink: contentsData?.after_yes_button_link || "",
         secretCode: contentsData?.secret_code || "",
         fontFamily: myFontFamily,

@@ -14,6 +14,7 @@ import { ImageProps } from "@/types/image";
 
 interface ImageContextType {
   viewableImages: ImageProps[];
+  isFetching: boolean;
   setViewableImages: (data: ImageProps[]) => void;
   setImages: ({
     action,
@@ -42,6 +43,7 @@ export const ImageProvider = ({
     data: (string | File)[];
   } | null>(null);
   const [viewableImages, setViewableImages] = useState<ImageProps[]>([]);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const initialize = async (id: string) => {
     const { result, error } = await getImageUrls({ contentId: id, isTemplate });
@@ -120,9 +122,12 @@ export const ImageProvider = ({
     }
   }, [images]);
 
+  console.log("viewableImages", viewableImages);
+
   return (
     <ImageContext.Provider
       value={{
+        isFetching,
         viewableImages,
         setViewableImages,
         setImages,

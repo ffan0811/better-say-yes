@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useImages } from "../image-provider";
 
 export const TITLE_COMMON_CLASSES =
-  "text-center text-base font-bold uppercase tracking-widest";
+  "text-center text-base font-bold uppercase tracking-widest w-full";
 
 export const DESCRIPTION_COMMON_CLASSES =
   "text-center break-words whitespace-pre-line";
