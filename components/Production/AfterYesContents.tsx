@@ -15,6 +15,7 @@ type AfterYesContentsProps = {
   description: ReactNode;
   button: ReactNode;
   className?: string;
+  isTemplate?: boolean;
 };
 
 export default function AfterYesContents({
@@ -22,7 +23,8 @@ export default function AfterYesContents({
   title,
   description,
   button,
-  className = "string",
+  className = "",
+  isTemplate,
 }: AfterYesContentsProps) {
   const { viewableImages } = useImages();
 
@@ -38,7 +40,9 @@ export default function AfterYesContents({
           let src = ele.src;
           if (ele.src.includes("blob")) {
           } else {
-            src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/contents/${contentId}/${ele.src}`;
+            src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${
+              isTemplate ? "templates" : "contents"
+            }/${contentId}/${ele.src}`;
           }
           return (
             <Image

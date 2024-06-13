@@ -95,6 +95,7 @@ export async function getImageUrls({
     error: ErrorType = null;
   try {
     const supabase = createClient();
+    console.log("d", isTemplate);
     const { data, error } = await supabase.storage
       .from(isTemplate ? "templates" : "contents")
       .list(contentId, {

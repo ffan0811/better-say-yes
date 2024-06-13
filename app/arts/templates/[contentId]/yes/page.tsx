@@ -43,6 +43,7 @@ export default async function ArtTemplateDetailsYesPage({
         themeColor={data.theme_color}
       >
         <AfterYesContents
+          isTemplate
           className="min-h-screen"
           contentId={params.contentId}
           title={
