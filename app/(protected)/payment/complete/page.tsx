@@ -64,7 +64,7 @@ export default async function PaymentCompleted({
             {!error && (
               <div className="mt-4 text-center">
                 <Link
-                  href={`/yes/${user.user_metadata.username}/${contentId}`}
+                  href={`/my/${contentId}`}
                   target="_blank"
                   className={buttonVariants({ variant: "default" })}
                 >

@@ -8,7 +8,7 @@ import FontWrapper from "@/components/Production/FontWrapper";
 import { createClient } from "@/lib/supabase/server";
 import { FontType } from "@/types/font";
 
-export default async function ArtTemplateDetailsYesPage({
+export default async function TemplateContentDetailsYesPage({
   params,
 }: {
   params: { contentId: string };

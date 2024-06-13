@@ -4,11 +4,10 @@ import FontWrapper from "@/components/Production/FontWrapper";
 import MainContents, {
   QUESTION_COMMON_CLASSES,
 } from "@/components/Production/MainContents";
-import { ImageProvider } from "@/components/image-provider";
 import { createClient } from "@/lib/supabase/server";
 import { FontType } from "@/types/font";
 
-export default async function ArtTemplateDetailsPage({
+export default async function TemplateDetailsPage({
   params,
 }: {
   params: { contentId: string };
@@ -49,7 +48,7 @@ export default async function ArtTemplateDetailsPage({
             themeColor={data.theme_color}
           >
             <DefaultLink
-              href={`/yes/templates/${params.contentId}/yes`}
+              href={`/my/templates/${params.contentId}/yes`}
               themeColor={data.theme_color}
               className="min-w-40"
             >

@@ -113,7 +113,7 @@ export default function ArtsContainer({ userId }: { userId: string }) {
               <div className="space-x-2 mt-4">
                 <Link
                   target="_blank"
-                  href={`/yes/templates/${ele.id}`}
+                  href={`/my/templates/${ele.id}`}
                   className={`${buttonVariants({ variant: "outline" })}`}
                 >
                   Demo
