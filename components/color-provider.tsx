@@ -1,12 +1,5 @@
 "use client";
-import { getContrastingColor } from "@/lib/utils";
-import {
-  createContext,
-  useState,
-  useContext,
-  ReactNode,
-  useEffect,
-} from "react";
+import { createContext, useState, useContext, ReactNode } from "react";
 
 interface ColorContextType {
   backgroundColor: string;
@@ -18,15 +11,8 @@ interface ColorContextType {
 const ColorContext = createContext<ColorContextType | undefined>(undefined);
 
 export const ColorProvider = ({ children }: { children: ReactNode }) => {
-  const [backgroundColor, setBackgroundColor] = useState<string>(
-    "linear-gradient(45deg, rgb(23, 26, 29) 4%, rgb(21, 39, 58) 46%, rgb(23, 84, 148) 100%)"
-  );
+  const [backgroundColor, setBackgroundColor] = useState<string>("");
   const [themeColor, setThemeColor] = useState<string>("");
-
-  useEffect(() => {
-    if (!themeColor) return;
-    const color = getContrastingColor(themeColor);
-  }, [themeColor]);
 
   return (
     <ColorContext.Provider

@@ -10,10 +10,9 @@ export default function BackgroundColorPicker() {
   const { setDegrees } = useColorPicker(backgroundColor, setBackgroundColor);
 
   useEffect(() => {
-    console.log("hey");
     if (!backgroundColor) return;
-    const isGradient = backgroundColor.includes("gradient");
-    if (!isGradient) return;
+    const isRadialGradient = backgroundColor.includes("radial");
+    if (isRadialGradient) return;
 
     setDegrees(45);
   }, []);
