@@ -101,7 +101,7 @@ export async function getImageUrls({
     const { data, error } = await supabase.storage
       .from(tableName)
       .list(contentId, {
-        limit: 10,
+        limit: 5,
         offset: 0,
         sortBy: { column: "created_at", order: "asc" },
       });
