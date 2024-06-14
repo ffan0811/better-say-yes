@@ -11,6 +11,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CreateButton from "./CreateContainer/CreateButton";
 import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
+import { ExternalLinkIcon } from "lucide-react";
+import TemplatesContainer, { TemplateType } from "./TemplatesContainer";
 
 const MAX_DRAFT_COUNT = 5;
 
@@ -19,7 +21,7 @@ export const ITEM_COMMON_CLASSES =
 
 export default function ProjectsContainer({ userId }: { userId: string }) {
   const supabase = createClient();
-  const [templatesData, setTemplatesData] = useState([]);
+  const [templatesData, setTemplatesData] = useState<TemplateType[]>([]);
   const [draftsData, setDraftsData] = useState([]);
   const [activeData, setActiveData] = useState([]);
   const { toast } = useToast();
@@ -96,36 +98,7 @@ export default function ProjectsContainer({ userId }: { userId: string }) {
   }, []);
   return (
     <div className="space-y-4">
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>Start with Templates</CardTitle>
-        </CardHeader>
-        <CardContent className="snap-mandatory snap-x flex gap-6 overflow-x-auto">
-          {templatesData.map((ele, idx) => (
-            <div
-              key={ele.id}
-              className={`${ITEM_COMMON_CLASSES} snap-center shrink-0 max-w-xs flex flex-col`}
-              style={{
-                background: ele.background_color,
-                color: ele.theme_color,
-                borderColor: ele.theme_color,
-              }}
-            >
-              <span className="block"> {ele.name || `Draft ${idx}`}</span>
-              <div className="space-x-2 mt-4">
-                <Link
-                  target="_blank"
-                  href={`/my/templates/${ele.id}`}
-                  className={`${buttonVariants({ variant: "outline" })}`}
-                >
-                  Demo
-                </Link>
-                <Button>Start</Button>
-              </div>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
+      <TemplatesContainer data={templatesData} />
       <Item title="Drafts" data={draftsData}>
         {draftsData.length > MAX_DRAFT_COUNT ? null : <CreateButton />}
       </Item>
