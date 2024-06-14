@@ -88,9 +88,13 @@ export async function deleteImage({
 export async function getImageUrls({
   contentId,
   isTemplate,
+  limit = 10,
+  offset = 0,
 }: {
   contentId: string;
   isTemplate?: boolean;
+  limit?: number;
+  offset?: number;
 }) {
   let result: ImageProps[],
     error: ErrorType = null;
@@ -101,8 +105,8 @@ export async function getImageUrls({
     const { data, error } = await supabase.storage
       .from(tableName)
       .list(contentId, {
-        limit: 5,
-        offset: 0,
+        limit,
+        offset,
         sortBy: { column: "created_at", order: "asc" },
       });
 
