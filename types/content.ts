@@ -1,4 +1,5 @@
 export type ContentsType = {
+  name: string;
   question: string;
   alertAfterYes?: string;
   afterYesTitle: string;

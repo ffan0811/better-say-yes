@@ -112,6 +112,7 @@ export default async function CreatePage({
         </nav>
         <div className="w-80 h-screen overflow-y-auto bg-neutral-900 flex justify-between fixed z-30 left-0 top-0">
           <Accordion type="multiple" className="w-full mt-20">
+            {/* <InputWithLabel label="Project Name" /> */}
             {sidebarMenu.map((ele) => (
               <AccordionItem key={ele.value} className="px-5" value={ele.value}>
                 <AccordionTrigger>{ele.label}</AccordionTrigger>

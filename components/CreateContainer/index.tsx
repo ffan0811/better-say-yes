@@ -36,6 +36,7 @@ export default function CreateContainer({
     setContents((prev) => {
       return {
         ...prev,
+        name: contentsData?.name || "",
         question: contentsData?.question || "Click me to edit",
         alertAfterYes: contentsData?.alert_after_yes,
         afterYesTitle:

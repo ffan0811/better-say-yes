@@ -6,6 +6,9 @@ import { saveContents } from "@/actions/content";
 import { useToast } from "../ui/use-toast";
 import { useState } from "react";
 import { handleError } from "@/lib/utils";
+import { SaveIcon } from "lucide-react";
+import { Input } from "../ui/input";
+import { MAX_PROJECT_NAME_LENGTH } from "@/constants/content";
 
 export default function SaveButton({ contentId }: { contentId: string }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -33,14 +36,30 @@ export default function SaveButton({ contentId }: { contentId: string }) {
   };
 
   return (
-    <Button
-      className="w-16"
-      spinnerColor="stroke-neutral-100"
-      isLoading={isLoading}
-      onClick={handleSubmit}
-      variant="outline"
-    >
-      Save
-    </Button>
+    <>
+      <Input
+        placeholder="Name your project"
+        className="w-auto"
+        maxLength={MAX_PROJECT_NAME_LENGTH}
+        disabled={isLoading}
+        value={contents.name}
+        onChange={(e) => {
+          setContents({
+            ...contents,
+            name: e.target.value,
+          });
+        }}
+      />
+      <Button
+        size="icon"
+        className="w-10"
+        spinnerColor="stroke-neutral-100"
+        isLoading={isLoading}
+        onClick={handleSubmit}
+        variant="outline"
+      >
+        <SaveIcon className="max-w-5 max-h-5" />
+      </Button>
+    </>
   );
 }

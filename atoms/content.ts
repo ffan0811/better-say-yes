@@ -2,6 +2,7 @@ import { ContentsType } from "@/types/content";
 import { atom } from "jotai";
 
 export const contentsAtom = atom<ContentsType>({
+  name: "",
   question: "",
   alertAfterYes: "",
   afterYesTitle: "",

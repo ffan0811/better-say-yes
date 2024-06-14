@@ -15,7 +15,7 @@ import { Button, buttonVariants } from "./ui/button";
 const MAX_DRAFT_COUNT = 5;
 
 export const ITEM_COMMON_CLASSES =
-  "border w-full h-40 text-lg rounded-md flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity";
+  "border w-full h-40 text-lg rounded-md flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity whitespace-pre-line p-4";
 
 export default function ArtsContainer({ userId }: { userId: string }) {
   const supabase = createClient();

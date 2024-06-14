@@ -3,6 +3,7 @@ import {
   MAX_AFTER_YES_BUTTON_LENGTH,
   MAX_AFTER_YES_DESCRIPTION_LENGTH,
   MAX_AFTER_YES_TITLE_LENGTH,
+  MAX_PROJECT_NAME_LENGTH,
   MAX_QUESTION_LENGTH,
 } from "@/constants/content";
 import { createClient } from "@/lib/supabase/server";
@@ -46,6 +47,7 @@ export async function saveContents({
     await supabase
       .from("contents")
       .update({
+        name: (contents?.name || "").substring(0, MAX_PROJECT_NAME_LENGTH),
         question: (contents?.question || "").substring(0, MAX_QUESTION_LENGTH),
         alert_after_yes: (contents?.alertAfterYes || "").substring(0, 1),
         after_yes_title: (contents?.afterYesTitle || "").substring(
