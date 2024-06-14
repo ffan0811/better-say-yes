@@ -26,6 +26,7 @@ export default function PreviewButton({ contentId }: { contentId: string }) {
 
   return (
     <Button
+      variant="outline"
       onClick={handlePreview}
       className={`${buttonVariants({ variant: "outline" })}`}
     >

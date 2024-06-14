@@ -6,6 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { ExternalLinkIcon } from "lucide-react";
 import { useFont } from "./font-provider";
 import { FontType } from "@/types/font";
+import { useState } from "react";
+import { useToast } from "./ui/use-toast";
+import { useRouter } from "next/navigation";
+import { createContent } from "@/actions/content";
 
 export type TemplateType = {
   id: string;
@@ -17,12 +21,30 @@ export type TemplateType = {
 
 export default function TemplatesContainer({ data }: { data: TemplateType[] }) {
   const { getFontClasses } = useFont();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { toast } = useToast();
+  const router = useRouter();
 
-  const handleCreateWithTemplate = (
+  const handleCreateWithTemplate = async (
     e: React.MouseEvent<HTMLDivElement>,
-    templateId: string
+    templateData: TemplateType
   ) => {
-    console.log("Div clicked", data);
+    setIsLoading(true);
+    const { result, error } = await createContent({
+      fontFamily: templateData.font_family as FontType,
+      backgroundColor: templateData.background_color,
+      themeColor: templateData.theme_color,
+    });
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Failed to create a draft",
+        description: error.message,
+      });
+    }
+    if (result) {
+      router.push(`/create?id=${result.id}`);
+    }
   };
 
   const handleClickLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -42,7 +64,7 @@ export default function TemplatesContainer({ data }: { data: TemplateType[] }) {
                 key={ele.id}
                 className={fontClasses}
                 data={ele}
-                onClick={(e) => handleCreateWithTemplate(e, ele.id)}
+                onClick={(e) => handleCreateWithTemplate(e, ele)}
                 onClickLink={(e) => handleClickLink(e)}
               />
             );
@@ -80,9 +102,9 @@ function Item({
         href={`/my/templates/${data.id}`}
         target="_blank"
         onClick={onClickLink}
-        className="hidden group-hover:block"
+        className="hidden group-hover:block absolute right-3 top-3"
       >
-        <ExternalLinkIcon className="w-6 h-6 absolute right-3 top-3" />
+        <ExternalLinkIcon className="w-6 h-6 " />
       </Link>
     </div>
   );

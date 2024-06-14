@@ -1,10 +1,10 @@
 "use client";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { createContent } from "@/actions/content";
-import { useToast } from "../ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ITEM_COMMON_CLASSES } from "../ProjectsContainer";
+import { ITEM_COMMON_CLASSES } from "@/components/ProjectsContainer";
 
 export default function CreateButton() {
   const [isLoading, setIsLoading] = useState<boolean>(false);

@@ -10,17 +10,26 @@ import { createClient } from "@/lib/supabase/server";
 import { handleError } from "@/lib/utils";
 import getBase64ImageUrl from "@/lib/utils/generateBlurPlaceholder";
 import { ContentsType } from "@/types/content";
+import { FontType } from "@/types/font";
 import { ErrorType } from "@/types/global";
 import { ImageProps } from "@/types/image";
 
-export async function createContent() {
+export async function createContent(params?: {
+  fontFamily?: FontType;
+  themeColor?: string;
+  backgroundColor?: string;
+}) {
   let result,
     error: ErrorType = null;
   try {
     const supabase = createClient();
     const { data } = await supabase
       .from("contents")
-      .insert({})
+      .insert({
+        font_family: params?.fontFamily || null,
+        theme_color: params?.themeColor || null,
+        background_color: params.backgroundColor || null,
+      })
       .select(`id`)
       .single();
     result = data;

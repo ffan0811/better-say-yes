@@ -3,15 +3,10 @@
 import { createClient } from "@/lib/supabase/client";
 import { ReactNode, useEffect, useState } from "react";
 import { useToast } from "./ui/use-toast";
-import {
-  ERROR_DEFAULT_DESCRIPTION,
-  ERROR_DEFAULT_TITLE,
-} from "@/constants/message";
+import { ERROR_DEFAULT_DESCRIPTION } from "@/constants/message";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CreateButton from "./CreateContainer/CreateButton";
 import Link from "next/link";
-import { Button, buttonVariants } from "./ui/button";
-import { ExternalLinkIcon } from "lucide-react";
 import TemplatesContainer, { TemplateType } from "./TemplatesContainer";
 
 const MAX_DRAFT_COUNT = 5;

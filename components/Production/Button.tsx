@@ -57,12 +57,10 @@ const OutlineButton = React.forwardRef<
   HTMLButtonElement,
   ButtonProps & { themeColor: string }
 >(({ themeColor, className, children, ...props }, ref) => {
-  // const { themeColor } = useColor();
-
   return (
     <Button
       ref={ref}
-      // style={{ borderColor: themeColor }}
+      style={{ borderColor: themeColor }}
       className={className}
       variant="outline"
       {...props}
