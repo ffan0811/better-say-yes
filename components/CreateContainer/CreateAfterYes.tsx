@@ -26,6 +26,11 @@ import AfterYesContents, {
   DESCRIPTION_COMMON_CLASSES,
   TITLE_COMMON_CLASSES,
 } from "../Production/AfterYesContents";
+import {
+  MAX_AFTER_YES_BUTTON_LENGTH,
+  MAX_AFTER_YES_DESCRIPTION_LENGTH,
+  MAX_AFTER_YES_TITLE_LENGTH,
+} from "@/constants/content";
 
 export default function CreateAfterYes({ contentId }: { contentId: string }) {
   const [contents, setContents] = useAtom(contentsAtom);
@@ -43,6 +48,7 @@ export default function CreateAfterYes({ contentId }: { contentId: string }) {
           <input
             className={`${TITLE_COMMON_CLASSES} ${EDITABLE_INPUT_CLASSES}`}
             value={contents.afterYesTitle}
+            maxLength={MAX_AFTER_YES_TITLE_LENGTH}
             onChange={(e) => {
               setContents({ ...contents, afterYesTitle: e.target.value });
             }}
@@ -52,6 +58,7 @@ export default function CreateAfterYes({ contentId }: { contentId: string }) {
           <DynamicHeightTextarea
             className={`w-full h-0 ${DESCRIPTION_COMMON_CLASSES} ${EDITABLE_INPUT_CLASSES}`}
             value={contents.afterYesDescription}
+            maxLength={MAX_AFTER_YES_DESCRIPTION_LENGTH}
             onChange={(e) => {
               setContents({
                 ...contents,
@@ -73,6 +80,7 @@ export default function CreateAfterYes({ contentId }: { contentId: string }) {
                         afterYesButtonText: e.target.value,
                       })
                     }
+                    maxLength={MAX_AFTER_YES_BUTTON_LENGTH}
                     value={contents.afterYesButtonText}
                   />
                 </DefaultButton>

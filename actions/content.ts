@@ -1,4 +1,10 @@
 "use server";
+import {
+  MAX_AFTER_YES_BUTTON_LENGTH,
+  MAX_AFTER_YES_DESCRIPTION_LENGTH,
+  MAX_AFTER_YES_TITLE_LENGTH,
+  MAX_QUESTION_LENGTH,
+} from "@/constants/content";
 import { createClient } from "@/lib/supabase/server";
 import { handleError } from "@/lib/utils";
 import getBase64ImageUrl from "@/lib/utils/generateBlurPlaceholder";
@@ -40,11 +46,20 @@ export async function saveContents({
     await supabase
       .from("contents")
       .update({
-        question: contents.question,
-        alert_after_yes: contents.alertAfterYes,
-        after_yes_title: contents.afterYesTitle,
-        after_yes_description: contents.afterYesDescription,
-        after_yes_button_text: contents.afterYesButtonText,
+        question: (contents?.question || "").substring(0, MAX_QUESTION_LENGTH),
+        alert_after_yes: (contents?.alertAfterYes || "").substring(0, 1),
+        after_yes_title: (contents?.afterYesTitle || "").substring(
+          0,
+          MAX_AFTER_YES_TITLE_LENGTH
+        ),
+        after_yes_description: (contents?.afterYesDescription || "").substring(
+          0,
+          MAX_AFTER_YES_DESCRIPTION_LENGTH
+        ),
+        after_yes_button_text: (contents?.afterYesButtonText || "").substring(
+          0,
+          MAX_AFTER_YES_BUTTON_LENGTH
+        ),
         after_yes_button_link: contents.afterYesButtonLink,
         secret_code: contents.secretCode,
         font_family: contents.fontFamily,

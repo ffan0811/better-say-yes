@@ -18,7 +18,7 @@ export default function MainContents({
   return (
     <>
       {title}
-      <div className="flex space-x-4 justify-center mt-4">
+      <div className="flex space-x-4 justify-center mt-8">
         <NoButton themeColor={themeColor} />
         {children}
       </div>
