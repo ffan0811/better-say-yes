@@ -12,14 +12,14 @@ export default function Navigation({}: NavigationProps) {
           <Link href="/">
             <Logo className={`h-auto w-28`} />
           </Link>
-          <ul className="flex items-center space-x-8">
+          {/* <ul className="flex items-center space-x-8">
             <li>
               <Link href="/templates">Templates</Link>
             </li>
             <li>
               <Link href="/pricing">Pricing</Link>
             </li>
-          </ul>
+          </ul> */}
         </div>
         <AuthButton />
       </div>

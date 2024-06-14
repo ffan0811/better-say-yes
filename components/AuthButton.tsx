@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { buttonVariants } from "./ui/button";
+import SignOutButton from "@/components/SignOutButton";
 
 export default async function AuthButton() {
   const supabase = createClient();
@@ -10,24 +11,16 @@ export default async function AuthButton() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const signOut = async () => {
-    "use server";
-
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    return redirect("/login");
-  };
-
   return user ? (
-    // <form action={signOut}>
-    //   <Button className="">Create</Button>
-    // </form>
-    <Link
-      href="/dashboard"
-      className={`${buttonVariants({ variant: "default" })}`}
-    >
-      Dashboard
-    </Link>
+    <div className="flex space-x-4">
+      <Link
+        href="/dashboard"
+        className={`${buttonVariants({ variant: "default" })}`}
+      >
+        Dashboard
+      </Link>
+      <SignOutButton />
+    </div>
   ) : (
     <Link href="/login" className={`${buttonVariants({ variant: "default" })}`}>
       Get Stared
