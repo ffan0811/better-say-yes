@@ -1,4 +1,4 @@
-import ArtsContainer from "@/components/ArtsContainer";
+import ProjectsContainer from "@/components/ProjectsContainer";
 import Layout from "@/components/Layout";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -14,7 +14,7 @@ export default async function DashboardPage() {
   return (
     <Layout>
       <div className="container">
-        <ArtsContainer userId={user.id} />
+        <ProjectsContainer userId={user.id} />
       </div>
     </Layout>
   );

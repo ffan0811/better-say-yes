@@ -17,7 +17,7 @@ const MAX_DRAFT_COUNT = 5;
 export const ITEM_COMMON_CLASSES =
   "border w-full h-40 text-lg rounded-md flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity whitespace-pre-line p-4";
 
-export default function ArtsContainer({ userId }: { userId: string }) {
+export default function ProjectsContainer({ userId }: { userId: string }) {
   const supabase = createClient();
   const [templatesData, setTemplatesData] = useState([]);
   const [draftsData, setDraftsData] = useState([]);
@@ -75,8 +75,10 @@ export default function ArtsContainer({ userId }: { userId: string }) {
       .eq("status", "active")
       .order("updated_at", { ascending: false });
 
+    console.log("data", data);
+
     if (data) {
-      setActiveData(draftsData);
+      setActiveData(data);
     }
     if (error) {
       toast({

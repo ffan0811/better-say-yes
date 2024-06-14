@@ -19,6 +19,7 @@ export default function SaveButton({ contentId }: { contentId: string }) {
     try {
       setIsLoading(true);
       // TODO: get colors and font
+      console.log("co", contents);
       const { error } = await saveContents({ id: contentId, contents });
       if (error) {
         throw new Error(error.message);

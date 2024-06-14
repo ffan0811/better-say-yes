@@ -34,7 +34,7 @@ import {
 
 export default function CreateAfterYes({ contentId }: { contentId: string }) {
   const [contents, setContents] = useAtom(contentsAtom);
-  const [tempLink, setTempLink] = useState<string>("");
+  const [tempLink, setTempLink] = useState<string>(contents.afterYesButtonLink);
 
   const { themeColor } = useColor();
 
@@ -98,7 +98,7 @@ export default function CreateAfterYes({ contentId }: { contentId: string }) {
               <div className="space-y-4 flex flex-col">
                 <Input
                   placeholder="https://bettersayyes.com"
-                  value={contents.afterYesButtonLink}
+                  value={tempLink}
                   onChange={(e) => setTempLink(e.target.value)}
                 />
                 <DialogTrigger

@@ -4,7 +4,7 @@ import { createContent } from "@/actions/content";
 import { useToast } from "../ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ITEM_COMMON_CLASSES } from "../ArtsContainer";
+import { ITEM_COMMON_CLASSES } from "../ProjectsContainer";
 
 export default function CreateButton() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
