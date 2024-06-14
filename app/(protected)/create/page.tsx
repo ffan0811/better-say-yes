@@ -19,6 +19,7 @@ import BackgroundColorPicker from "@/components/BackgroundColorPicker";
 import ColorPicker from "@/components/ColorPicker";
 import ImageWrapper from "@/components/Production/ImageWrapper";
 import { getImageUrls } from "@/actions/content";
+import PreviewButton from "@/components/CreateContainer/PreviewButton";
 
 const sidebarMenu = [
   {
@@ -106,7 +107,10 @@ export default async function CreatePage({
             <div className="flex items-center space-x-2">
               {/* <RefreshCcwIcon className="mr-4 opacity-80" /> */}
               <SaveButton contentId={searchParams.id} />
-              <PaymentButton contentId={searchParams.id} />
+              <PreviewButton contentId={searchParams.id} />
+              {contentsData.status === "draft" && (
+                <PaymentButton contentId={searchParams.id} />
+              )}
             </div>
           </div>
         </nav>

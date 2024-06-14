@@ -2,6 +2,7 @@
 import { ReactNode } from "react";
 import Image from "next/image";
 import { useImages } from "../image-provider";
+import { ImageProps } from "@/types/image";
 
 export const TITLE_COMMON_CLASSES =
   "text-center text-base font-bold uppercase tracking-widest w-full";
