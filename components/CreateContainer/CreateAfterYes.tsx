@@ -41,7 +41,7 @@ export default function CreateAfterYes({ contentId }: { contentId: string }) {
   console.log("contents", contents);
 
   return (
-    <div className="h-[calc(100vh-5rem)]">
+    <div className="min-h-[calc(100vh-5rem)]">
       <AfterYesContents
         contentId={contentId}
         title={

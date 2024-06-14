@@ -59,6 +59,12 @@ export default function CreateContainer({
     setFont(myFontFamily);
   }, [contentsData]);
 
+  useEffect(() => {
+    return () => {
+      setPreview({ stage: PageStepType.MAIN });
+    };
+  }, []);
+
   return (
     <FontWrapper fontFamily={font as FontType}>
       <ColorWrapper backgroundColor={backgroundColor} themeColor={themeColor}>
