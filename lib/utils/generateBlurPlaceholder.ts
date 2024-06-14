@@ -1,23 +1,22 @@
-import { ImageProps } from "@/types/image";
 import sharp from "sharp";
 
-const cache = new Map<ImageProps, string>();
+const cache = new Map<string, string>();
 
 // TODO: make it usable globally, For example, do not have contentId. instead, get just url
-export default async function getBase64ImageUrl(
-  contentId: string,
-  image: ImageProps,
-  isTemplate?: boolean
-): Promise<string> {
+export default async function getBase64ImageUrl({
+  storageUrl,
+  imageName,
+}: {
+  storageUrl: string;
+  imageName: string;
+}): Promise<string> {
   try {
-    let url = cache.get(image);
+    let url = cache.get(imageName);
     if (url) {
       return url;
     }
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${
-        isTemplate ? "templates" : "contents"
-      }/${contentId}/${image.src}`
+      `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${storageUrl}/${imageName}`
     );
     if (!response.ok) {
       throw new Error(`Failed to fetch image: ${response.statusText}`);
@@ -29,9 +28,9 @@ export default async function getBase64ImageUrl(
     const minifiedBuffer = await sharp(Buffer.from(buffer)).blur(20).toBuffer();
 
     const base64 = minifiedBuffer.toString("base64");
-    const mimeType = image.src.endsWith(".png") ? "image/png" : "image/jpeg";
+    const mimeType = imageName.endsWith(".png") ? "image/png" : "image/jpeg";
     url = `data:${mimeType};base64,${base64}`;
-    cache.set(image, url);
+    cache.set(imageName, url);
     return url;
   } catch (error) {}
 }

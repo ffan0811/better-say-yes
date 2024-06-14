@@ -9,7 +9,7 @@ import {
 import { useToast } from "./ui/use-toast";
 import { sendImagesToDB } from "@/fetch/contents";
 import { handleError } from "@/lib/utils";
-import { deleteImage, getImageUrls } from "@/actions/content";
+import { deleteImage } from "@/actions/content";
 import { ImageProps } from "@/types/image";
 
 interface ImageContextType {
@@ -44,32 +44,6 @@ export const ImageProvider = ({
   } | null>(null);
   const [viewableImages, setViewableImages] = useState<ImageProps[]>([]);
   const [isFetching, setIsFetching] = useState<boolean>(false);
-
-  const initialize = async (id: string) => {
-    console.log("init", id);
-    try {
-      const { result, error } = await getImageUrls({
-        contentId: id,
-        isTemplate,
-      });
-      console.log("result", result);
-      console.log("error", error);
-      setViewableImages(result as { src: string; blurDartUrl?: string }[]);
-      if (error) throw new Error(error.message);
-    } catch (e) {
-      const err = handleError(e);
-      toast({
-        variant: "destructive",
-        title: "Failed to fetch images",
-        description: err.message,
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (!contentId) return;
-    initialize(contentId);
-  }, [contentId]);
 
   useEffect(() => {
     if (!contentId || !images) return;

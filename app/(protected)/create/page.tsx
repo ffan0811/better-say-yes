@@ -17,9 +17,8 @@ import { ImageProvider } from "@/components/image-provider";
 import SelectFont from "@/components/selectFont";
 import BackgroundColorPicker from "@/components/BackgroundColorPicker";
 import ColorPicker from "@/components/ColorPicker";
-import ColorWrapper from "@/components/Production/ColorWrapper";
-import FontWrapper from "@/components/Production/FontWrapper";
-import { FontType } from "@/types/font";
+import ImageWrapper from "@/components/Production/ImageWrapper";
+import { getImageUrls } from "@/actions/content";
 
 const sidebarMenu = [
   {
@@ -53,11 +52,22 @@ export default async function CreatePage({
     .eq("id", searchParams.id)
     .single();
 
+  const { result: imageResults, error: imageError } = await getImageUrls({
+    contentId: searchParams.id,
+  });
+
   if (error) {
     return (
       <div className="h-screen w-full flex items-center justify-center">
         <p className="text-3xl">Failed to fetch data</p>
       </div>
+    );
+  }
+
+  if (imageError) {
+    console.log(
+      "Failed to fetch images in Create pages",
+      JSON.stringify(imageError)
     );
   }
 
@@ -82,42 +92,44 @@ export default async function CreatePage({
 
   return (
     <ImageProvider contentId={searchParams.id}>
-      <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500">
-        <div className="flex justify-between items-center w-full px-5">
-          <div className="flex items-center space-x-16">
-            <Link
-              href="/dashboard
+      <ImageWrapper images={imageResults}>
+        <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500">
+          <div className="flex justify-between items-center w-full px-5">
+            <div className="flex items-center space-x-16">
+              <Link
+                href="/dashboard
             "
-            >
-              <Logo className="h-auto w-20" />
-            </Link>
+              >
+                <Logo className="h-auto w-20" />
+              </Link>
+            </div>
+            <div className="flex items-center space-x-2">
+              {/* <RefreshCcwIcon className="mr-4 opacity-80" /> */}
+              <SaveButton contentId={searchParams.id} />
+              <PaymentButton contentId={searchParams.id} />
+            </div>
           </div>
-          <div className="flex items-center space-x-2">
-            {/* <RefreshCcwIcon className="mr-4 opacity-80" /> */}
-            <SaveButton contentId={searchParams.id} />
-            <PaymentButton contentId={searchParams.id} />
-          </div>
+        </nav>
+        <div className="w-80 h-screen overflow-y-auto bg-neutral-900 flex justify-between fixed z-30 left-0 top-0">
+          <Accordion type="multiple" className="w-full mt-20">
+            {sidebarMenu.map((ele) => (
+              <AccordionItem key={ele.value} className="px-5" value={ele.value}>
+                <AccordionTrigger>{ele.label}</AccordionTrigger>
+                <AccordionContent className="pt-2 pb-5">
+                  {comp[ele.value]}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
-      </nav>
-      <div className="w-80 h-screen overflow-y-auto bg-neutral-900 flex justify-between fixed z-30 left-0 top-0">
-        <Accordion type="multiple" className="w-full mt-20">
-          {sidebarMenu.map((ele) => (
-            <AccordionItem key={ele.value} className="px-5" value={ele.value}>
-              <AccordionTrigger>{ele.label}</AccordionTrigger>
-              <AccordionContent className="pt-2 pb-5">
-                {comp[ele.value]}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </div>
-      <div className="ml-80 mt-20">
-        <CreateContainer
-          contentId={searchParams.id}
-          contentsData={contentsData}
-        />
-      </div>
-      <PageSwitcher />
+        <div className="ml-80 mt-20">
+          <CreateContainer
+            contentId={searchParams.id}
+            contentsData={contentsData}
+          />
+        </div>
+        <PageSwitcher />
+      </ImageWrapper>
     </ImageProvider>
   );
 }

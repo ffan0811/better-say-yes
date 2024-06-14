@@ -4,6 +4,7 @@ import { handleError } from "@/lib/utils";
 import getBase64ImageUrl from "@/lib/utils/generateBlurPlaceholder";
 import { ContentsType } from "@/types/content";
 import { ErrorType } from "@/types/global";
+import { ImageProps } from "@/types/image";
 
 export async function createContent() {
   let result,
@@ -91,43 +92,40 @@ export async function getImageUrls({
   contentId: string;
   isTemplate?: boolean;
 }) {
-  let result,
+  let result: ImageProps[],
     error: ErrorType = null;
   try {
+    const tableName = isTemplate ? "templates" : "contents";
     const supabase = createClient();
+
     const { data, error } = await supabase.storage
-      .from(isTemplate ? "templates" : "contents")
+      .from(tableName)
       .list(contentId, {
-        limit: 10,
+        limit: 30,
         offset: 0,
         sortBy: { column: "created_at", order: "asc" },
       });
 
-    if (error) {
-      console.log("nnnn");
-      throw new Error(error.message);
-    }
-    console.log("ssss?");
+    if (error) throw new Error(error.message);
 
-    const imagePromises = data.map(async (ele) => {
-      const blurDataUrl = await getBase64ImageUrl(
-        contentId,
-        {
-          src: ele.name,
-          blurDataUrl: "",
-        },
-        isTemplate
-      );
-      return { src: ele.name, blurDataUrl };
+    let reducedResults: ImageProps[] = [];
+
+    const blurImagePromises = data.map((image: { name: string }) => {
+      return getBase64ImageUrl({
+        imageName: image.name,
+        storageUrl: `/${tableName}/${contentId}`,
+      });
     });
+    const imagesWithBlurDataUrls = await Promise.all(blurImagePromises);
 
-    console.log("yessss?");
+    for (let i = 0; i < data.length; i++) {
+      reducedResults.push({
+        src: data[i].name,
+        blurDataUrl: imagesWithBlurDataUrls[i],
+      });
+    }
 
-    const imageNames = await Promise.all(imagePromises);
-
-    console.log("bbbb");
-
-    result = imageNames;
+    result = reducedResults;
   } catch (e) {
     const err = handleError(e);
     error = err;
