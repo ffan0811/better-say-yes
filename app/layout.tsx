@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
+import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 // import Navigation from "@/components/Navigation";
@@ -6,6 +7,7 @@ import SessionProvider from "@/components/session-provider";
 import { FontProvider } from "@/components/font-provider";
 import { ColorProvider } from "@/components/color-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import ProgressBarProvider from "@/components/progress-bar-provider";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -25,18 +27,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-background text-foreground">
-        <SessionProvider>
-          <ColorProvider>
-            <FontProvider>
-              <ThemeProvider attribute="class" defaultTheme="dark">
-                <TooltipProvider delayDuration={100}>
-                  {children}
-                </TooltipProvider>
-                <Toaster />
-              </ThemeProvider>
-            </FontProvider>
-          </ColorProvider>
-        </SessionProvider>
+        <ProgressBarProvider>
+          <SessionProvider>
+            <ColorProvider>
+              <FontProvider>
+                <ThemeProvider attribute="class" defaultTheme="dark">
+                  <TooltipProvider delayDuration={100}>
+                    {children}
+                  </TooltipProvider>
+                  <Toaster />
+                </ThemeProvider>
+              </FontProvider>
+            </ColorProvider>
+          </SessionProvider>
+        </ProgressBarProvider>
       </body>
     </html>
   );
