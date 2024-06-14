@@ -95,20 +95,19 @@ export async function getImageUrls({
     error: ErrorType = null;
   try {
     const supabase = createClient();
-    console.log("hello");
     const { data, error } = await supabase.storage
       .from(isTemplate ? "templates" : "contents")
       .list(contentId, {
-        limit: 100,
+        limit: 1,
         offset: 0,
         sortBy: { column: "created_at", order: "asc" },
       });
 
-    console.log("data", data);
-
     if (error) {
+      console.log("nnnn");
       throw new Error(error.message);
     }
+    console.log("ssss?");
 
     const imagePromises = data.map(async (ele) => {
       const blurDataUrl = await getBase64ImageUrl(
@@ -122,7 +121,11 @@ export async function getImageUrls({
       return { src: ele.name, blurDataUrl };
     });
 
+    console.log("yessss?");
+
     const imageNames = await Promise.all(imagePromises);
+
+    console.log("bbbb");
 
     result = imageNames;
   } catch (e) {

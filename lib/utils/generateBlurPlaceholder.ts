@@ -1,4 +1,3 @@
-"use server";
 import { ImageProps } from "@/types/image";
 import sharp from "sharp";
 
@@ -20,7 +19,6 @@ export default async function getBase64ImageUrl(
         isTemplate ? "templates" : "contents"
       }/${contentId}/${image.src}`
     );
-    console.log("urlsr", response.ok);
     if (!response.ok) {
       throw new Error(`Failed to fetch image: ${response.statusText}`);
     }

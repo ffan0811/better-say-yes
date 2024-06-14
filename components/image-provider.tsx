@@ -131,8 +131,6 @@ export const ImageProvider = ({
     }
   }, [images]);
 
-  console.log("viewableImages", viewableImages);
-
   return (
     <ImageContext.Provider
       value={{
