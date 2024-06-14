@@ -31,7 +31,9 @@ export default function ProjectsContainer({ userId }: { userId: string }) {
 
     const { data, error } = await supabase
       .from("templates")
-      .select("id, background_color, theme_color, name, created_at, updated_at")
+      .select(
+        "id, background_color, font_family, theme_color, name, created_at, updated_at"
+      )
       .eq("status", "active")
       .order("updated_at", { ascending: false });
     if (data) {

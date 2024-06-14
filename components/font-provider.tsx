@@ -74,8 +74,11 @@ interface FontContextType {
   font: string;
   fontClassName: string;
   setFont: (font: FontType) => void;
-  getFontClasses: (font: keyof typeof fonts) => void;
+  getFontClasses: (font: FontName) => string;
 }
+
+type Fonts = typeof fonts;
+type FontName = keyof Fonts;
 
 const FontContext = createContext<FontContextType | undefined>(undefined);
 
@@ -88,7 +91,7 @@ export const FontProvider = ({ children }: { children: ReactNode }) => {
     setFontClassName(classes?.className || "");
   }, [font]);
 
-  const getFontClasses = (fontName: keyof typeof fonts) => {
+  const getFontClasses = (fontName: FontName): string => {
     const classes = fonts[fontName];
     return classes?.className || "";
   };
