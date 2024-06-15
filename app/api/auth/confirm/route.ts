@@ -10,8 +10,20 @@ export async function GET(request: Request) {
   const origin = process.env.SITE_ORIGIN || requestUrl.origin;
   // const redirectTo = requestUrl.searchParams.get("emailRedirectTo");
 
+  // for google
+  const provider = requestUrl.searchParams.get("provider");
+  const code = requestUrl.searchParams.get("code");
+
+  const supabase = createClient();
+
+  if (provider === "google" && code) {
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+    if (error) {
+      return NextResponse.json({ message: error.message }, { status: 500 });
+    }
+  }
+
   if (tokenHash && type) {
-    const supabase = createClient();
     const { error } = await supabase.auth.verifyOtp({
       token_hash: tokenHash,
       type,
@@ -25,9 +37,11 @@ export async function GET(request: Request) {
   //   return NextResponse.redirect(redirectTo);
   // }
 
-  if (type === "signup") {
+  if (type === "signup" || provider === "google") {
+    console.log("heh?");
     return NextResponse.redirect(`${origin}/welcome`);
   } else {
+    console.log("poo");
     return NextResponse.redirect(`${origin}/dashboard`);
   }
 }

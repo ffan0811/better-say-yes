@@ -2,7 +2,7 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { SubmitButton } from "./submit-button";
+import { SubmitButton as EmailSubmitButton } from "./submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ResponsiveWrapper from "@/components/ResponsiveWrapper";
@@ -13,6 +13,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import GoogleLogin from "@/components/GoogleLogin";
+import { Separator } from "@/components/ui/separator";
 
 export default function Login({
   searchParams,
@@ -48,10 +50,12 @@ export default function Login({
           <CardHeader>
             <CardTitle>Welcome,</CardTitle>
             <CardDescription>
-              We will send you a verification email
+              Make some fun moments with your people with us
             </CardDescription>
           </CardHeader>
           <CardContent>
+            <GoogleLogin className="w-full" />
+            <Separator className="block my-8" />
             <form className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -60,9 +64,9 @@ export default function Login({
                 placeholder="you@example.com"
                 required
               />
-              <SubmitButton formAction={signIn} className="mb-2">
+              <EmailSubmitButton formAction={signIn} className="mb-2">
                 Continue with Email
-              </SubmitButton>
+              </EmailSubmitButton>
               {searchParams?.message && (
                 <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
                   {searchParams.message}

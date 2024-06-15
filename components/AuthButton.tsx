@@ -23,7 +23,7 @@ export default async function AuthButton() {
     </div>
   ) : (
     <Link href="/login" className={`${buttonVariants({ variant: "default" })}`}>
-      Get Stared
+      Get Started
     </Link>
   );
 }
