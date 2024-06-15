@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { ITEM_COMMON_CLASSES } from "./ProjectsContainer";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { UnlinkIcon } from "lucide-react";
+import { Trash2Icon } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useToast } from "./ui/use-toast";
 import { ERROR_DEFAULT_TITLE } from "@/constants/message";
 
-export type ActiveType = {
+export type InactiveType = {
   id: string;
   background_color: string;
   theme_color: string;
@@ -17,17 +17,17 @@ export type ActiveType = {
   updated_at: string;
 };
 
-export default function ActiveContainer({
+export default function InactiveContainer({
   data,
   onRefresh,
 }: {
-  data: ActiveType[];
+  data: InactiveType[];
   onRefresh: () => void;
 }) {
   const supabase = createClient();
   const { toast } = useToast();
 
-  const handleTakeDownContent = async (
+  const handleDeleteContent = async (
     e: React.MouseEvent<HTMLButtonElement>,
     contentId: string,
     contentName: string
@@ -36,14 +36,14 @@ export default function ActiveContainer({
     e.stopPropagation();
 
     const confirm = window.confirm(
-      `Are you sure you want to take your ${contentName} offline? It will no longer be public.`
+      `Are you sure you want to delete ${contentName}`
     );
 
     if (!confirm) return;
 
     const { data, error } = await supabase
       .from("contents")
-      .update({ status: "inactive" })
+      .delete()
       .eq("id", contentId);
 
     if (error) {
@@ -61,7 +61,7 @@ export default function ActiveContainer({
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Active</CardTitle>
+        <CardTitle>Inactive</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-4 gap-4">
@@ -85,11 +85,11 @@ export default function ActiveContainer({
                 <button
                   type="button"
                   onClick={(e) =>
-                    handleTakeDownContent(e, ele.id, ele.name || `Draft ${idx}`)
+                    handleDeleteContent(e, ele.id, ele.name || `Draft ${idx}`)
                   }
                   className="hidden group-hover:block absolute right-3 top-3"
                 >
-                  <UnlinkIcon className="w-6 h-6 " />
+                  <Trash2Icon className="w-6 h-6 " />
                 </button>
               </a>
             </Link>
