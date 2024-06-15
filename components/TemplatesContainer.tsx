@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
 import { createContent } from "@/actions/content";
+import { Skeleton } from "./ui/skeleton";
 
 export type TemplateType = {
   id: string;
@@ -19,7 +20,13 @@ export type TemplateType = {
   name: string;
 };
 
-export default function TemplatesContainer({ data }: { data: TemplateType[] }) {
+export default function TemplatesContainer({
+  data,
+  isFetching,
+}: {
+  data: TemplateType[];
+  isFetching: boolean;
+}) {
   const { getFontClasses } = useFont();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
@@ -50,6 +57,11 @@ export default function TemplatesContainer({ data }: { data: TemplateType[] }) {
   const handleClickLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.stopPropagation();
   };
+
+  const loaders = Array.from({ length: 4 }, (_, index) => (
+    <Loader key={index} />
+  ));
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -57,22 +69,28 @@ export default function TemplatesContainer({ data }: { data: TemplateType[] }) {
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-4 gap-4">
-          {data.map((ele, idx) => {
-            const fontClasses = getFontClasses(ele.font_family as FontType);
-            return (
-              <Item
-                key={ele.id}
-                className={fontClasses}
-                data={ele}
-                onClick={(e) => handleCreateWithTemplate(e, ele)}
-                onClickLink={(e) => handleClickLink(e)}
-              />
-            );
-          })}
+          {isFetching
+            ? loaders
+            : data.map((ele, idx) => {
+                const fontClasses = getFontClasses(ele.font_family as FontType);
+                return (
+                  <Item
+                    key={ele.id}
+                    className={fontClasses}
+                    data={ele}
+                    onClick={(e) => handleCreateWithTemplate(e, ele)}
+                    onClickLink={(e) => handleClickLink(e)}
+                  />
+                );
+              })}
         </div>
       </CardContent>
     </Card>
   );
+}
+
+function Loader() {
+  return <Skeleton className="w-full h-40 rounded-md" />;
 }
 
 function Item({

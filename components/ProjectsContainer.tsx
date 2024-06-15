@@ -20,10 +20,12 @@ export default function ProjectsContainer({ userId }: { userId: string }) {
   const [draftsData, setDraftsData] = useState([]);
   const [activeData, setActiveData] = useState([]);
   const { toast } = useToast();
+  const [isLoadingTemplates, setIsLoadingTemplates] = useState<boolean>(true);
 
   const getTemplates = async () => {
     if (!userId) return;
 
+    setIsLoadingTemplates(true);
     const { data, error } = await supabase
       .from("templates")
       .select(
@@ -41,6 +43,7 @@ export default function ProjectsContainer({ userId }: { userId: string }) {
         description: ERROR_DEFAULT_DESCRIPTION,
       });
     }
+    setIsLoadingTemplates(false);
   };
 
   const getDrafts = async () => {
@@ -95,7 +98,10 @@ export default function ProjectsContainer({ userId }: { userId: string }) {
   }, []);
   return (
     <div className="space-y-4">
-      <TemplatesContainer data={templatesData} />
+      <TemplatesContainer
+        data={templatesData}
+        isFetching={isLoadingTemplates}
+      />
       <Item title="Drafts" data={draftsData}>
         {draftsData.length > MAX_DRAFT_COUNT ? null : <CreateButton />}
       </Item>
