@@ -11,9 +11,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { SubmitButton } from "@/app/(noAuthOnly)/login/submit-button";
 import { redirect } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
+import SignOutButton from "@/components/SignOutButton";
+import { SubmitButton } from "@/components/SubmitButton";
 
 export default async function SettingsPage({
   searchParams,
@@ -45,12 +46,17 @@ export default async function SettingsPage({
       <div className="container">
         <Card>
           <CardHeader>
-            <CardTitle>Welcome, {user.email}</CardTitle>
+            <CardTitle className="flex items-center space-x-4">
+              <p>Welcome, {user.email}</p>
+              <SignOutButton />
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="destructive">Delete account</Button>
+                <div className="text-right mt-8">
+                  <Button variant="destructive">Delete account</Button>
+                </div>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>

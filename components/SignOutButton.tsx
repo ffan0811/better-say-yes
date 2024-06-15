@@ -1,8 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
-import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
+import { SubmitButton } from "@/components/SubmitButton";
 import { LogOutIcon } from "lucide-react";
-import { SubmitButton } from "./submit-button";
 
 export default function SignOutButton() {
   const signOut = async () => {
@@ -15,7 +14,13 @@ export default function SignOutButton() {
 
   return (
     <form>
-      <SubmitButton formAction={signOut} type="submit" className="px-2">
+      <SubmitButton
+        formAction={signOut}
+        variant="outline"
+        size="icon"
+        type="submit"
+        className="px-2"
+      >
         <LogOutIcon />
       </SubmitButton>
     </form>

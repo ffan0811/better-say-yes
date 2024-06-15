@@ -11,6 +11,7 @@ import {
 } from "@/constants/message";
 import { useToast } from "./ui/use-toast";
 import { CheckboxWithText } from "./ui/checkbox";
+import { handleError } from "@/lib/utils";
 
 export default function AccountForm({
   user,
@@ -47,13 +48,14 @@ export default function AccountForm({
           is_email_subscribed: !isEmailNoSubscribed,
         },
       });
-      if (error) throw error;
+      if (error) throw new Error(error.message);
       router.push("/dashboard");
     } catch (error) {
+      const err = handleError(error);
       toast({
         variant: "destructive",
         title: ERROR_DEFAULT_TITLE,
-        description: ERROR_DEFAULT_DESCRIPTION,
+        description: err.message,
       });
     } finally {
       setLoading(false);
