@@ -2,12 +2,9 @@
 
 import { useFormStatus } from "react-dom";
 import { forwardRef, type ComponentProps } from "react";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 
-type Props = ComponentProps<"button"> & {
-  // isPending?: boolean;
-  // pendingText?: string;
-};
+type Props = ComponentProps<"button"> & ButtonProps;
 
 export const SubmitButton = forwardRef<HTMLButtonElement, Props>(
   ({ children, ...props }, ref) => {

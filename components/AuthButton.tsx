@@ -1,8 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import SignOutButton from "@/components/SignOutButton";
+import { SettingsIcon } from "lucide-react";
 
 export default async function AuthButton() {
   const supabase = createClient();
@@ -19,7 +20,16 @@ export default async function AuthButton() {
       >
         Dashboard
       </Link>
-      <SignOutButton />
+      <Link
+        href="/settings"
+        className={`px-2 ${buttonVariants({
+          variant: "outline",
+          size: "icon",
+        })}`}
+      >
+        <SettingsIcon />
+      </Link>
+      {/* <SignOutButton /> */}
     </div>
   ) : (
     <Link href="/login" className={`${buttonVariants({ variant: "default" })}`}>
