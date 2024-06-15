@@ -8,6 +8,7 @@ import { FontProvider } from "@/components/font-provider";
 import { ColorProvider } from "@/components/color-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import ProgressBarProvider from "@/components/progress-bar-provider";
+import { GlobalLoaderProvider } from "@/components/global-loader-provider";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -32,10 +33,12 @@ export default function RootLayout({
             <ColorProvider>
               <FontProvider>
                 <ThemeProvider attribute="class" defaultTheme="dark">
-                  <TooltipProvider delayDuration={100}>
-                    {children}
-                  </TooltipProvider>
-                  <Toaster />
+                  <GlobalLoaderProvider>
+                    <TooltipProvider delayDuration={100}>
+                      {children}
+                    </TooltipProvider>
+                    <Toaster />
+                  </GlobalLoaderProvider>
                 </ThemeProvider>
               </FontProvider>
             </ColorProvider>

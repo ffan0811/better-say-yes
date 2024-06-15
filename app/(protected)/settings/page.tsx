@@ -15,6 +15,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
 import SignOutButton from "@/components/SignOutButton";
 import { SubmitButton } from "@/components/SubmitButton";
+import LoaderEntirePage from "@/components/loaderEntirePage";
 
 export default async function SettingsPage({
   searchParams,

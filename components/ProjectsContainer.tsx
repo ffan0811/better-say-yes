@@ -134,9 +134,9 @@ function Item({
               href={`/create?id=${ele.id}`}
               className={ITEM_COMMON_CLASSES}
               style={{
-                background: ele.background_color,
-                color: ele.theme_color,
-                borderColor: ele.theme_color,
+                background: ele?.background_color,
+                color: ele?.theme_color,
+                borderColor: ele?.theme_color,
               }}
             >
               {ele.name || `Draft ${idx}`}

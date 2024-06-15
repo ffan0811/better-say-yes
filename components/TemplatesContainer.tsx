@@ -11,6 +11,8 @@ import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
 import { createContent } from "@/actions/content";
 import { Skeleton } from "./ui/skeleton";
+import { globalLoaderAtom } from "@/atoms/global";
+import { useAtom } from "jotai";
 
 export type TemplateType = {
   id: string;
@@ -28,7 +30,7 @@ export default function TemplatesContainer({
   isFetching: boolean;
 }) {
   const { getFontClasses } = useFont();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isGlobalLoading, setIsGlobalLoading] = useAtom(globalLoaderAtom);
   const { toast } = useToast();
   const router = useRouter();
 
@@ -36,7 +38,10 @@ export default function TemplatesContainer({
     e: React.MouseEvent<HTMLDivElement>,
     templateData: TemplateType
   ) => {
-    setIsLoading(true);
+    setIsGlobalLoading({
+      isActive: true,
+      message: "Generating your page...",
+    });
     const { result, error } = await createContent({
       fontFamily: templateData.font_family as FontType,
       backgroundColor: templateData.background_color,
@@ -78,7 +83,10 @@ export default function TemplatesContainer({
                     key={ele.id}
                     className={fontClasses}
                     data={ele}
-                    onClick={(e) => handleCreateWithTemplate(e, ele)}
+                    onClick={(e) =>
+                      !isGlobalLoading.isActive &&
+                      handleCreateWithTemplate(e, ele)
+                    }
                     onClickLink={(e) => handleClickLink(e)}
                   />
                 );

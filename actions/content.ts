@@ -28,7 +28,7 @@ export async function createContent(params?: {
       .insert({
         font_family: params?.fontFamily || null,
         theme_color: params?.themeColor || null,
-        background_color: params.backgroundColor || null,
+        background_color: params?.backgroundColor || null,
       })
       .select(`id`)
       .single();

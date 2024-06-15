@@ -2,17 +2,21 @@
 import { Button } from "@/components/ui/button";
 import { createContent } from "@/actions/content";
 import { useToast } from "@/components/ui/use-toast";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ITEM_COMMON_CLASSES } from "@/components/ProjectsContainer";
+import { useAtom } from "jotai";
+import { globalLoaderAtom } from "@/atoms/global";
 
 export default function CreateButton() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isGlobalLoading, setIsGlobalLoading] = useAtom(globalLoaderAtom);
   const { toast } = useToast();
   const router = useRouter();
 
   const handleSubmit = async () => {
-    setIsLoading(true);
+    setIsGlobalLoading({
+      isActive: true,
+      message: "Generating your page...",
+    });
     const { result, error } = await createContent();
     if (error) {
       toast({
@@ -31,7 +35,7 @@ export default function CreateButton() {
       variant="outline"
       spinnerColor="stroke-neutral-50"
       className={ITEM_COMMON_CLASSES}
-      isLoading={isLoading}
+      isLoading={isGlobalLoading.isActive}
       onClick={handleSubmit}
     >
       + Create
