@@ -1,6 +1,5 @@
 import Layout from "@/components/Layout";
 import ImageRotator from "@/components/ImageRotator";
-import Logo from "@/components/Logo";
 
 export default async function Index() {
   return (

@@ -1,5 +1,4 @@
 import { Toaster } from "@/components/ui/toaster";
-import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 // import Navigation from "@/components/Navigation";
@@ -16,8 +15,9 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Your Fun, Personalized Decision-Making Page",
+  description:
+    "You can create and customize fun decision-making pages. Engage with creative questions, interactive yes or no options, and personalized images. Join us for 100% fun and success in every decision!",
 };
 
 export default function RootLayout({
