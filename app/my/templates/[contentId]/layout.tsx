@@ -1,7 +1,8 @@
 import { getImageUrls } from "@/actions/content";
 import ImageWrapper from "@/components/Production/ImageWrapper";
 import { ImageProvider } from "@/components/image-provider";
-import { ReactNode } from "react";
+import LoaderEntirePage from "@/components/loaderEntirePage";
+import { ReactNode, Suspense } from "react";
 
 export default async function TemplateContentPageLayout({
   params,
@@ -24,8 +25,10 @@ export default async function TemplateContentPageLayout({
   }
 
   return (
-    <ImageProvider isTemplate contentId={params.contentId}>
-      <ImageWrapper images={result}>{children}</ImageWrapper>
-    </ImageProvider>
+    <Suspense fallback={<LoaderEntirePage />}>
+      <ImageProvider isTemplate contentId={params.contentId}>
+        <ImageWrapper images={result}>{children}</ImageWrapper>
+      </ImageProvider>
+    </Suspense>
   );
 }
