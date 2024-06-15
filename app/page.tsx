@@ -1,56 +1,22 @@
-import DeployButton from "../components/DeployButton";
-import AuthButton from "../components/AuthButton";
-import { createClient } from "@/lib/supabase/server";
-import ConnectSupabaseSteps from "@/components/tutorial/ConnectSupabaseSteps";
-import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
-import Header from "@/components/Header";
-import Logo from "@/components/Logo";
-import Navigation from "@/components/Navigation";
 import Layout from "@/components/Layout";
+import ImageRotator from "@/components/ImageRotator";
+import Logo from "@/components/Logo";
 
 export default async function Index() {
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient();
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
-
-  const isSupabaseConnected = canInitSupabaseClient();
-
   return (
-    <Layout hasGap>
-      <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        <div className="flex-1 flex flex-col gap-20 max-w-4xl px-3">
-          <Header />
-          <main className="flex-1 flex flex-col gap-6">
-            <h2 className="font-bold text-4xl mb-4">Next steps</h2>
-            {isSupabaseConnected ? (
-              <SignUpUserSteps />
-            ) : (
-              <ConnectSupabaseSteps />
-            )}
-          </main>
-        </div>
-
-        <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
-          <p>
-            Powered by{" "}
-            <a
-              href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-              target="_blank"
-              className="font-bold hover:underline"
-              rel="noreferrer"
-            >
-              Supabase
-            </a>
-          </p>
-        </footer>
-      </div>
+    <Layout>
+      <main className="flex-1 flex flex-col">
+        <section className="h-screen absolute w-full left-0 top-0 flex justify-center items-center -z-[1]">
+          <div className="flex items-center text-7xl font-bold">
+            100%{" "}
+            <div className="mx-4">
+              <ImageRotator />
+            </div>{" "}
+            100% fun
+          </div>
+        </section>
+        <section></section>
+      </main>
     </Layout>
   );
 }

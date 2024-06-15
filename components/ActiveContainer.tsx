@@ -83,6 +83,7 @@ export default function ActiveContainer({
               >
                 <span className="block"> {ele.name || `Draft ${idx}`}</span>
                 <button
+                  data-prevent-nprogress={true}
                   type="button"
                   onClick={(e) =>
                     handleTakeDownContent(e, ele.id, ele.name || `Draft ${idx}`)

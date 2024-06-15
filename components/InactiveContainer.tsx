@@ -83,6 +83,7 @@ export default function InactiveContainer({
               >
                 <span className="block"> {ele.name || `Draft ${idx}`}</span>
                 <button
+                  data-prevent-nprogress={true}
                   type="button"
                   onClick={(e) =>
                     handleDeleteContent(e, ele.id, ele.name || `Draft ${idx}`)
