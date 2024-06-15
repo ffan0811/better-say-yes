@@ -17,14 +17,13 @@ export type Database = {
           after_yes_title: string | null
           alert_after_yes: string | null
           background_color: string | null
-          contrasting_color: string | null
           created_at: string
           font_family: string | null
           id: string
           name: string | null
           question: string | null
           secret_code: string | null
-          status: Database["public"]["Enums"]["content_status"]
+          status: Database["public"]["Enums"]["status_content"]
           theme_color: string | null
           updated_at: string | null
           user_id: string | null
@@ -36,14 +35,13 @@ export type Database = {
           after_yes_title?: string | null
           alert_after_yes?: string | null
           background_color?: string | null
-          contrasting_color?: string | null
           created_at?: string
           font_family?: string | null
           id?: string
           name?: string | null
           question?: string | null
           secret_code?: string | null
-          status?: Database["public"]["Enums"]["content_status"]
+          status?: Database["public"]["Enums"]["status_content"]
           theme_color?: string | null
           updated_at?: string | null
           user_id?: string | null
@@ -55,14 +53,13 @@ export type Database = {
           after_yes_title?: string | null
           alert_after_yes?: string | null
           background_color?: string | null
-          contrasting_color?: string | null
           created_at?: string
           font_family?: string | null
           id?: string
           name?: string | null
           question?: string | null
           secret_code?: string | null
-          status?: Database["public"]["Enums"]["content_status"]
+          status?: Database["public"]["Enums"]["status_content"]
           theme_color?: string | null
           updated_at?: string | null
           user_id?: string | null
@@ -138,14 +135,13 @@ export type Database = {
           after_yes_title: string | null
           alert_after_yes: string | null
           background_color: string | null
-          constrasting_color: string | null
           created_at: string
           font_family: string | null
           id: string
           name: string | null
           question: string | null
           secret_code: string | null
-          status: Database["public"]["Enums"]["content_status"]
+          status: Database["public"]["Enums"]["status_content"]
           theme_color: string | null
           updated_at: string | null
           user_id: string | null
@@ -157,14 +153,13 @@ export type Database = {
           after_yes_title?: string | null
           alert_after_yes?: string | null
           background_color?: string | null
-          constrasting_color?: string | null
           created_at?: string
           font_family?: string | null
           id?: string
           name?: string | null
           question?: string | null
           secret_code?: string | null
-          status?: Database["public"]["Enums"]["content_status"]
+          status?: Database["public"]["Enums"]["status_content"]
           theme_color?: string | null
           updated_at?: string | null
           user_id?: string | null
@@ -176,14 +171,13 @@ export type Database = {
           after_yes_title?: string | null
           alert_after_yes?: string | null
           background_color?: string | null
-          constrasting_color?: string | null
           created_at?: string
           font_family?: string | null
           id?: string
           name?: string | null
           question?: string | null
           secret_code?: string | null
-          status?: Database["public"]["Enums"]["content_status"]
+          status?: Database["public"]["Enums"]["status_content"]
           theme_color?: string | null
           updated_at?: string | null
           user_id?: string | null
@@ -214,6 +208,7 @@ export type Database = {
         | "inactive"
         | "."
       currencies: "$"
+      status_content: "in_progress" | "pending" | "blocked" | "active"
     }
     CompositeTypes: {
       [_ in never]: never

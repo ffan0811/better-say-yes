@@ -1,7 +1,7 @@
 import { getImageUrls } from "@/actions/content";
 import ImageWrapper from "@/components/Production/ImageWrapper";
 import { ImageProvider } from "@/components/image-provider";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 
 export default async function ContentPageLayout({
   params,
@@ -23,8 +23,10 @@ export default async function ContentPageLayout({
     console.log("Failed to fetch template images", JSON.stringify(error));
   }
   return (
-    <ImageProvider contentId={params.contentId}>
-      <ImageWrapper images={result}>{children}</ImageWrapper>
-    </ImageProvider>
+    <Suspense fallback={<p className="text-red-500">loading.....</p>}>
+      <ImageProvider contentId={params.contentId}>
+        <ImageWrapper images={result}>{children}</ImageWrapper>
+      </ImageProvider>
+    </Suspense>
   );
 }

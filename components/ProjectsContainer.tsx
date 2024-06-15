@@ -53,7 +53,7 @@ export default function ProjectsContainer({ userId }: { userId: string }) {
       .from("contents")
       .select("id, background_color, theme_color, name, created_at, updated_at")
       .eq("user_id", userId)
-      .eq("status", "draft")
+      .eq("status", "in_progress")
       .order("updated_at", { ascending: false });
     if (data) {
       setDraftsData(data);

@@ -108,7 +108,7 @@ export default async function CreatePage({
               {/* <RefreshCcwIcon className="mr-4 opacity-80" /> */}
               <SaveButton contentId={searchParams.id} />
               <PreviewButton contentId={searchParams.id} />
-              {contentsData.status === "draft" && (
+              {contentsData.status === "in_progress" && (
                 <PaymentButton contentId={searchParams.id} />
               )}
             </div>
