@@ -11,7 +11,7 @@ import { ERROR_DEFAULT_TITLE } from "@/constants/message";
 
 const MAX_DRAFT_COUNT = 5;
 
-export type InProgressType = {
+export type DraftType = {
   id: string;
   background_color: string;
   theme_color: string;
@@ -20,11 +20,11 @@ export type InProgressType = {
   updated_at: string;
 };
 
-export default function InProgressContainer({
+export default function DraftContainer({
   data,
   onRefresh,
 }: {
-  data: InProgressType[];
+  data: DraftType[];
   onRefresh: () => void;
 }) {
   const supabase = createClient();
@@ -38,7 +38,9 @@ export default function InProgressContainer({
     e.preventDefault();
     e.stopPropagation();
 
-    const confirm = window.confirm(`Do you want to delete ${contentName}`);
+    const confirm = window.confirm(
+      `Are you sure you want to delete ${contentName}`
+    );
 
     if (!confirm) return;
 
@@ -62,7 +64,7 @@ export default function InProgressContainer({
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>In Progress</CardTitle>
+        <CardTitle>Drafts</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-4 gap-4">

@@ -23,7 +23,7 @@ export type Database = {
           name: string | null
           question: string | null
           secret_code: string | null
-          status: Database["public"]["Enums"]["status_content"]
+          status: Database["public"]["Enums"]["content_status"]
           theme_color: string | null
           updated_at: string | null
           user_id: string | null
@@ -41,7 +41,7 @@ export type Database = {
           name?: string | null
           question?: string | null
           secret_code?: string | null
-          status?: Database["public"]["Enums"]["status_content"]
+          status?: Database["public"]["Enums"]["content_status"]
           theme_color?: string | null
           updated_at?: string | null
           user_id?: string | null
@@ -59,7 +59,7 @@ export type Database = {
           name?: string | null
           question?: string | null
           secret_code?: string | null
-          status?: Database["public"]["Enums"]["status_content"]
+          status?: Database["public"]["Enums"]["content_status"]
           theme_color?: string | null
           updated_at?: string | null
           user_id?: string | null
@@ -141,7 +141,7 @@ export type Database = {
           name: string | null
           question: string | null
           secret_code: string | null
-          status: Database["public"]["Enums"]["status_content"]
+          status: Database["public"]["Enums"]["content_status"]
           theme_color: string | null
           updated_at: string | null
           user_id: string | null
@@ -159,7 +159,7 @@ export type Database = {
           name?: string | null
           question?: string | null
           secret_code?: string | null
-          status?: Database["public"]["Enums"]["status_content"]
+          status?: Database["public"]["Enums"]["content_status"]
           theme_color?: string | null
           updated_at?: string | null
           user_id?: string | null
@@ -177,7 +177,7 @@ export type Database = {
           name?: string | null
           question?: string | null
           secret_code?: string | null
-          status?: Database["public"]["Enums"]["status_content"]
+          status?: Database["public"]["Enums"]["content_status"]
           theme_color?: string | null
           updated_at?: string | null
           user_id?: string | null
@@ -200,13 +200,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      content_status:
-        | "draft"
-        | "pending"
-        | "blocked"
-        | "active"
-        | "inactive"
-        | "."
+      content_status: "draft" | "pending" | "blocked" | "active" | "inactive"
       currencies: "$"
       status_content: "in_progress" | "pending" | "blocked" | "active"
     }

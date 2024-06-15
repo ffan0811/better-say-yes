@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { ERROR_DEFAULT_DESCRIPTION } from "@/constants/message";
 import TemplatesContainer, { TemplateType } from "./TemplatesContainer";
-import InProgressContainer from "./InProgressContainer";
+import InProgressContainer from "./DraftContainer";
 import ActiveContainer from "./ActiveContainer";
 
 export const ITEM_COMMON_CLASSES =
@@ -49,7 +49,7 @@ export default function ProjectsContainer({ userId }: { userId: string }) {
       .from("contents")
       .select("id, background_color, theme_color, name, created_at, updated_at")
       .eq("user_id", userId)
-      .eq("status", "in_progress")
+      .eq("status", "draft")
       .order("updated_at", { ascending: false });
     if (data) {
       setDraftsData(data);
@@ -72,8 +72,6 @@ export default function ProjectsContainer({ userId }: { userId: string }) {
       .eq("user_id", userId)
       .eq("status", "active")
       .order("updated_at", { ascending: false });
-
-    console.log("data", data);
 
     if (data) {
       setActiveData(data);
@@ -99,7 +97,15 @@ export default function ProjectsContainer({ userId }: { userId: string }) {
         isFetching={isLoadingTemplates}
       />
       <InProgressContainer data={draftsData} onRefresh={getDrafts} />
-      {activeData.length > 0 && <ActiveContainer data={activeData} />}
+      {activeData.length > 0 && (
+        <ActiveContainer
+          data={activeData}
+          onRefresh={() => {
+            getDrafts();
+            getActives();
+          }}
+        />
+      )}
     </div>
   );
 }
