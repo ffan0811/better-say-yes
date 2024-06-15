@@ -1,15 +1,11 @@
 "use client";
-
 import { createClient } from "@/lib/supabase/client";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { ERROR_DEFAULT_DESCRIPTION } from "@/constants/message";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import CreateButton from "./CreateContainer/CreateButton";
-import Link from "next/link";
 import TemplatesContainer, { TemplateType } from "./TemplatesContainer";
-
-const MAX_DRAFT_COUNT = 5;
+import InProgressContainer from "./InProgressContainer";
+import ActiveContainer from "./ActiveContainer";
 
 export const ITEM_COMMON_CLASSES =
   "border w-full h-40 text-lg rounded-md flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity whitespace-pre-line p-4";
@@ -102,48 +98,8 @@ export default function ProjectsContainer({ userId }: { userId: string }) {
         data={templatesData}
         isFetching={isLoadingTemplates}
       />
-      <Item title="Drafts" data={draftsData}>
-        {draftsData.length > MAX_DRAFT_COUNT ? null : <CreateButton />}
-      </Item>
-      {activeData.length > 0 && <Item title="Active" data={activeData} />}
+      <InProgressContainer data={draftsData} onRefresh={getDrafts} />
+      {activeData.length > 0 && <ActiveContainer data={activeData} />}
     </div>
-  );
-}
-
-function Item({
-  title,
-  data,
-  children,
-}: {
-  title: string;
-  data: any[];
-  children?: ReactNode;
-}) {
-  // if ((data || []).length === 0) return;
-  return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-4 gap-4">
-          {children}
-          {data.map((ele, idx) => (
-            <Link
-              key={ele.id}
-              href={`/create?id=${ele.id}`}
-              className={ITEM_COMMON_CLASSES}
-              style={{
-                background: ele?.background_color,
-                color: ele?.theme_color,
-                borderColor: ele?.theme_color,
-              }}
-            >
-              {ele.name || `Draft ${idx}`}
-            </Link>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
   );
 }

@@ -12,6 +12,7 @@ import MainContents, {
   QUESTION_COMMON_CLASSES,
 } from "@/components/Production/MainContents";
 import { ImageProvider } from "@/components/image-provider";
+import LoaderEntirePage from "@/components/loaderEntirePage";
 import { FontType } from "@/types/font";
 import { ImageProps } from "@/types/image";
 import { PageStepType } from "@/types/status";
@@ -38,7 +39,9 @@ export default function PreviewPage() {
   }, []);
 
   if (!contents) {
-    return <div>Loading...</div>;
+    return (
+      <LoaderEntirePage text="If It doesn't work, Please close the current tab and try again." />
+    );
   }
 
   const handleClickYes = () => {
