@@ -21,6 +21,11 @@ export async function GET(request: Request) {
     if (error) {
       return NextResponse.json({ message: error.message }, { status: 500 });
     }
+    if (data.user.user_metadata?.username) {
+      return NextResponse.redirect(`${origin}/dashboard`);
+    } else {
+      return NextResponse.redirect(`${origin}/welcome`);
+    }
   }
 
   if (tokenHash && type) {
@@ -31,17 +36,12 @@ export async function GET(request: Request) {
     if (error) {
       return NextResponse.json({ message: error.message }, { status: 500 });
     }
+    if (type === "signup") {
+      return NextResponse.redirect(`${origin}/welcome`);
+    } else {
+      return NextResponse.redirect(`${origin}/dashboard`);
+    }
   }
 
-  // if (redirectTo) {
-  //   return NextResponse.redirect(redirectTo);
-  // }
-
-  if (type === "signup" || provider === "google") {
-    console.log("heh?");
-    return NextResponse.redirect(`${origin}/welcome`);
-  } else {
-    console.log("poo");
-    return NextResponse.redirect(`${origin}/dashboard`);
-  }
+  return NextResponse.json({ message: "Login not supported" }, { status: 500 });
 }
