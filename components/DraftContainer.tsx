@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ITEM_COMMON_CLASSES } from "./ProjectsContainer";
+import { ITEM_COMMON_CLASSES, ITEM_HEIGHT } from "./ProjectsContainer";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import CreateButton from "./CreateContainer/CreateButton";
 import { Trash2Icon } from "lucide-react";
@@ -67,7 +67,7 @@ export default function DraftContainer({
         <CardTitle>Drafts</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid md:grid-cols-4 gap-4">
           {data.length > MAX_DRAFT_COUNT ? null : <CreateButton />}
           {data.map((ele, idx) => (
             <Link
@@ -78,7 +78,7 @@ export default function DraftContainer({
             >
               <a
                 // data-disable-nprogress={true}
-                className={`relative flex flex-col group ${ITEM_COMMON_CLASSES}`}
+                className={`relative flex flex-col group ${ITEM_COMMON_CLASSES} ${ITEM_HEIGHT}`}
                 style={{
                   background: ele.background_color,
                   color: ele.theme_color,

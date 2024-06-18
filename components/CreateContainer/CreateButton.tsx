@@ -3,7 +3,10 @@ import { Button } from "@/components/ui/button";
 import { createContent } from "@/actions/content";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { ITEM_COMMON_CLASSES } from "@/components/ProjectsContainer";
+import {
+  ITEM_COMMON_CLASSES,
+  ITEM_HEIGHT,
+} from "@/components/ProjectsContainer";
 import { useAtom } from "jotai";
 import { globalLoaderAtom } from "@/atoms/global";
 
@@ -34,7 +37,7 @@ export default function CreateButton() {
     <Button
       variant="outline"
       spinnerColor="stroke-neutral-50"
-      className={ITEM_COMMON_CLASSES}
+      className={`${ITEM_COMMON_CLASSES} ${ITEM_HEIGHT}`}
       isLoading={isGlobalLoading.isActive}
       onClick={handleSubmit}
     >

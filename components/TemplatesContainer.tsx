@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ITEM_COMMON_CLASSES } from "./ProjectsContainer";
+import { ITEM_COMMON_CLASSES, ITEM_HEIGHT } from "./ProjectsContainer";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { ExternalLinkIcon } from "lucide-react";
 import { useFont } from "./font-provider";
@@ -73,7 +73,7 @@ export default function TemplatesContainer({
         <CardTitle>Start with Templates</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="snap-mandatory snap-x h-40 overflow-x-auto space-x-4 flex md:snap-none md:h-auto md:space-x-0 md:grid md:grid-cols-4 md:gap-4">
           {isFetching
             ? loaders
             : data.map((ele, idx) => {
@@ -81,7 +81,7 @@ export default function TemplatesContainer({
                 return (
                   <Item
                     key={ele.id}
-                    className={fontClasses}
+                    className={`snap-center shrink-0 ${fontClasses}`}
                     data={ele}
                     onClick={(e) =>
                       !isGlobalLoading.isActive &&
@@ -116,7 +116,7 @@ function Item({
     <div
       key={data.id}
       onClick={onClick}
-      className={`relative flex flex-col group ${className} ${ITEM_COMMON_CLASSES}`}
+      className={`relative flex flex-col group ${className} ${ITEM_COMMON_CLASSES} ${ITEM_HEIGHT}`}
       style={{
         background: data.background_color,
         color: data.theme_color,

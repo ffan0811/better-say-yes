@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { ERROR_DEFAULT_DESCRIPTION } from "@/constants/message";
 import TemplatesContainer, { TemplateType } from "./TemplatesContainer";
-import InProgressContainer from "./DraftContainer";
+import DraftContainer from "./DraftContainer";
 import ActiveContainer from "./ActiveContainer";
 import InactiveContainer from "./InactiveContainer";
 
 export const ITEM_COMMON_CLASSES =
-  "border w-full h-40 text-lg rounded-md flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity whitespace-pre-line p-4";
+  "border w-full text-lg rounded-md flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity whitespace-pre-line p-4";
+export const ITEM_HEIGHT = "h-40";
 
 export default function ProjectsContainer({ userId }: { userId: string }) {
   const supabase = createClient();
@@ -121,7 +122,7 @@ export default function ProjectsContainer({ userId }: { userId: string }) {
         data={templatesData}
         isFetching={isLoadingTemplates}
       />
-      <InProgressContainer data={draftsData} onRefresh={getDrafts} />
+      <DraftContainer data={draftsData} onRefresh={getDrafts} />
       {activeData.length > 0 && (
         <ActiveContainer
           data={activeData}

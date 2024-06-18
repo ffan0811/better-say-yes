@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ITEM_COMMON_CLASSES } from "./ProjectsContainer";
+import { ITEM_COMMON_CLASSES, ITEM_HEIGHT } from "./ProjectsContainer";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Trash2Icon } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
@@ -64,7 +64,7 @@ export default function InactiveContainer({
         <CardTitle>Inactive</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid md:grid-cols-4 gap-4">
           {data.map((ele, idx) => (
             <Link
               key={ele.id}
@@ -74,7 +74,7 @@ export default function InactiveContainer({
             >
               <a
                 // data-disable-nprogress={true}
-                className={`relative flex flex-col group ${ITEM_COMMON_CLASSES}`}
+                className={`relative flex flex-col group ${ITEM_COMMON_CLASSES} ${ITEM_HEIGHT}`}
                 style={{
                   background: ele.background_color,
                   color: ele.theme_color,
