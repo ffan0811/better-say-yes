@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from "react";
 
 const images = [
-  "./images/1.svg",
-  "./images/2.svg",
-  "./images/3.svg",
-  "./images/4.svg",
-  "./images/5.svg",
-  "./images/6.svg",
+  "./images/yes1.svg",
+  "./images/yes2.svg",
+  "./images/yes3.svg",
+  "./images/yes4.svg",
+  "./images/yes5.svg",
+  "./images/yes6.svg",
 ];
 
 export default function ImageRotator({ className }: { className?: string }) {

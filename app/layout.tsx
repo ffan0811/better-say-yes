@@ -18,6 +18,14 @@ export const metadata = {
   title: "Your Fun, Personalized Decision-Making Page",
   description:
     "You can create and customize fun decision-making pages. Engage with creative questions, interactive yes or no options, and personalized images. Join us for 100% fun and success in every decision!",
+  icons: [
+    { url: "/images/favicon.ico", sizes: "48x48", type: "image/x-icon" },
+    { url: "/images/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    { url: "/images/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    { url: "/images/apple-icon.png", sizes: "180x180", type: "image/png" },
+    { url: "/images/icon-192.png", sizes: "192x192", type: "image/png" },
+    { url: "/images/icon-512.png", sizes: "512x512", type: "image/png" },
+  ],
 };
 
 export default function RootLayout({

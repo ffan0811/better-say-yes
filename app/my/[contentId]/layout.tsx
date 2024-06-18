@@ -21,7 +21,7 @@ export default async function ContentPageLayout({
   });
 
   if (error) {
-    console.log("Failed to fetch template images", JSON.stringify(error));
+    return <p>{`Failed to fetch template images: ${JSON.stringify(error)}`}</p>;
   }
   return (
     <Suspense fallback={<LoaderEntirePage />}>
