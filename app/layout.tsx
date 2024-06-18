@@ -13,11 +13,26 @@ const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
 
+const SHORT_TITLE = "BetterSayYes";
+const TITLE = "BetterSayYes: Your Fun, Personalized Decision-Making Page";
+const DESCRIPTION =
+  "Create and customize fun decision-making pages. Engage with creative questions, interactive yes or no options, and personalized images. Join us for 100% fun and success in every decision!";
+
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Your Fun, Personalized Decision-Making Page",
-  description:
-    "You can create and customize fun decision-making pages. Engage with creative questions, interactive yes or no options, and personalized images. Join us for 100% fun and success in every decision!",
+  title: TITLE,
+  description: DESCRIPTION,
+  applicationName: SHORT_TITLE,
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    siteName: SHORT_TITLE,
+    locale: "en_US",
+    type: "website",
+    url: defaultUrl,
+  },
+  referrer: "no-referrer",
+  keywords: ["BetterSayYes", "custom pages", "fun events", "fun projects"],
   icons: [
     { url: "/images/favicon.ico", sizes: "48x48", type: "image/x-icon" },
     { url: "/images/favicon-16x16.png", sizes: "16x16", type: "image/png" },
