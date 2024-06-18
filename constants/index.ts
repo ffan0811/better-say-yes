@@ -7,4 +7,4 @@ export const EXTERNAL_CONTACT =
 export const EXTERNAL_MARKETING_WEBSITE =
   "https://www.instagram.com/bettersayyes";
 export const EDITABLE_INPUT_CLASSES =
-  "bg-transparent outline-none focus:border border-dashed border-neutral-500 whitespace-pre-line";
+  "bg-transparent outline-none focus:border border-dashed border-neutral-500 whitespace-pre-line-line";

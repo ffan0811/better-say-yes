@@ -38,7 +38,7 @@ export default function CreateMain({}: {}) {
             currentLength={contents.question.length}
           >
             <DynamicHeightTextarea
-              className={`w-full h-0 bg-transparent outline-none focus:border border-dashed border-neutral-500 whitespace-pre-line ${EDITABLE_INPUT_CLASSES} ${QUESTION_COMMON_CLASSES}`}
+              className={`w-full h-0 bg-transparent outline-none focus:border border-dashed border-neutral-500 whitespace-pre-line-line ${EDITABLE_INPUT_CLASSES} ${QUESTION_COMMON_CLASSES}`}
               value={contents.question}
               maxLength={MAX_QUESTION_LENGTH}
               onChange={(e) => {

@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import NoButton from "./NoButton";
 
 export const QUESTION_COMMON_CLASSES =
-  "leading-9 text-center break-words text-3xl whitespace-pre";
+  "leading-9 text-center break-words text-3xl whitespace-pre-line";
 
 type MainContentsProps = {
   title: ReactNode;

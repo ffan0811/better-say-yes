@@ -42,7 +42,7 @@ export default async function TemplateDetailsPage({
         backgroundColor={data.background_color}
         themeColor={data.theme_color}
       >
-        <div className="h-screen flex flex-col items-center justify-center">
+        <div className="px-4 h-screen flex flex-col items-center justify-center">
           <MainContents
             title={<p className={QUESTION_COMMON_CLASSES}>{data.question}</p>}
             themeColor={data.theme_color}
