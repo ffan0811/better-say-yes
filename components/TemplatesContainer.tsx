@@ -64,7 +64,7 @@ export default function TemplatesContainer({
   };
 
   const loaders = Array.from({ length: 4 }, (_, index) => (
-    <Loader key={index} />
+    <Loader key={index} className="shrink-0" />
   ));
 
   return (
@@ -73,7 +73,9 @@ export default function TemplatesContainer({
         <CardTitle>Start with Templates</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="snap-mandatory snap-x h-40 overflow-x-auto space-x-4 flex md:snap-none md:h-auto md:space-x-0 md:grid md:grid-cols-4 md:gap-4">
+        <div
+          className={`snap-mandatory snap-x ${ITEM_HEIGHT} overflow-x-auto space-x-4 flex md:snap-none md:h-auto md:space-x-0 md:grid md:grid-cols-4 md:gap-4`}
+        >
           {isFetching
             ? loaders
             : data.map((ele, idx) => {
@@ -97,8 +99,8 @@ export default function TemplatesContainer({
   );
 }
 
-function Loader() {
-  return <Skeleton className="w-full h-40 rounded-md" />;
+function Loader({ className = "" }: { className?: string }) {
+  return <Skeleton className={`w-full h-40 rounded-md ${className}`} />;
 }
 
 function Item({

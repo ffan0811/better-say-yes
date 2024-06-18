@@ -5,12 +5,14 @@ import { ReactNode } from "react";
 type LayoutProps = {
   hasGap?: boolean;
   className?: string;
+  navigationClassName?: string;
   children: ReactNode;
 };
 
 export default function Layout({
   hasGap,
   className = "",
+  navigationClassName = "",
   children,
 }: LayoutProps) {
   return (
@@ -19,7 +21,7 @@ export default function Layout({
         hasGap ? "gap-20" : ""
       } ${className}`}
     >
-      <Navigation />
+      <Navigation className={navigationClassName} />
       {children}
       <Footer />
     </main>

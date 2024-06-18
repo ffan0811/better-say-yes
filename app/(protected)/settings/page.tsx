@@ -44,7 +44,7 @@ export default async function SettingsPage({
 
   return (
     <Layout>
-      <div className="container">
+      <div className="container px-4 md:px-0">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center space-x-4">
