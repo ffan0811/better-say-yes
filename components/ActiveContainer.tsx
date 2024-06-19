@@ -8,6 +8,8 @@ import { createClient } from "@/lib/supabase/client";
 import { useToast } from "./ui/use-toast";
 import { ERROR_DEFAULT_TITLE } from "@/constants/message";
 import { copyToClipboard } from "@/lib/utils";
+import { useAtom } from "jotai";
+import { globalLoaderAtom } from "@/atoms/global";
 
 export type ActiveType = {
   id: string;
@@ -30,6 +32,7 @@ export default function ActiveContainer({
 }) {
   const supabase = createClient();
   const { toast } = useToast();
+  const [isGlobalLoading, setIsGlobalLoading] = useAtom(globalLoaderAtom);
 
   const handleTakeDownContent = async (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -109,6 +112,12 @@ export default function ActiveContainer({
                   background: ele.background_color,
                   color: ele.theme_color,
                   borderColor: ele.theme_color,
+                }}
+                onClick={() => {
+                  setIsGlobalLoading({
+                    isActive: true,
+                    message: "Preparing your page...",
+                  });
                 }}
               >
                 <span className="block"> {ele.name || `Draft ${idx}`}</span>
