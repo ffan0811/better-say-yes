@@ -20,6 +20,7 @@ import ColorPicker from "@/components/ColorPicker";
 import ImageWrapper from "@/components/Production/ImageWrapper";
 import { getImageUrls } from "@/actions/content";
 import PreviewButton from "@/components/CreateContainer/PreviewButton";
+import ReLaunchButton from "@/components/ReLaunchButton";
 
 const sidebarMenu = [
   {
@@ -94,14 +95,14 @@ export default async function CreatePage({
   return (
     <ImageProvider contentId={searchParams.id}>
       <ImageWrapper images={imageResults}>
-        <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500">
+        <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500 overflow-x-auto">
           <div className="flex justify-between items-center w-full px-5">
             <div className="flex items-center space-x-16">
               <Link
                 href="/dashboard
             "
               >
-                <Logo className="h-auto w-20" />
+                <Logo className="h-auto w-12 md:w-20" />
               </Link>
             </div>
             <div className="flex items-center space-x-2">
@@ -111,10 +112,13 @@ export default async function CreatePage({
               {contentsData.status === "draft" && (
                 <PaymentButton contentId={searchParams.id} />
               )}
+              {contentsData.status === "inactive" && (
+                <ReLaunchButton contentId={searchParams.id} />
+              )}
             </div>
           </div>
         </nav>
-        <div className="w-80 h-screen overflow-y-auto bg-neutral-900 flex justify-between fixed z-30 left-0 top-0">
+        <div className="w-80 h-screen overflow-y-auto bg-neutral-900 justify-between fixed z-30 left-0 top-0 hidden md:flex">
           <Accordion type="multiple" className="w-full mt-20">
             {/* <InputWithLabel label="Project Name" /> */}
             {sidebarMenu.map((ele) => (
@@ -127,7 +131,7 @@ export default async function CreatePage({
             ))}
           </Accordion>
         </div>
-        <div className="ml-80 mt-20">
+        <div className="md:ml-80 mt-20">
           <CreateContainer
             contentId={searchParams.id}
             contentsData={contentsData}

@@ -127,8 +127,8 @@ export default function ProjectsContainer({ userId }: { userId: string }) {
         <ActiveContainer
           data={activeData}
           onRefresh={() => {
-            getDrafts();
             getActives();
+            getInactives();
           }}
         />
       )}

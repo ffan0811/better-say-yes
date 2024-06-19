@@ -34,6 +34,7 @@ export default async function PaymentCompleted({
   const paymentIntent: {
     id: string;
     amount: number;
+    amount_received: number;
     currency: string;
     created: number;
     status: string;
@@ -46,22 +47,31 @@ export default async function PaymentCompleted({
     .update({ status: "active" })
     .eq("id", contentId);
 
+  const { error: storePaymentError } = await supabase.from("payments").upsert({
+    stripe_id: paymentIntent.id,
+    amount: paymentIntent.amount_received,
+  });
+
+  console.log("error", error, storePaymentError);
+
+  const isError = error || storePaymentError;
+
   return (
     <Layout>
       <ResponsiveWrapper>
         <Card>
           <CardHeader>
             <CardTitle>
-              {error ? "Failed" : "Success! Your Custom Page is Ready"}
+              {isError ? "Failed" : "Success! Your Custom Page is Ready"}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-lg">
-              {error
+              {isError
                 ? "Your payment was successful! Unfortunately, the page didn't go live. Please refresh and try again. If the issue persists, contact us with your Order ID."
                 : "Thank you for your purchase! Your custom page is now live. Click the button below to open and share it."}
             </p>
-            {!error && (
+            {!isError && (
               <div className="mt-4 text-center">
                 <Link
                   href={`/my/${contentId}`}
