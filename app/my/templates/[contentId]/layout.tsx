@@ -20,8 +20,15 @@ export default async function TemplateContentPageLayout({
 
   const supabase = createClient();
 
-  const { data, error } = await supabase.functions.invoke("fetch-images", {
-    body: { contentId: params.contentId, tableName: TABLE_NAME },
+  // const { data, error } = await supabase.functions.invoke("fetch-images", {
+  //   body: { contentId: params.contentId, tableName: TABLE_NAME },
+  // });
+
+  const { data, error } = await supabase.rpc("list_objects", {
+    bucketid: "templates",
+    prefix: "",
+    limits: 20,
+    offsets: 0,
   });
 
   if (error) {
