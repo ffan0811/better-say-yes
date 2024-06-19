@@ -14,6 +14,7 @@ export default function ImageWrapper({
   const { setViewableImages } = useImages();
 
   useEffect(() => {
+    console.log("imagea", images);
     if (images && (images || []).length > 0) {
       setViewableImages(images);
     }

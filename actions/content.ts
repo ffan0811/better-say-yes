@@ -111,57 +111,57 @@ export async function deleteImage({
   return { result, error };
 }
 
-export async function getImageUrls({
-  contentId,
-  isTemplate,
-  limit = 20,
-  offset = 0,
-}: {
-  contentId: string;
-  isTemplate?: boolean;
-  limit?: number;
-  offset?: number;
-}) {
-  let result: ImageProps[],
-    error: ErrorType = null;
-  try {
-    const tableName = isTemplate ? "templates" : "contents";
-    const supabase = createClient();
-    const { data, error } = await supabase.storage
-      .from(tableName)
-      .list(contentId, {
-        limit,
-        offset,
-        sortBy: { column: "created_at", order: "asc" },
-      });
+// export async function getImageUrls({
+//   contentId,
+//   isTemplate,
+//   limit = 20,
+//   offset = 0,
+// }: {
+//   contentId: string;
+//   isTemplate?: boolean;
+//   limit?: number;
+//   offset?: number;
+// }) {
+//   let result: ImageProps[],
+//     error: ErrorType = null;
+//   try {
+//     const tableName = isTemplate ? "templates" : "contents";
+//     const supabase = createClient();
+//     const { data, error } = await supabase.storage
+//       .from(tableName)
+//       .list(contentId, {
+//         limit,
+//         offset,
+//         sortBy: { column: "created_at", order: "asc" },
+//       });
 
-    if (error) throw new Error(error.message);
+//     if (error) throw new Error(error.message);
 
-    let reducedResults: ImageProps[] = [];
+//     let reducedResults: ImageProps[] = [];
 
-    const blurImagePromises = data.map((image: { name: string }) => {
-      return getBase64ImageUrl({
-        imageName: image.name,
-        storageUrl: `/${tableName}/${contentId}`,
-      });
-    });
-    const imagesWithBlurDataUrls = await Promise.all(blurImagePromises);
+//     const blurImagePromises = data.map((image: { name: string }) => {
+//       return getBase64ImageUrl({
+//         imageName: image.name,
+//         storageUrl: `/${tableName}/${contentId}`,
+//       });
+//     });
+//     const imagesWithBlurDataUrls = await Promise.all(blurImagePromises);
 
-    for (let i = 0; i < data.length; i++) {
-      reducedResults.push({
-        src: data[i].name,
-        blurDataUrl: imagesWithBlurDataUrls[i],
-      });
-    }
+//     for (let i = 0; i < data.length; i++) {
+//       reducedResults.push({
+//         src: data[i].name,
+//         blurDataUrl: imagesWithBlurDataUrls[i],
+//       });
+//     }
 
-    result = reducedResults;
-  } catch (e) {
-    const err = handleError(e);
-    error = err;
-  }
+//     result = reducedResults;
+//   } catch (e) {
+//     const err = handleError(e);
+//     error = err;
+//   }
 
-  return { result, error };
-}
+//   return { result, error };
+// }
 
 // NOTE: cannot pass images unless its in FormData
 // export async function saveImages({

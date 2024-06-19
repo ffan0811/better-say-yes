@@ -7,6 +7,8 @@ import { Trash2Icon } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useToast } from "./ui/use-toast";
 import { ERROR_DEFAULT_TITLE } from "@/constants/message";
+import { useAtom } from "jotai";
+import { globalLoaderAtom } from "@/atoms/global";
 
 export type InactiveType = {
   id: string;
@@ -26,6 +28,7 @@ export default function InactiveContainer({
 }) {
   const supabase = createClient();
   const { toast } = useToast();
+  const [isGlobalLoading, setIsGlobalLoading] = useAtom(globalLoaderAtom);
 
   const handleDeleteContent = async (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -45,7 +48,7 @@ export default function InactiveContainer({
       .from("contents")
       .delete()
       .eq("id", contentId);
-
+    console.log("da", contentId, data);
     if (error) {
       toast({
         title: ERROR_DEFAULT_TITLE,
@@ -79,6 +82,12 @@ export default function InactiveContainer({
                   background: ele.background_color,
                   color: ele.theme_color,
                   borderColor: ele.theme_color,
+                }}
+                onClick={() => {
+                  setIsGlobalLoading({
+                    isActive: true,
+                    message: "Preparing your page...",
+                  });
                 }}
               >
                 <span className="block"> {ele.name || `Draft ${idx}`}</span>
