@@ -17,7 +17,6 @@ export default async function ContentPageLayout({
 
   const { result, error } = await getImageUrls({
     contentId: params.contentId,
-    isTemplate: true,
   });
 
   if (error) {
