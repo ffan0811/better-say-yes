@@ -139,3 +139,16 @@ export function getContrastingColor(rgbString: string): string {
   const { r: cr, g: cg, b: cb } = hslToRgb(h, s, l);
   return `rgb(${cr}, ${cg}, ${cb})`;
 }
+
+export const copyToClipboard = async (text: string) => {
+  let result,
+    error = null;
+  try {
+    await navigator.clipboard.writeText(text);
+    result = true;
+  } catch (error) {
+    error = "Failed to copy";
+  }
+
+  return { result, error };
+};
