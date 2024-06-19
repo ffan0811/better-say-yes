@@ -12,13 +12,12 @@ Deno.serve(async (req) => {
   )
 
   
-  const { data, error } = await supabase.storage
-      .from(tableName)
-      .list(contentId, {
-        limit: 20,
-        offset: 0,
-        sortBy: { column: "created_at", order: "asc" },
-      });
+  const { data, error } = await supabase.rpc('list_objects', {
+    bucketid: contentName,
+    prefix: '',
+    limit: 20,
+    offset: 0,
+  });
 
   if(error) {
     return new Response({message: "Failed to fetch images"}, {
