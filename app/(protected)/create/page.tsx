@@ -18,7 +18,6 @@ import SelectFont from "@/components/selectFont";
 import BackgroundColorPicker from "@/components/BackgroundColorPicker";
 import ColorPicker from "@/components/ColorPicker";
 import ImageWrapper from "@/components/Production/ImageWrapper";
-import { getImageUrls } from "@/actions/content";
 import PreviewButton from "@/components/CreateContainer/PreviewButton";
 import ReLaunchButton from "@/components/ReLaunchButton";
 
@@ -54,9 +53,9 @@ export default async function CreatePage({
     .eq("id", searchParams.id)
     .single();
 
-  const { result: imageResults, error: imageError } = await getImageUrls({
-    contentId: searchParams.id,
-  });
+  // const { result: imageResults, error: imageError } = await getImageUrls({
+  //   contentId: searchParams.id,
+  // });
 
   if (error) {
     return (
@@ -66,12 +65,12 @@ export default async function CreatePage({
     );
   }
 
-  if (imageError) {
-    console.log(
-      "Failed to fetch images in Create pages",
-      JSON.stringify(imageError)
-    );
-  }
+  // if (imageError) {
+  //   console.log(
+  //     "Failed to fetch images in Create pages",
+  //     JSON.stringify(imageError)
+  //   );
+  // }
 
   const comp = {
     [SidebarMenuType.FONT]: (
@@ -94,7 +93,7 @@ export default async function CreatePage({
 
   return (
     <ImageProvider contentId={searchParams.id}>
-      <ImageWrapper images={imageResults}>
+      <ImageWrapper contentId={searchParams.id}>
         <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500 overflow-x-auto">
           <div className="flex justify-between items-center w-full px-5">
             <div className="flex items-center space-x-16">

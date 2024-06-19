@@ -1,4 +1,4 @@
-import { getImageUrls } from "@/actions/content";
+// import { getImageUrls } from "@/actions/content";
 import ImageWrapper from "@/components/Production/ImageWrapper";
 import { ImageProvider } from "@/components/image-provider";
 import LoaderEntirePage from "@/components/loaderEntirePage";
@@ -15,19 +15,19 @@ export default async function TemplateContentPageLayout({
     return <p>Incorrect URL</p>;
   }
 
-  const { result, error } = await getImageUrls({
-    contentId: params.contentId,
-    isTemplate: true,
-  });
+  // const { result, error } = await getImageUrls({
+  //   contentId: params.contentId,
+  //   isTemplate: true,
+  // });
 
-  if (error) {
-    console.log("Failed to fetch template images", JSON.stringify(error));
-  }
+  // if (error) {
+  //   console.log("Failed to fetch template images", JSON.stringify(error));
+  // }
 
   return (
     <Suspense fallback={<LoaderEntirePage />}>
       <ImageProvider isTemplate contentId={params.contentId}>
-        <ImageWrapper images={result}>{children}</ImageWrapper>
+        <ImageWrapper contentId={params.contentId}>{children}</ImageWrapper>
       </ImageProvider>
     </Suspense>
   );
