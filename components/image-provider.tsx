@@ -11,6 +11,8 @@ import { sendImagesToDB } from "@/fetch/contents";
 import { handleError } from "@/lib/utils";
 import { deleteImage } from "@/actions/content";
 import { ImageProps } from "@/types/image";
+import { useAtom } from "jotai";
+import { uploadingImageLoaderAtom } from "@/atoms/global";
 
 interface ImageContextType {
   viewableImages: ImageProps[];
@@ -44,6 +46,9 @@ export const ImageProvider = ({
   } | null>(null);
   const [viewableImages, setViewableImages] = useState<ImageProps[]>([]);
   const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [uploadingImageLoader, setUploadingImageLoader] = useAtom(
+    uploadingImageLoaderAtom
+  );
 
   useEffect(() => {
     if (!contentId || !images) return;
@@ -62,6 +67,7 @@ export const ImageProvider = ({
       // Upload images to storage
       const saveImages = async () => {
         try {
+          setUploadingImageLoader(true);
           const { error } = await sendImagesToDB({
             contentId,
             data: images.data as File[],
@@ -76,6 +82,8 @@ export const ImageProvider = ({
             title: "Failed to upload images",
             description: err.message,
           });
+        } finally {
+          setUploadingImageLoader(false);
         }
       };
 
@@ -93,7 +101,23 @@ export const ImageProvider = ({
       // Delete image in storage
       if (!(images.data[0] as string).includes("blob")) {
         const deleteImageInDB = async () => {
-          await deleteImage({ contentId, imageName: images.data[0] as string });
+          setUploadingImageLoader(true);
+
+          try {
+            await deleteImage({
+              contentId,
+              imageName: images.data[0] as string,
+            });
+          } catch (e) {
+            const err = handleError(e);
+            toast({
+              variant: "destructive",
+              title: "Failed to delete images",
+              description: err.message,
+            });
+          } finally {
+            setUploadingImageLoader(false);
+          }
         };
 
         deleteImageInDB();
