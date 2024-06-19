@@ -1,29 +1,22 @@
 "use client";
 
+import { ImageProps } from "@/types/image";
 import { ReactNode, useEffect } from "react";
 import { useImages } from "../image-provider";
-import { getImageUrls } from "@/actions/content";
 
 export default function ImageWrapper({
-  contentId,
+  images,
   children,
 }: {
-  contentId: string;
+  images: ImageProps[];
   children: ReactNode;
 }) {
   const { setViewableImages } = useImages();
 
-  const fetch = async () => {
-    const { result, error } = await getImageUrls({
-      contentId: contentId,
-    });
-    if (result && result.length > 0) {
-      setViewableImages(result);
-    }
-  };
-
   useEffect(() => {
-    fetch();
-  }, [contentId]);
+    if (images && (images || []).length > 0) {
+      setViewableImages(images);
+    }
+  }, [images]);
   return <>{children}</>;
 }
