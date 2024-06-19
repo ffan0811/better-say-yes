@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 // import Navigation from "@/components/Navigation";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import SessionProvider from "@/components/session-provider";
 import { FontProvider } from "@/components/font-provider";
 import { ColorProvider } from "@/components/color-provider";
@@ -68,6 +69,7 @@ export default function RootLayout({
           </SessionProvider>
         </ProgressBarProvider>
       </body>
+      <GoogleAnalytics gaId="G-7THTQS3FPJ" />
     </html>
   );
 }

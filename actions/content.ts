@@ -114,7 +114,7 @@ export async function deleteImage({
 export async function getImageUrls({
   contentId,
   isTemplate,
-  limit = 5,
+  limit = 20,
   offset = 0,
 }: {
   contentId: string;
