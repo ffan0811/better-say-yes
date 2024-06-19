@@ -18,9 +18,9 @@ import SelectFont from "@/components/selectFont";
 import BackgroundColorPicker from "@/components/BackgroundColorPicker";
 import ColorPicker from "@/components/ColorPicker";
 import ImageWrapper from "@/components/Production/ImageWrapper";
-import { getImageUrls } from "@/actions/content";
 import PreviewButton from "@/components/CreateContainer/PreviewButton";
 import ReLaunchButton from "@/components/ReLaunchButton";
+import { generateCustomizedImages } from "@/lib/utils/image";
 
 const sidebarMenu = [
   {
@@ -41,6 +41,8 @@ const sidebarMenu = [
   },
 ];
 
+const TABLE_NAME = "contents";
+
 export default async function CreatePage({
   searchParams,
 }: {
@@ -54,8 +56,19 @@ export default async function CreatePage({
     .eq("id", searchParams.id)
     .single();
 
-  const { result: imageResults, error: imageError } = await getImageUrls({
+  const { data: imageResults, error: imageError } =
+    await supabase.functions.invoke("fetch-images", {
+      body: { contentId: searchParams.id, tableName: TABLE_NAME },
+    });
+
+  if (error) {
+    return <p>{`Failed to fetch template images: ${JSON.stringify(error)}`}</p>;
+  }
+
+  const results = await generateCustomizedImages({
     contentId: searchParams.id,
+    tableName: TABLE_NAME,
+    images: imageResults,
   });
 
   if (error) {
@@ -94,7 +107,7 @@ export default async function CreatePage({
 
   return (
     <ImageProvider contentId={searchParams.id}>
-      <ImageWrapper images={imageResults}>
+      <ImageWrapper images={results}>
         <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500 overflow-x-auto">
           <div className="flex justify-between items-center w-full px-5">
             <div className="flex items-center space-x-16">

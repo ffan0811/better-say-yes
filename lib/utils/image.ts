@@ -1,4 +1,7 @@
+import { ImageProps } from "@/types/image";
 import { v4 as uuidv4 } from "uuid";
+import getBase64ImageUrl from "@/lib/utils/generateBlurPlaceholder";
+
 
 // import fetch from "node-fetch";
 // import sharp from "sharp";
@@ -47,48 +50,22 @@ export const createImageFileNames = (images: File | File[]) => {
   }
 };
 
-// NOTE: only works in server
-// export async function getBlurDataURL(
-//   publicUrl: string
-// ): Promise<string | null> {
-//   try {
-//     const response = await fetch(publicUrl);
-//     if (!response.ok) {
-//       throw new Error(`Failed to fetch image: ${response.statusText}`);
-//     }
-//     const arrayBuffer = await response.arrayBuffer();
-//     const buffer = Buffer.from(arrayBuffer);
+export const generateCustomizedImages = async ({images, contentId, tableName}:{images: Record<string,any>[], contentId: string, tableName: string;}) => {
+  let reducedResults: ImageProps[] = [];
 
-//     const resizedImageBuffer = await sharp(buffer)
-//       .resize(10) // Resize to 10px
-//       .blur() // Apply blur
-//       .toBuffer();
-
-//     const base64Image = resizedImageBuffer.toString("base64");
-//     return `data:image/jpeg;base64,${base64Image}`;
-//   } catch (error) {
-//     console.error("Error generating blurDataURL:", error);
-//     return null;
-//   }
-// }
-
-export async function getBase64ImageFromUrl(imageUrl: string) {
-  var res = await fetch(imageUrl);
-  var blob = await res.blob();
-
-  return new Promise((resolve, reject) => {
-    var reader = new FileReader();
-    reader.addEventListener(
-      "load",
-      function () {
-        resolve(reader.result);
-      },
-      false
-    );
-
-    reader.onerror = () => {
-      return reject(this);
-    };
-    reader.readAsDataURL(blob);
+  const blurImagePromises = images.map((image: { name: string }) => {
+    return getBase64ImageUrl({
+      imageName: image.name,
+      storageUrl: `/${tableName}/${contentId}`,
+    });
   });
+  const imagesWithBlurDataUrls = await Promise.all(blurImagePromises);
+
+  for (let i = 0; i < images.length; i++) {
+    reducedResults.push({
+      src: images[i].name,
+      blurDataUrl: imagesWithBlurDataUrls[i],
+    });
+  }
+  return reducedResults
 }
