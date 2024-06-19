@@ -58,7 +58,7 @@ function Item({ title, description }) {
           <CardTitle>{title}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p>{description}</p>
+          <p>{description} </p>
         </CardContent>
       </Card>
       <motion.h2 style={{ y }}>{`#00${title}`}</motion.h2>
