@@ -106,7 +106,7 @@ export default function ActiveContainer({
               href={`/create?id=${ele.id}`}
             >
               <a
-                // data-disable-nprogress={true}
+                data-disable-nprogress={true}
                 className={`relative flex flex-col group ${ITEM_COMMON_CLASSES} ${ITEM_HEIGHT}`}
                 style={{
                   background: ele.background_color,
