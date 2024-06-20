@@ -36,7 +36,7 @@ const sidebarMenu = [
     value: SidebarMenuType.THEME_COLOR,
   },
   {
-    label: "Images",
+    label: "Images (AutoSave)",
     value: SidebarMenuType.IMAGES,
   },
 ];
