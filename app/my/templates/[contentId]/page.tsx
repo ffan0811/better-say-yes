@@ -40,7 +40,7 @@ export default async function TemplateDetailsPage({
 
   const results = await generateCustomizedImages({
     contentId: params.contentId,
-    tableName: "contents",
+    tableName: "templates",
     images: data.images,
   });
 
