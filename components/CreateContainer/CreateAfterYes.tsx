@@ -38,8 +38,6 @@ export default function CreateAfterYes({ contentId }: { contentId: string }) {
 
   const { themeColor } = useColor();
 
-  console.log("contents", contents);
-
   return (
     <div className="min-h-[calc(100vh-5rem)]">
       <AfterYesContents

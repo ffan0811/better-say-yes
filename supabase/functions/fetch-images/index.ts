@@ -4,7 +4,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 
 Deno.serve(async (req) => {
-  const { contentId, tableName } = await req.json()
+  const { contentId, tableName = 'contents' } = await req.json()
 
   const supabase = createClient(
     Deno.env.get('SUPABASE_URL') ?? '',
@@ -13,11 +13,10 @@ Deno.serve(async (req) => {
 
   
   const { data, error } = await supabase.rpc('list_objects', {
-    bucketid: contentName,
-    prefix: '',
-    limit: 20,
-    offset: 0,
+    bucketid: tableName,
+    prefix: contentId,
   });
+
 
   if(error) {
     return new Response({message: "Failed to fetch images"}, {
