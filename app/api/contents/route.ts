@@ -21,6 +21,12 @@ export async function POST(req: NextRequest) {
     //   throw new Error(removeError.message);
     // }
 
+    const { data: previousImages } = await supabase
+      .from("contents")
+      .select("images")
+      .eq("id", contentId)
+      .single();
+
     const fileNames = createImageFileNames(images) as string[];
 
     await Promise.all(
@@ -30,11 +36,21 @@ export async function POST(req: NextRequest) {
           .upload(`${contentId}/${fileNames[index]}`, ele, {
             upsert: true,
           });
+
         if (error) {
           throw new Error(error.message);
         }
       })
     );
+
+    const { error: dbError } = await supabase
+      .from("contents")
+      .update({ images: [...(previousImages?.images || []), ...fileNames] })
+      .eq("id", contentId);
+
+    if (dbError) {
+      throw new Error(dbError.message);
+    }
 
     return NextResponse.json(true);
   } catch (e) {

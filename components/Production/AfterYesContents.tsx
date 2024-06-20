@@ -28,7 +28,6 @@ export default function AfterYesContents({
   isTemplate,
 }: AfterYesContentsProps) {
   const { viewableImages } = useImages();
-
   return (
     <div className={`w-full h-full p-4 ${className}`}>
       <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
@@ -43,7 +42,7 @@ export default function AfterYesContents({
           } else {
             src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${
               isTemplate ? "templates" : "contents"
-            }/${ele.src}`;
+            }/${contentId}/${ele.src}`;
           }
           return (
             <Image

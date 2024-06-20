@@ -1,3 +1,4 @@
+"use client";
 import CreateContainer from "@/components/CreateContainer";
 import Logo from "@/components/Logo";
 import PaymentButton from "@/components/Payment/PaymentButton";
@@ -12,7 +13,7 @@ import {
 import PageSwitcher from "@/components/PageSwitcher";
 import CreateImages from "@/components/CreateContainer/Images";
 import SaveButton from "@/components/CreateContainer/SaveButton";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/client";
 import { ImageProvider } from "@/components/image-provider";
 import SelectFont from "@/components/selectFont";
 import BackgroundColorPicker from "@/components/BackgroundColorPicker";
@@ -20,7 +21,13 @@ import ColorPicker from "@/components/ColorPicker";
 import ImageWrapper from "@/components/Production/ImageWrapper";
 import PreviewButton from "@/components/CreateContainer/PreviewButton";
 import ReLaunchButton from "@/components/ReLaunchButton";
-import { generateCustomizedImages } from "@/lib/utils/image";
+import { useEffect, useState } from "react";
+import { Tables } from "@/database.types";
+import { ImageProps } from "@/types/image";
+import { useToast } from "@/components/ui/use-toast";
+import { ERROR_DEFAULT_TITLE } from "@/constants/message";
+import { getBlurUrls } from "@/actions/content";
+import LoaderEntirePage from "@/components/loaderEntirePage";
 
 const sidebarMenu = [
   {
@@ -36,55 +43,61 @@ const sidebarMenu = [
     value: SidebarMenuType.THEME_COLOR,
   },
   {
-    label: "Images",
+    label: "Images (AutoSave)",
     value: SidebarMenuType.IMAGES,
   },
 ];
 
 const TABLE_NAME = "contents";
 
-export default async function CreatePage({
+export default function CreatePage({
   searchParams,
 }: {
   searchParams: { id: string };
 }) {
+  const [contentsData, setContentsData] = useState<Tables<"contents">>(null);
+  const [images, setImages] = useState<ImageProps[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const supabase = createClient();
+  const { toast } = useToast();
 
-  const { data: contentsData, error } = await supabase
-    .from("contents")
-    .select("*")
-    .eq("id", searchParams.id)
-    .single();
+  const init = async () => {
+    try {
+      setIsLoading(true);
 
-  const { data: imageResults, error: imageError } =
-    await supabase.functions.invoke("fetch-images", {
-      body: { contentId: searchParams.id, tableName: TABLE_NAME },
-    });
+      const { data, error } = await supabase
+        .from("contents")
+        .select("*")
+        .eq("id", searchParams.id)
+        .single();
 
-  if (error) {
-    return <p>{`Failed to fetch template images: ${JSON.stringify(error)}`}</p>;
-  }
+      setContentsData(data);
 
-  const results = await generateCustomizedImages({
-    contentId: searchParams.id,
-    tableName: TABLE_NAME,
-    images: imageResults,
-  });
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: ERROR_DEFAULT_TITLE,
+          description: error.message,
+        });
+        return;
+      }
 
-  if (error) {
-    return (
-      <div className="h-screen w-full flex items-center justify-center">
-        <p className="text-3xl">Failed to fetch data</p>
-      </div>
-    );
-  }
+      const { result: fullImages } = await getBlurUrls({
+        contentId: searchParams.id,
+        tableName: "contents",
+        images: data.images,
+      });
+      setImages(fullImages);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  if (imageError) {
-    console.log(
-      "Failed to fetch images in Create pages",
-      JSON.stringify(imageError)
-    );
-  }
+  useEffect(() => {
+    if (!searchParams.id) return;
+    init();
+  }, [searchParams.id]);
 
   const comp = {
     [SidebarMenuType.FONT]: (
@@ -104,10 +117,14 @@ export default async function CreatePage({
     ),
     [SidebarMenuType.IMAGES]: <CreateImages contentId={searchParams.id} />,
   };
+  if (isLoading && !contentsData)
+    return <LoaderEntirePage text="Preparing your page..." />;
+
+  if (!contentsData) return <p>Cannot find data</p>;
 
   return (
     <ImageProvider contentId={searchParams.id}>
-      <ImageWrapper images={results}>
+      <ImageWrapper images={images}>
         <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500 overflow-x-auto">
           <div className="flex justify-between items-center w-full px-5">
             <div className="flex items-center space-x-16">

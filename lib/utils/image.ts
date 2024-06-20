@@ -50,20 +50,20 @@ export const createImageFileNames = (images: File | File[]) => {
   }
 };
 
-export const generateCustomizedImages = async ({images, contentId, tableName}:{images: Record<string,any>[], contentId: string, tableName: string;}) => {
+export const generateCustomizedImages = async ({images, contentId, tableName}:{images: string[], contentId: string, tableName: string;}) => {
   let reducedResults: ImageProps[] = [];
-
-  const blurImagePromises = (images || []).map((image: { name: string }) => {
+  const blurImagePromises = (images || []).map((imageName) => {
     return getBase64ImageUrl({
-      imageName: image.name,
+      imageName,
       storageUrl: `/${tableName}`,
+      contentId
     });
   });
   const imagesWithBlurDataUrls = await Promise.all(blurImagePromises);
 
   for (let i = 0; i < (images || []).length; i++) {
     reducedResults.push({
-      src: images[i].name,
+      src: images[i],
       blurDataUrl: imagesWithBlurDataUrls[i],
     });
   }
