@@ -6,9 +6,11 @@ const cache = new Map<string, string>();
 export default async function getBase64ImageUrl({
   storageUrl,
   imageName,
+  contentId,
 }: {
   storageUrl: string;
   imageName: string;
+  contentId: string;
 }): Promise<string> {
   try {
     let url = cache.get(imageName);
@@ -16,7 +18,7 @@ export default async function getBase64ImageUrl({
       return url;
     }
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${storageUrl}/${imageName}`
+      `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${storageUrl}/${contentId}/${imageName}`
     );
     if (!response.ok) {
       throw new Error(`Failed to fetch image: ${response.statusText}`);
@@ -32,5 +34,5 @@ export default async function getBase64ImageUrl({
     url = `data:${mimeType};base64,${base64}`;
     cache.set(imageName, url);
     return url;
-  } catch (error) {}
+  } catch (error) { }
 }

@@ -100,8 +100,18 @@ export async function deleteImage({
     const { error } = await supabase.storage
       .from(`contents`)
       .remove([`${contentId}/${imageName}`]);
+
+    const { data: previousImages } = await supabase.from('contents').select("images").eq("id", contentId).single();
+
+    const newImages = previousImages.images.filter((ele) => ele !== imageName);
+    const { error: dbError } = await supabase.from('contents').update({ images: newImages }).eq('id', contentId);
+
     if (error) {
       throw new Error(error.message);
+    }
+    if (dbError) {
+      throw new Error(dbError.message);
+
     }
   } catch (e) {
     const err = handleError(e);

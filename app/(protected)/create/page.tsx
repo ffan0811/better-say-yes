@@ -56,11 +56,6 @@ export default async function CreatePage({
     .eq("id", searchParams.id)
     .single();
 
-  const { data: imageResults, error: imageError } =
-    await supabase.functions.invoke("fetch-images", {
-      body: { contentId: searchParams.id, tableName: TABLE_NAME },
-    });
-
   if (error) {
     return <p>{`Failed to fetch template images: ${JSON.stringify(error)}`}</p>;
   }
@@ -68,21 +63,21 @@ export default async function CreatePage({
   const results = await generateCustomizedImages({
     contentId: searchParams.id,
     tableName: TABLE_NAME,
-    images: imageResults,
+    images: contentsData.images,
   });
+
+  // } catch (error) {
+  //   console.log(
+  //     "Failed to fetch images in Create pages",
+  //     JSON.stringify(error)
+  //   );
+  // }
 
   if (error) {
     return (
       <div className="h-screen w-full flex items-center justify-center">
         <p className="text-3xl">Failed to fetch data</p>
       </div>
-    );
-  }
-
-  if (imageError) {
-    console.log(
-      "Failed to fetch images in Create pages",
-      JSON.stringify(imageError)
     );
   }
 
