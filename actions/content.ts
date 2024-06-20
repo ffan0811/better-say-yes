@@ -8,7 +8,7 @@ import {
 } from "@/constants/content";
 import { createClient } from "@/lib/supabase/server";
 import { handleError } from "@/lib/utils";
-import getBase64ImageUrl from "@/lib/utils/generateBlurPlaceholder";
+import { generateCustomizedImages } from "@/lib/utils/image";
 import { ContentsType } from "@/types/content";
 import { FontType } from "@/types/font";
 import { ErrorType } from "@/types/global";
@@ -113,6 +113,25 @@ export async function deleteImage({
       throw new Error(dbError.message);
 
     }
+  } catch (e) {
+    const err = handleError(e);
+    error = err;
+  }
+
+  return { result, error };
+}
+
+export async function getBlurUrls({contentId, tableName, images}: {contentId: string, tableName: string, images: string[]}) {
+  let result: ImageProps[],
+    error: ErrorType = null;
+  try {
+    const data = await generateCustomizedImages({
+      contentId,
+      tableName,
+      images,
+    });
+    result = data;
+    
   } catch (e) {
     const err = handleError(e);
     error = err;
