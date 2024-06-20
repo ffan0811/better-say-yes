@@ -48,8 +48,6 @@ const sidebarMenu = [
   },
 ];
 
-const TABLE_NAME = "contents";
-
 export default function CreatePage({
   searchParams,
 }: {

@@ -1,18 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { ITEM_COMMON_CLASSES, ITEM_HEIGHT } from "./ProjectsContainer";
+import { ITEM_HEIGHT } from "@/components/ContentItem";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { ExternalLinkIcon } from "lucide-react";
 import { useFont } from "./font-provider";
 import { FontType } from "@/types/font";
-import { useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
 import { createContent } from "@/actions/content";
 import { Skeleton } from "./ui/skeleton";
 import { globalLoaderAtom } from "@/atoms/global";
 import { useAtom } from "jotai";
+import ContentItem from "./ContentItem";
+import ContentSideButton from "./ContentItem/ContentSideButton";
 
 export type TemplateType = {
   id: string;
@@ -81,16 +82,27 @@ export default function TemplatesContainer({
             : data.map((ele, idx) => {
                 const fontClasses = getFontClasses(ele.font_family as FontType);
                 return (
-                  <Item
+                  <ContentItem
                     key={ele.id}
                     className={`snap-center shrink-0 ${fontClasses}`}
-                    data={ele}
+                    contentId={ele.id}
+                    type="button"
+                    title={ele?.name}
                     onClick={(e) =>
                       !isGlobalLoading.isActive &&
                       handleCreateWithTemplate(e, ele)
                     }
-                    onClickLink={(e) => handleClickLink(e)}
-                  />
+                    backgroundColor={ele.background_color}
+                    themeColor={ele.theme_color}
+                  >
+                    <ContentSideButton
+                      type="link"
+                      href={`/my/templates/${ele.id}`}
+                      onClickLink={(e) => handleClickLink(e)}
+                    >
+                      <ExternalLinkIcon />
+                    </ContentSideButton>
+                  </ContentItem>
                 );
               })}
         </div>
@@ -101,39 +113,4 @@ export default function TemplatesContainer({
 
 function Loader({ className = "" }: { className?: string }) {
   return <Skeleton className={`w-full h-40 rounded-md ${className}`} />;
-}
-
-function Item({
-  data,
-  className = "",
-  onClick,
-  onClickLink,
-}: {
-  data: TemplateType;
-  className: string;
-  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
-  onClickLink: (e: React.MouseEvent<HTMLAnchorElement>) => void;
-}) {
-  return (
-    <div
-      key={data.id}
-      onClick={onClick}
-      className={`relative flex flex-col group ${className} ${ITEM_COMMON_CLASSES} ${ITEM_HEIGHT}`}
-      style={{
-        background: data.background_color,
-        color: data.theme_color,
-        borderColor: data.theme_color,
-      }}
-    >
-      <span className="block"> {data.name || "Draft"}</span>
-      <Link
-        href={`/my/templates/${data.id}`}
-        target="_blank"
-        onClick={onClickLink}
-        className="hidden group-hover:block absolute right-3 top-3"
-      >
-        <ExternalLinkIcon className="w-6 h-6 " />
-      </Link>
-    </div>
-  );
 }

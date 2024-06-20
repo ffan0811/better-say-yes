@@ -8,10 +8,6 @@ import DraftContainer from "./DraftContainer";
 import ActiveContainer from "./ActiveContainer";
 import InactiveContainer from "./InactiveContainer";
 
-export const ITEM_COMMON_CLASSES =
-  "border w-full text-lg rounded-md flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity whitespace-pre-line-line p-4";
-export const ITEM_HEIGHT = "h-40";
-
 export default function ProjectsContainer({ userId }: { userId: string }) {
   const supabase = createClient();
   const [templatesData, setTemplatesData] = useState<TemplateType[]>([]);

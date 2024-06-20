@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { ITEM_COMMON_CLASSES, ITEM_HEIGHT } from "./ProjectsContainer";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { CopyIcon, UnlinkIcon } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
@@ -10,6 +8,8 @@ import { ERROR_DEFAULT_TITLE } from "@/constants/message";
 import { copyToClipboard } from "@/lib/utils";
 import { useAtom } from "jotai";
 import { globalLoaderAtom } from "@/atoms/global";
+import ContentItem from "./ContentItem";
+import ContentSideButton from "./ContentItem/ContentSideButton";
 
 export type ActiveType = {
   id: string;
@@ -19,9 +19,6 @@ export type ActiveType = {
   created_at: string;
   updated_at: string;
 };
-
-const BUTTON_COMMON_CLASSES = "opacity-70 hover:opacity-100";
-const ICON_COMMON_CLASSES = "w-6 h-6";
 
 export default function ActiveContainer({
   data,
@@ -99,56 +96,37 @@ export default function ActiveContainer({
       <CardContent>
         <div className="grid md:grid-cols-4 gap-4">
           {data.map((ele, idx) => (
-            <Link
+            <ContentItem
               key={ele.id}
-              legacyBehavior
-              passHref
-              href={`/create?id=${ele.id}`}
+              contentId={ele.id}
+              title={ele?.name || `Draft ${idx}`}
+              type="link"
+              backgroundColor={ele.background_color}
+              themeColor={ele.theme_color}
+              onClickLink={() => {
+                setIsGlobalLoading({
+                  isActive: true,
+                  message: "Preparing your page...",
+                });
+              }}
             >
-              <a
-                data-disable-nprogress={true}
-                className={`relative flex flex-col group ${ITEM_COMMON_CLASSES} ${ITEM_HEIGHT}`}
-                style={{
-                  background: ele.background_color,
-                  color: ele.theme_color,
-                  borderColor: ele.theme_color,
-                }}
-                onClick={() => {
-                  setIsGlobalLoading({
-                    isActive: true,
-                    message: "Preparing your page...",
-                  });
-                }}
+              <ContentSideButton
+                type="button"
+                onClick={(e) =>
+                  handleTakeDownContent(e, ele.id, ele.name || `Draft ${idx}`)
+                }
               >
-                <span className="block"> {ele.name || `Draft ${idx}`}</span>
-                <div className="hidden group-hover:block absolute right-3 top-3 space-x-2">
-                  <button
-                    data-prevent-nprogress={true}
-                    type="button"
-                    onClick={(e) =>
-                      handleTakeDownContent(
-                        e,
-                        ele.id,
-                        ele.name || `Draft ${idx}`
-                      )
-                    }
-                    className={BUTTON_COMMON_CLASSES}
-                  >
-                    <UnlinkIcon className={ICON_COMMON_CLASSES} />
-                  </button>
-                  <button
-                    data-prevent-nprogress={true}
-                    type="button"
-                    onClick={(e) =>
-                      handleCopy(e, ele.id, ele.name || `Draft ${idx}`)
-                    }
-                    className={BUTTON_COMMON_CLASSES}
-                  >
-                    <CopyIcon className={ICON_COMMON_CLASSES} />
-                  </button>
-                </div>
-              </a>
-            </Link>
+                <UnlinkIcon />
+              </ContentSideButton>
+              <ContentSideButton
+                type="button"
+                onClick={(e) =>
+                  handleCopy(e, ele.id, ele.name || `Draft ${idx}`)
+                }
+              >
+                <CopyIcon />
+              </ContentSideButton>
+            </ContentItem>
           ))}
         </div>
       </CardContent>
