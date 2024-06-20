@@ -5,7 +5,7 @@ interface SpinnerType {
 
 export default function Spinner({
   className = "",
-  color = "stroke-primary",
+  color = "stroke-neutral-900",
 }: SpinnerType) {
   return (
     <div aria-label="Loading..." role="status" className={`${className}`}>

@@ -24,6 +24,13 @@ export default async function TemplateContentPageLayout({
     body: { contentId: params.contentId, tableName: TABLE_NAME },
   });
 
+  // const { data, error } = await supabase.rpc("list_objects", {
+  //   bucketid: "templates",
+  //   prefix: "",
+  //   limits: 20,
+  //   offsets: 0,
+  // });
+
   if (error) {
     return <p>{`Failed to fetch template images: ${JSON.stringify(error)}`}</p>;
   }

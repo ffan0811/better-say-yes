@@ -79,24 +79,32 @@ export type Database = {
           amount: number
           created_at: string
           currency: Database["public"]["Enums"]["currencies"]
-          id: string
           stripe_id: string
+          user_id: string
         }
         Insert: {
           amount: number
           created_at?: string
           currency?: Database["public"]["Enums"]["currencies"]
-          id?: string
           stripe_id: string
+          user_id?: string
         }
         Update: {
           amount?: number
           created_at?: string
           currency?: Database["public"]["Enums"]["currencies"]
-          id?: string
           stripe_id?: string
+          user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "payments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -182,27 +190,33 @@ export type Database = {
           updated_at?: string | null
           user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "templates_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      list_objects: {
+        Args: {
+          bucketid: string
+          prefix: string
+          limits?: number
+          offsets?: number
+        }
+        Returns: {
+          name: string
+          id: string
+          updated_at: string
+          created_at: string
+          last_accessed_at: string
+          metadata: Json
+        }[]
+      }
     }
     Enums: {
       content_status: "draft" | "pending" | "blocked" | "active" | "inactive"
-      currencies: "$"
-      status_content: "in_progress" | "pending" | "blocked" | "active"
+      currencies: "$" | "¢"
     }
     CompositeTypes: {
       [_ in never]: never

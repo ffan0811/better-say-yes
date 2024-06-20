@@ -43,7 +43,7 @@ export default function AfterYesContents({
           } else {
             src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${
               isTemplate ? "templates" : "contents"
-            }/${contentId}/${ele.src}`;
+            }/${ele.src}`;
           }
           return (
             <Image

@@ -24,6 +24,15 @@ export default async function ContentPageLayout({
     body: { contentId: params.contentId, tableName: TABLE_NAME },
   });
 
+  // const { data, error } = await supabase.rpc("list_objects", {
+  //   bucketid: "contents",
+  //   prefix: params.contentId,
+  //   limits: 20,
+  //   offsets: 0,
+  // });
+
+  console.log("data", data);
+
   if (error) {
     return <p>{`Failed to fetch images: ${JSON.stringify(error)}`}</p>;
   }
