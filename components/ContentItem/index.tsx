@@ -11,6 +11,8 @@ type ContentItemProps = {
   contentId: string;
   type: "link" | "button";
   title: string;
+  href?: string;
+  target?: "_blank";
   className?: string;
   children: ReactNode;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -23,6 +25,8 @@ export default function ContentItem({
   contentId,
   type,
   title,
+  href,
+  target,
   className = "",
   children,
   onClick,
@@ -34,7 +38,7 @@ export default function ContentItem({
     "hidden group-hover:flex absolute right-3 top-3 space-x-2";
   if (type === "link") {
     return (
-      <Link legacyBehavior passHref href={`/create?id=${contentId}`}>
+      <Link legacyBehavior passHref href={href || `/create?id=${contentId}`}>
         <a
           data-disable-nprogress={true}
           className={COMMON_WRAPPER_CLASSES}
@@ -44,6 +48,7 @@ export default function ContentItem({
             borderColor: themeColor,
           }}
           onClick={onClickLink}
+          target={target}
         >
           <span className="block"> {title || `Draft`}</span>
           <div className={COMMON_BUTTON_CLASSES}>{children}</div>

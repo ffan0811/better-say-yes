@@ -25,9 +25,11 @@ export type TemplateType = {
 export default function TemplatesContainer({
   data,
   isFetching,
+  isShowcase,
 }: {
   data: TemplateType[];
   isFetching: boolean;
+  isShowcase?: boolean;
 }) {
   const { getFontClasses } = useFont();
   const [isGlobalLoading, setIsGlobalLoading] = useAtom(globalLoaderAtom);
@@ -70,7 +72,9 @@ export default function TemplatesContainer({
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Start with Templates</CardTitle>
+        <CardTitle>
+          {isShowcase ? "From the BetterSayYes Team" : "Start with Templates"}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div
@@ -85,7 +89,9 @@ export default function TemplatesContainer({
                     key={ele.id}
                     className={`snap-center shrink-0 ${fontClasses}`}
                     contentId={ele.id}
-                    type="button"
+                    type={isShowcase ? "link" : "button"}
+                    href={`/my/templates/${ele.id}`}
+                    target={isShowcase ? "_blank" : undefined}
                     title={ele?.name}
                     onClick={(e) =>
                       !isGlobalLoading.isActive &&
@@ -94,27 +100,31 @@ export default function TemplatesContainer({
                     backgroundColor={ele.background_color}
                     themeColor={ele.theme_color}
                   >
-                    <ContentSideButton
-                      type="link"
-                      href={`/my/templates/${ele.id}`}
-                      target="_blank"
-                      onClickLink={(e) => handleClickLink(e)}
-                    >
-                      <ExternalLinkIcon />
-                    </ContentSideButton>
-                    <ContentSideButton
-                      type="link"
-                      href={`/create?id=${ele.id}&isTemplate=true`}
-                      onClickLink={(e) => {
-                        e.stopPropagation();
-                        setIsGlobalLoading({
-                          isActive: true,
-                          message: "Preparing your page...",
-                        });
-                      }}
-                    >
-                      <Edit2Icon />
-                    </ContentSideButton>
+                    {isShowcase ? null : (
+                      <>
+                        <ContentSideButton
+                          type="link"
+                          href={`/my/templates/${ele.id}`}
+                          target="_blank"
+                          onClickLink={(e) => handleClickLink(e)}
+                        >
+                          <ExternalLinkIcon />
+                        </ContentSideButton>
+                        <ContentSideButton
+                          type="link"
+                          href={`/create?id=${ele.id}&isTemplate=true`}
+                          onClickLink={(e) => {
+                            e.stopPropagation();
+                            setIsGlobalLoading({
+                              isActive: true,
+                              message: "Preparing your page...",
+                            });
+                          }}
+                        >
+                          <Edit2Icon />
+                        </ContentSideButton>
+                      </>
+                    )}
                   </ContentItem>
                 );
               })}

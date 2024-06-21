@@ -77,7 +77,7 @@ export default function CreatePage({
         tableName: "contents",
       });
     }
-  }, [searchParams.isTemplate]);
+  }, [searchParams]);
 
   const init = async () => {
     if (!tableName) return;
@@ -139,7 +139,7 @@ export default function CreatePage({
     ),
     [SidebarMenuType.IMAGES]: <CreateImages contentId={searchParams.id} />,
   };
-  console.log(isLoading, contentsData);
+  console.log(isLoading, contentsData, tableName);
   if (isLoading && !contentsData)
     return <LoaderEntirePage text="Preparing your page..." />;
 
