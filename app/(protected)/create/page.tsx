@@ -139,7 +139,7 @@ export default function CreatePage({
     ),
     [SidebarMenuType.IMAGES]: <CreateImages contentId={searchParams.id} />,
   };
-  console.log(isLoading, contentsData, tableName);
+  console.log(isLoading, contentsData, tableName, searchParams);
   if (isLoading && !contentsData)
     return <LoaderEntirePage text="Preparing your page..." />;
 
