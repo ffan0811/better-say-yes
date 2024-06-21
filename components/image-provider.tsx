@@ -13,6 +13,7 @@ import { deleteImage } from "@/actions/content";
 import { ImageProps } from "@/types/image";
 import { useAtom } from "jotai";
 import { uploadingImageLoaderAtom } from "@/atoms/global";
+import { useSearchParams } from "next/navigation";
 
 interface ImageContextType {
   viewableImages: ImageProps[];
@@ -31,14 +32,14 @@ const ImageContext = createContext<ImageContextType | undefined>(undefined);
 
 export const ImageProvider = ({
   contentId,
-  isTemplate,
   children,
 }: {
   contentId: string;
-  isTemplate?: boolean;
   children: ReactNode;
 }) => {
   const { toast } = useToast();
+  const searchFunc = useSearchParams();
+  const isTemplate = searchFunc.get("isTemplate") === "true";
 
   const [images, setImages] = useState<{
     action: "add" | "delete" | "reset";
@@ -71,6 +72,7 @@ export const ImageProvider = ({
           const { error } = await sendImagesToDB({
             contentId,
             data: images.data as File[],
+            tableName: isTemplate ? "templates" : "contents",
           });
           if (error) {
             throw new Error(error.message);
@@ -107,6 +109,7 @@ export const ImageProvider = ({
             await deleteImage({
               contentId,
               imageName: images.data[0] as string,
+              tableName: isTemplate ? "templates" : "contents",
             });
           } catch (e) {
             const err = handleError(e);

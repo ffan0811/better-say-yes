@@ -7,6 +7,7 @@ export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const contentId = formData.get("contentId");
+    const tableName = formData.get("tableName") as 'contents' | 'templates';
     const images = formData.getAll("images") as File[];
 
     const supabase = createClient();
@@ -22,7 +23,7 @@ export async function POST(req: NextRequest) {
     // }
 
     const { data: previousImages } = await supabase
-      .from("contents")
+      .from(tableName || "contents")
       .select("images")
       .eq("id", contentId)
       .single();
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
     await Promise.all(
       images.map(async (ele: File, index) => {
         const { error } = await supabase.storage
-          .from(`contents`)
+          .from(tableName || `contents`)
           .upload(`${contentId}/${fileNames[index]}`, ele, {
             upsert: true,
           });
@@ -44,7 +45,7 @@ export async function POST(req: NextRequest) {
     );
 
     const { error: dbError } = await supabase
-      .from("contents")
+      .from(tableName || "contents")
       .update({ images: [...(previousImages?.images || []), ...fileNames] })
       .eq("id", contentId);
 

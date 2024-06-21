@@ -1,4 +1,5 @@
 export type ContentsType = {
+  tableName: 'contents' | 'templates' | null;
   name: string;
   question: string;
   alertAfterYes?: string;

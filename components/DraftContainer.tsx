@@ -1,7 +1,4 @@
 "use client";
-
-import Link from "next/link";
-import { ITEM_COMMON_CLASSES, ITEM_HEIGHT } from "./ProjectsContainer";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import CreateButton from "./CreateContainer/CreateButton";
 import { Trash2Icon } from "lucide-react";
@@ -10,6 +7,8 @@ import { useToast } from "./ui/use-toast";
 import { ERROR_DEFAULT_TITLE } from "@/constants/message";
 import { globalLoaderAtom } from "@/atoms/global";
 import { useAtom } from "jotai";
+import ContentItem from "./ContentItem";
+import ContentSideButton from "./ContentItem/ContentSideButton";
 
 const MAX_DRAFT_COUNT = 5;
 
@@ -73,40 +72,29 @@ export default function DraftContainer({
         <div className="grid md:grid-cols-4 gap-4">
           {data.length > MAX_DRAFT_COUNT ? null : <CreateButton />}
           {data.map((ele, idx) => (
-            <Link
+            <ContentItem
               key={ele.id}
-              legacyBehavior
-              passHref
-              href={`/create?id=${ele.id}`}
+              type="link"
+              contentId={ele.id}
+              title={ele?.name || `Draft ${idx}`}
+              themeColor={ele.theme_color}
+              backgroundColor={ele.background_color}
+              onClickLink={() => {
+                setIsGlobalLoading({
+                  isActive: true,
+                  message: "Preparing your page...",
+                });
+              }}
             >
-              <a
-                data-disable-nprogress={true}
-                className={`relative flex flex-col group ${ITEM_COMMON_CLASSES} ${ITEM_HEIGHT}`}
-                style={{
-                  background: ele.background_color,
-                  color: ele.theme_color,
-                  borderColor: ele.theme_color,
-                }}
-                onClick={() => {
-                  setIsGlobalLoading({
-                    isActive: true,
-                    message: "Preparing your page...",
-                  });
-                }}
+              <ContentSideButton
+                type="button"
+                onClick={(e) =>
+                  handleDeleteContent(e, ele.id, ele.name || `Draft ${idx}`)
+                }
               >
-                <span className="block"> {ele.name || `Draft ${idx}`}</span>
-                <button
-                  data-prevent-nprogress={true}
-                  type="button"
-                  onClick={(e) =>
-                    handleDeleteContent(e, ele.id, ele.name || `Draft ${idx}`)
-                  }
-                  className="hidden group-hover:block absolute right-3 top-3"
-                >
-                  <Trash2Icon className="w-6 h-6 " />
-                </button>
-              </a>
-            </Link>
+                <Trash2Icon />
+              </ContentSideButton>
+            </ContentItem>
           ))}
         </div>
       </CardContent>

@@ -28,6 +28,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { ERROR_DEFAULT_TITLE } from "@/constants/message";
 import { getBlurUrls } from "@/actions/content";
 import LoaderEntirePage from "@/components/loaderEntirePage";
+import { useAtom } from "jotai";
+import { contentsAtom } from "@/atoms/content";
 
 const sidebarMenu = [
   {
@@ -48,28 +50,48 @@ const sidebarMenu = [
   },
 ];
 
-const TABLE_NAME = "contents";
-
 export default function CreatePage({
   searchParams,
 }: {
-  searchParams: { id: string };
+  searchParams: { id: string; isTemplate?: string };
 }) {
   const [contentsData, setContentsData] = useState<Tables<"contents">>(null);
   const [images, setImages] = useState<ImageProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [tableName, setTableName] = useState<string | null>(null);
+  const [contentsClientData, setContentsClientData] = useAtom(contentsAtom);
   const supabase = createClient();
   const { toast } = useToast();
 
+  useEffect(() => {
+    if (searchParams.isTemplate === "true") {
+      setTableName("templates");
+      setContentsClientData({
+        ...contentsClientData,
+        tableName: "templates",
+      });
+    } else {
+      setTableName("contents");
+      setContentsClientData({
+        ...contentsClientData,
+        tableName: "contents",
+      });
+    }
+  }, [searchParams.isTemplate]);
+
   const init = async () => {
+    if (!tableName) return;
+
     try {
       setIsLoading(true);
 
       const { data, error } = await supabase
-        .from("contents")
+        .from(tableName as "contents" | "templates")
         .select("*")
         .eq("id", searchParams.id)
         .single();
+
+      console.log("data", data);
 
       setContentsData(data);
 
@@ -84,8 +106,8 @@ export default function CreatePage({
 
       const { result: fullImages } = await getBlurUrls({
         contentId: searchParams.id,
-        tableName: "contents",
-        images: data.images,
+        tableName: tableName,
+        images: data?.images || [],
       });
       setImages(fullImages);
     } catch (error) {
@@ -97,7 +119,7 @@ export default function CreatePage({
   useEffect(() => {
     if (!searchParams.id) return;
     init();
-  }, [searchParams.id]);
+  }, [searchParams.id, searchParams.isTemplate, tableName]);
 
   const comp = {
     [SidebarMenuType.FONT]: (
@@ -117,6 +139,7 @@ export default function CreatePage({
     ),
     [SidebarMenuType.IMAGES]: <CreateImages contentId={searchParams.id} />,
   };
+  console.log(isLoading, contentsData);
   if (isLoading && !contentsData)
     return <LoaderEntirePage text="Preparing your page..." />;
 

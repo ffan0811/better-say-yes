@@ -43,7 +43,7 @@ export default async function TemplateContentDetailsYesPage({
         themeColor={data.theme_color}
       >
         <AfterYesContents
-          isTemplate
+          tableName="templates"
           className="min-h-screen"
           contentId={params.contentId}
           title={
