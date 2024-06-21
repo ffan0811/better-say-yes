@@ -14,14 +14,14 @@ export default function Navigation({ className = "" }: NavigationProps) {
           <Link href="/dashboard">
             <Logo className={`h-auto w-16 md:w-28`} />
           </Link>
-          {/* <ul className="flex items-center space-x-8">
+          <ul className="flex items-center space-x-8">
             <li>
-              <Link href="/templates">Templates</Link>
+              <Link href="/showcase">Showcase</Link>
             </li>
-            <li>
+            {/* <li>
               <Link href="/pricing">Pricing</Link>
-            </li>
-          </ul> */}
+            </li> */}
+          </ul>
         </div>
         <AuthButton />
       </div>
