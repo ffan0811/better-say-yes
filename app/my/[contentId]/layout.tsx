@@ -2,8 +2,6 @@ import { ImageProvider } from "@/components/image-provider";
 import LoaderEntirePage from "@/components/loaderEntirePage";
 import { ReactNode, Suspense } from "react";
 
-const TABLE_NAME = "contents";
-
 export default async function ContentPageLayout({
   params,
   children,

@@ -44,11 +44,9 @@ export async function createContent(params?: {
 export async function saveContents({
   id,
   contents,
-  isTemplate
 }: {
   id: string;
   contents: ContentsType;
-  isTemplate?: boolean;
 }) {
   let result,
     error: ErrorType = null;
@@ -56,7 +54,7 @@ export async function saveContents({
     const supabase = createClient();
 
     await supabase
-      .from(isTemplate ? "templates" : "contents")
+      .from(contents?.tableName || "contents")
       .update({
         name: (contents?.name || "").substring(0, MAX_PROJECT_NAME_LENGTH),
         question: (contents?.question || "").substring(0, MAX_QUESTION_LENGTH),
@@ -91,22 +89,24 @@ export async function saveContents({
 export async function deleteImage({
   contentId,
   imageName,
+  tableName,
 }: {
   contentId: string;
   imageName: string;
+  tableName: 'contents' | 'templates'
 }) {
   let result,
     error: ErrorType = null;
   try {
     const supabase = createClient();
     const { error } = await supabase.storage
-      .from(`contents`)
+      .from(tableName)
       .remove([`${contentId}/${imageName}`]);
 
-    const { data: previousImages } = await supabase.from('contents').select("images").eq("id", contentId).single();
+    const { data: previousImages } = await supabase.from(tableName).select("images").eq("id", contentId).single();
 
     const newImages = previousImages.images.filter((ele) => ele !== imageName);
-    const { error: dbError } = await supabase.from('contents').update({ images: newImages }).eq('id', contentId);
+    const { error: dbError } = await supabase.from(tableName).update({ images: newImages }).eq('id', contentId);
 
     if (error) {
       throw new Error(error.message);

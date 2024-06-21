@@ -4,11 +4,14 @@ import { createClient } from "@/lib/supabase/client";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
+import { useAtom } from "jotai";
+import { contentsAtom } from "@/atoms/content";
 
 export default function ReLaunchButton({ contentId }: { contentId: string }) {
   const { toast } = useToast();
   const supabase = createClient();
   const router = useRouter();
+  const [contentsData, setContentsData] = useAtom(contentsAtom);
 
   const handleClick = async () => {
     const confirm = window.confirm(
@@ -18,7 +21,7 @@ export default function ReLaunchButton({ contentId }: { contentId: string }) {
     if (!confirm) return;
 
     const { data, error } = await supabase
-      .from("contents")
+      .from(contentsData.tableName || "contents")
       .update({ status: "active" })
       .eq("id", contentId);
 

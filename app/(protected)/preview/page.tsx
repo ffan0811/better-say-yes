@@ -78,6 +78,7 @@ export default function PreviewPage() {
             )}
             {pageStep === PageStepType.AFTER_YES && (
               <AfterYesContents
+                tableName={contents.tableName}
                 className="min-h-screen"
                 contentId={contents.contentId}
                 title={

@@ -41,6 +41,7 @@ export default function CreateAfterYes({ contentId }: { contentId: string }) {
   return (
     <div className="min-h-[calc(100vh-5rem)]">
       <AfterYesContents
+        tableName={contents.tableName}
         contentId={contentId}
         title={
           <input

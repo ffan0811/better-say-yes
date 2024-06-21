@@ -17,9 +17,7 @@ export default async function TemplateContentPageLayout({
 
   return (
     <Suspense fallback={<LoaderEntirePage />}>
-      <ImageProvider isTemplate contentId={params.contentId}>
-        {children}
-      </ImageProvider>
+      <ImageProvider contentId={params.contentId}>{children}</ImageProvider>
     </Suspense>
   );
 }
