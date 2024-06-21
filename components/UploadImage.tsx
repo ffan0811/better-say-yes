@@ -3,6 +3,9 @@
 import { Fragment } from "react";
 import { ImagePlusIcon, XCircleIcon } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import { useAtom } from "jotai";
+import { contentsAtom } from "@/atoms/content";
+import Image from "next/image";
 
 interface UploadImageType {
   contentId: string;
@@ -26,6 +29,8 @@ export default function UploadImage({
   handleExtraImages,
   handleDeleteImage,
 }: UploadImageType) {
+  const [contentsData, setContentsData] = useAtom(contentsAtom);
+
   return (
     <div className="relative content-start grid gap-2 grid-cols-3">
       <div
@@ -51,11 +56,11 @@ export default function UploadImage({
       {data.length > 0 ? (
         <Fragment>
           {data.map((img, i) => {
-            // let src = img.src;
-            // if (img.src.includes("blob")) {
-            // } else {
-            //   src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/contents/${contentId}/${img.src}`;
-            // }
+            let src = img.src;
+            if (img.src.includes("blob")) {
+            } else {
+              src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${contentsData.tableName}/${contentId}/${img.src}`;
+            }
             return (
               <div
                 key={i}
@@ -69,10 +74,14 @@ export default function UploadImage({
                 >
                   <XCircleIcon className="w-8 h-8 text-inherit cursor-pointer hover:opacity-70" />
                 </button>
-                <img
-                  src={img?.blurDataUrl || img.src}
+                <Image
+                  src={src}
+                  placeholder={img.blurDataUrl ? "blur" : undefined}
+                  blurDataURL={img.blurDataUrl || ""}
                   alt={"image-" + i}
                   className="w-full h-full"
+                  width={32}
+                  height={32}
                 />
               </div>
             );

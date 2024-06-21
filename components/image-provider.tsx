@@ -14,6 +14,7 @@ import { ImageProps } from "@/types/image";
 import { useAtom } from "jotai";
 import { uploadingImageLoaderAtom } from "@/atoms/global";
 import { useSearchParams } from "next/navigation";
+import { compressImages } from "@/lib/compress";
 
 interface ImageContextType {
   viewableImages: ImageProps[];
@@ -69,9 +70,14 @@ export const ImageProvider = ({
       const saveImages = async () => {
         try {
           setUploadingImageLoader(true);
+          const thumbnails = await compressImages(images.data as File[], {
+            maxWidth: 5,
+            quality: 0.8,
+          });
           const { error } = await sendImagesToDB({
             contentId,
             data: images.data as File[],
+            thumbnails: thumbnails as File[],
             tableName: isTemplate ? "templates" : "contents",
           });
           if (error) {

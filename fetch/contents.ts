@@ -4,10 +4,12 @@ import { ErrorType } from "@/types/global";
 export const sendImagesToDB = async ({
   contentId,
   data,
+  thumbnails,
   tableName,
 }: {
   contentId: string;
   data: File[];
+  thumbnails: File[];
   tableName?: "contents" | "templates"
 }) => {
   let result,
@@ -17,6 +19,9 @@ export const sendImagesToDB = async ({
     formData.append("contentId", contentId || "");
     (data || []).forEach((ele) => {
       formData.append("images", ele);
+    });
+    (thumbnails || []).forEach((ele) => {
+      formData.append("thumbnails", ele);
     });
     formData.append("tableName", tableName)
     const response = await fetch(`/api/contents`, {
