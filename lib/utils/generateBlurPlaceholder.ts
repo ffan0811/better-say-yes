@@ -18,7 +18,7 @@ export default async function getBase64ImageUrl({
       return url;
     }
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${storageUrl}/${contentId}/${imageName}`
+      `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${storageUrl}/${contentId}/thumbnail-${imageName}`
     );
     if (!response.ok) {
       throw new Error(`Failed to fetch image: ${response.statusText}`);

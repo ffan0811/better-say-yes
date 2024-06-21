@@ -101,7 +101,7 @@ export async function deleteImage({
     const supabase = createClient();
     const { error } = await supabase.storage
       .from(tableName)
-      .remove([`${contentId}/${imageName}`]);
+      .remove([`${contentId}/${imageName}`, `${contentId}/thumbnail-${imageName}`]);
 
     const { data: previousImages } = await supabase.from(tableName).select("images").eq("id", contentId).single();
 
