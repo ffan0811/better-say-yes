@@ -44,9 +44,11 @@ export async function createContent(params?: {
 export async function saveContents({
   id,
   contents,
+  isTemplate
 }: {
   id: string;
   contents: ContentsType;
+  isTemplate?: boolean;
 }) {
   let result,
     error: ErrorType = null;
@@ -54,7 +56,7 @@ export async function saveContents({
     const supabase = createClient();
 
     await supabase
-      .from("contents")
+      .from(isTemplate ? "templates" : "contents")
       .update({
         name: (contents?.name || "").substring(0, MAX_PROJECT_NAME_LENGTH),
         question: (contents?.question || "").substring(0, MAX_QUESTION_LENGTH),

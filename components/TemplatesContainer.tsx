@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { ITEM_HEIGHT } from "@/components/ContentItem";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { ExternalLinkIcon } from "lucide-react";
+import { Edit2Icon, ExternalLinkIcon } from "lucide-react";
 import { useFont } from "./font-provider";
 import { FontType } from "@/types/font";
 import { useToast } from "./ui/use-toast";
@@ -98,9 +97,23 @@ export default function TemplatesContainer({
                     <ContentSideButton
                       type="link"
                       href={`/my/templates/${ele.id}`}
+                      target="_blank"
                       onClickLink={(e) => handleClickLink(e)}
                     >
                       <ExternalLinkIcon />
+                    </ContentSideButton>
+                    <ContentSideButton
+                      type="link"
+                      href={`/create?id=${ele.id}&isTemplate=true`}
+                      onClickLink={(e) => {
+                        e.stopPropagation();
+                        setIsGlobalLoading({
+                          isActive: true,
+                          message: "Preparing your page...",
+                        });
+                      }}
+                    >
+                      <Edit2Icon />
                     </ContentSideButton>
                   </ContentItem>
                 );

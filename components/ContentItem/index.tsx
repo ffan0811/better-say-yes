@@ -28,12 +28,16 @@ export default function ContentItem({
   onClick,
   onClickLink,
 }: ContentItemProps) {
+  const COMMON_WRAPPER_CLASSES = `relative flex flex-col group ${className} ${ITEM_COMMON_CLASSES} ${ITEM_HEIGHT}`;
+
+  const COMMON_BUTTON_CLASSES =
+    "hidden group-hover:flex absolute right-3 top-3 space-x-2";
   if (type === "link") {
     return (
       <Link legacyBehavior passHref href={`/create?id=${contentId}`}>
         <a
           data-disable-nprogress={true}
-          className={`relative flex flex-col group ${className} ${ITEM_COMMON_CLASSES} ${ITEM_HEIGHT}`}
+          className={COMMON_WRAPPER_CLASSES}
           style={{
             background: backgroundColor,
             color: themeColor,
@@ -42,9 +46,7 @@ export default function ContentItem({
           onClick={onClickLink}
         >
           <span className="block"> {title || `Draft`}</span>
-          <div className="hidden group-hover:block absolute right-3 top-3 space-x-2">
-            {children}
-          </div>
+          <div className={COMMON_BUTTON_CLASSES}>{children}</div>
         </a>
       </Link>
     );
@@ -52,7 +54,7 @@ export default function ContentItem({
   return (
     <div
       onClick={onClick}
-      className={`relative flex flex-col group ${className} ${ITEM_COMMON_CLASSES} ${ITEM_HEIGHT}`}
+      className={COMMON_WRAPPER_CLASSES}
       style={{
         background: backgroundColor,
         color: themeColor,
@@ -60,9 +62,7 @@ export default function ContentItem({
       }}
     >
       <span className="block"> {title || "Draft"}</span>
-      <div className="hidden group-hover:block absolute right-3 top-3 space-x-2">
-        {children}
-      </div>
+      <div className={COMMON_BUTTON_CLASSES}>{children}</div>
     </div>
   );
 }

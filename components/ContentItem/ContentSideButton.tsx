@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 
 type ContentSideButtonProps = {
   type: "button" | "link";
+  target?: "_blank";
   href?: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onClickLink?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
@@ -11,6 +12,7 @@ type ContentSideButtonProps = {
 
 export default function ContentSideButton({
   type,
+  target,
   href,
   onClick,
   onClickLink,
@@ -20,9 +22,9 @@ export default function ContentSideButton({
     return (
       <Link
         href={href}
-        target="_blank"
+        target={target}
         onClick={onClickLink}
-        className="opacity-70 hover:opacity-100 w-6 h-6"
+        className="block opacity-70 hover:opacity-100 w-6 h-6"
       >
         {children}
       </Link>
