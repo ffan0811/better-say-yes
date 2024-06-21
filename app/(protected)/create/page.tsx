@@ -1,5 +1,6 @@
 "use client";
 import CreateContainer from "@/components/CreateContainer";
+import { useSearchParams } from "next/navigation";
 import Logo from "@/components/Logo";
 import PaymentButton from "@/components/Payment/PaymentButton";
 import Link from "next/link";
@@ -50,11 +51,7 @@ const sidebarMenu = [
   },
 ];
 
-export default function CreatePage({
-  searchParams,
-}: {
-  searchParams: { id: string; isTemplate?: string };
-}) {
+export default function CreatePage() {
   const [contentsData, setContentsData] = useState<Tables<"contents">>(null);
   const [images, setImages] = useState<ImageProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -63,8 +60,12 @@ export default function CreatePage({
   const supabase = createClient();
   const { toast } = useToast();
 
+  const searchFunc = useSearchParams();
+  const paramsId = searchFunc.get("id");
+  const paramsIsTemplate = searchFunc.get("isTemplate");
+
   useEffect(() => {
-    if (searchParams.isTemplate === "true") {
+    if (paramsIsTemplate === "true") {
       setTableName("templates");
       setContentsClientData({
         ...contentsClientData,
@@ -77,7 +78,7 @@ export default function CreatePage({
         tableName: "contents",
       });
     }
-  }, [searchParams]);
+  }, [paramsIsTemplate]);
 
   const init = async () => {
     if (!tableName) return;
@@ -88,7 +89,7 @@ export default function CreatePage({
       const { data, error } = await supabase
         .from(tableName as "contents" | "templates")
         .select("*")
-        .eq("id", searchParams.id)
+        .eq("id", paramsId)
         .single();
 
       console.log("data", data);
@@ -105,7 +106,7 @@ export default function CreatePage({
       }
 
       const { result: fullImages } = await getBlurUrls({
-        contentId: searchParams.id,
+        contentId: paramsId,
         tableName: tableName,
         images: data?.images || [],
       });
@@ -117,9 +118,9 @@ export default function CreatePage({
   };
 
   useEffect(() => {
-    if (!searchParams.id) return;
+    if (!paramsId) return;
     init();
-  }, [searchParams.id, searchParams.isTemplate, tableName]);
+  }, [paramsId, paramsIsTemplate, tableName]);
 
   const comp = {
     [SidebarMenuType.FONT]: (
@@ -137,16 +138,16 @@ export default function CreatePage({
         <ColorPicker />
       </div>
     ),
-    [SidebarMenuType.IMAGES]: <CreateImages contentId={searchParams.id} />,
+    [SidebarMenuType.IMAGES]: <CreateImages contentId={paramsId} />,
   };
-  console.log(isLoading, contentsData, tableName, searchParams);
+  console.log(isLoading, contentsData, tableName, paramsIsTemplate, paramsId);
   if (isLoading && !contentsData)
     return <LoaderEntirePage text="Preparing your page..." />;
 
   if (!contentsData) return <p>Cannot find data</p>;
 
   return (
-    <ImageProvider contentId={searchParams.id}>
+    <ImageProvider contentId={paramsId}>
       <ImageWrapper images={images}>
         <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500 overflow-x-auto">
           <div className="flex justify-between items-center w-full px-5">
@@ -160,13 +161,13 @@ export default function CreatePage({
             </div>
             <div className="flex items-center space-x-2">
               {/* <RefreshCcwIcon className="mr-4 opacity-80" /> */}
-              <SaveButton contentId={searchParams.id} />
-              <PreviewButton contentId={searchParams.id} />
+              <SaveButton contentId={paramsId} />
+              <PreviewButton contentId={paramsId} />
               {contentsData.status === "draft" && (
-                <PaymentButton contentId={searchParams.id} />
+                <PaymentButton contentId={paramsId} />
               )}
               {contentsData.status === "inactive" && (
-                <ReLaunchButton contentId={searchParams.id} />
+                <ReLaunchButton contentId={paramsId} />
               )}
             </div>
           </div>
@@ -185,10 +186,7 @@ export default function CreatePage({
           </Accordion>
         </div>
         <div className="md:ml-80 mt-20">
-          <CreateContainer
-            contentId={searchParams.id}
-            contentsData={contentsData}
-          />
+          <CreateContainer contentId={paramsId} contentsData={contentsData} />
         </div>
         <PageSwitcher />
       </ImageWrapper>
