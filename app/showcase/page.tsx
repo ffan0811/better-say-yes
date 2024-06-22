@@ -1,5 +1,6 @@
 import ContentItem from "@/components/ContentItem";
 import Layout from "@/components/Layout";
+import { EXTERNAL_SHOWCASE_SUBMISSION_FORM } from "@/constants";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
@@ -17,7 +18,7 @@ export default async function ShowcasePage() {
   return (
     <Layout>
       <Link
-        href="/"
+        href={EXTERNAL_SHOWCASE_SUBMISSION_FORM}
         target="_blank"
         className="bg-white hover:bg-white/80 transition-colors w-full text-center py-6 px-4 mb-8"
       >
