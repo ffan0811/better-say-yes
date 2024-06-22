@@ -11,10 +11,16 @@ export default async function DashboardPage() {
 
   if (!user) return redirect("/login");
 
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("id, role")
+    .eq("id", user.id)
+    .single();
+
   return (
     <Layout>
       <div className="container">
-        <ProjectsContainer userId={user.id} />
+        <ProjectsContainer user={{ id: user.id, role: data.role || [] }} />
       </div>
     </Layout>
   );
