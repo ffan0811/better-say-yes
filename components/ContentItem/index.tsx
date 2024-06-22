@@ -2,7 +2,9 @@ import Link from "next/link";
 import { ReactNode } from "react";
 
 export const ITEM_COMMON_CLASSES =
-  "border w-full text-lg rounded-md flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity whitespace-pre-line-line p-4";
+  "border w-full text-lg rounded-md flex items-center justify-center whitespace-pre-line-line p-4";
+export const ITEM_HOVER_CLASSES =
+  "cursor-pointer hover:opacity-80 transition-opacity";
 export const ITEM_HEIGHT = "h-40";
 
 type ContentItemProps = {
@@ -32,7 +34,7 @@ export default function ContentItem({
   onClick,
   onClickLink,
 }: ContentItemProps) {
-  const COMMON_WRAPPER_CLASSES = `relative flex flex-col group ${className} ${ITEM_COMMON_CLASSES} ${ITEM_HEIGHT}`;
+  const COMMON_WRAPPER_CLASSES = `relative flex flex-col group ${className} ${ITEM_COMMON_CLASSES} ${ITEM_HOVER_CLASSES} ${ITEM_HEIGHT}`;
 
   const COMMON_BUTTON_CLASSES =
     "hidden group-hover:flex absolute right-3 top-3 space-x-2";
