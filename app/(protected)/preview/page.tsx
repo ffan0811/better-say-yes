@@ -1,5 +1,5 @@
 "use client";
-
+import PageSwitcher from "@/components/PageSwitcher";
 import AfterYesContents, {
   DESCRIPTION_COMMON_CLASSES,
   TITLE_COMMON_CLASSES,
@@ -46,6 +46,12 @@ export default function PreviewPage() {
 
   const handleClickYes = () => {
     setPageStep(PageStepType.AFTER_YES);
+  };
+
+  const handlePage = (direction: "prev" | "next") => {
+    setPageStep(
+      direction === "prev" ? PageStepType.MAIN : PageStepType.AFTER_YES
+    );
   };
 
   return (
@@ -110,6 +116,7 @@ export default function PreviewPage() {
                 }
               />
             )}
+            <PageSwitcher onClick={handlePage} />
           </ImageWrapper>
         </ColorWrapper>
       </FontWrapper>

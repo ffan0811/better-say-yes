@@ -10,7 +10,13 @@ import { SaveIcon } from "lucide-react";
 import { Input } from "../ui/input";
 import { MAX_PROJECT_NAME_LENGTH } from "@/constants/content";
 
-export default function SaveButton({ contentId }: { contentId: string }) {
+export default function SaveButton({
+  contentId,
+  isImageLoading,
+}: {
+  contentId: string;
+  isImageLoading: boolean;
+}) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [contents, setContents] = useAtom(contentsAtom);
   const { toast } = useToast();
@@ -42,7 +48,7 @@ export default function SaveButton({ contentId }: { contentId: string }) {
         placeholder="Name your project"
         className="w-auto"
         maxLength={MAX_PROJECT_NAME_LENGTH}
-        disabled={isLoading}
+        disabled={isLoading || isImageLoading}
         value={contents.name}
         onChange={(e) => {
           setContents({
@@ -55,7 +61,7 @@ export default function SaveButton({ contentId }: { contentId: string }) {
         size="icon"
         className="w-10"
         spinnerColor="stroke-neutral-100"
-        isLoading={isLoading}
+        isLoading={isLoading || isImageLoading}
         onClick={handleSubmit}
         variant="outline"
       >
