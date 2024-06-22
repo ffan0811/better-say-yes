@@ -17,7 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Separator } from "../ui/separator";
-import { ITEM_COMMON_CLASSES, ITEM_HEIGHT } from "../ContentItem";
+import { ITEM_COMMON_CLASSES, ITEM_SIZE } from "../ContentItem";
 import { EXTERNAL_REFUND_POLICY } from "@/constants";
 
 export default function PaymentButton({ contentId }: { contentId: string }) {
@@ -117,7 +117,7 @@ export default function PaymentButton({ contentId }: { contentId: string }) {
         </DialogHeader>
         <div className="flex items-center justify-center flex-col md:flex-row text-center md:text-left">
           <div
-            className={`${ITEM_COMMON_CLASSES} ${ITEM_HEIGHT} max-w-40 mb-4 md:mb-0 text-center`}
+            className={`${ITEM_COMMON_CLASSES} ${ITEM_SIZE} max-w-40 mb-4 md:mb-0 text-center`}
             style={{
               background: contents.backgroundColor,
               color: contents.themeColor,

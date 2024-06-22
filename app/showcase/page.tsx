@@ -1,6 +1,5 @@
+import ContentItem from "@/components/ContentItem";
 import Layout from "@/components/Layout";
-import ShowcaseContainer from "@/components/ShowcaseContainer";
-import TemplatesContainer from "@/components/TemplatesContainer";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
@@ -10,7 +9,7 @@ export default async function ShowcasePage() {
   const { data, error } = await supabase
     .from("templates")
     .select(
-      "id, background_color, font_family, theme_color, name, created_at, updated_at"
+      "id, question, background_color, font_family, theme_color, name, created_at, updated_at"
     )
     .eq("status", "active")
     .order("updated_at", { ascending: false });
@@ -28,8 +27,29 @@ export default async function ShowcasePage() {
         </p>
       </Link>
       <div className="container space-y-8">
-        <TemplatesContainer data={data} isFetching={false} isShowcase />
-        <ShowcaseContainer />
+        {/* <TemplatesContainer data={data} isFetching={false} isShowcase />
+        <ShowcaseContainer /> */}
+        <div className="grid grid-cols-3 gap-4">
+          {data.map((ele, idx) => (
+            <div>
+              <ContentItem
+                key={ele.id}
+                backgroundColor={ele.background_color}
+                themeColor={ele.theme_color}
+                type="link"
+                title={ele?.name || `Draft ${idx}`}
+                href={`/my/templates/${ele.id}`}
+                target="_blank"
+              />
+              <div className="text-right mt-1">
+                <p className="text-neutral-200 truncate">
+                  Q. {`${ele.question}`}
+                </p>
+                <p className="text-sm text-neutral-400">BetterSayYes</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </Layout>
   );

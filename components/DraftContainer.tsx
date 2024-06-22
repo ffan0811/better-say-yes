@@ -69,7 +69,7 @@ export default function DraftContainer({
         <CardTitle>Drafts</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid md:grid-cols-4 gap-4">
+        <div className="grid md:grid-cols-3 gap-4">
           {data.length > MAX_DRAFT_COUNT ? null : <CreateButton />}
           {data.map((ele, idx) => (
             <ContentItem

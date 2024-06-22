@@ -1,6 +1,5 @@
 "use client";
 
-import { ITEM_HEIGHT } from "@/components/ContentItem";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Edit2Icon, ExternalLinkIcon } from "lucide-react";
 import { useFont } from "./font-provider";
@@ -65,7 +64,7 @@ export default function TemplatesContainer({
     e.stopPropagation();
   };
 
-  const loaders = Array.from({ length: 4 }, (_, index) => (
+  const loaders = Array.from({ length: 6 }, (_, index) => (
     <Loader key={index} className="shrink-0" />
   ));
 
@@ -78,7 +77,7 @@ export default function TemplatesContainer({
       </CardHeader>
       <CardContent>
         <div
-          className={`snap-mandatory snap-x ${ITEM_HEIGHT} overflow-x-auto space-x-4 flex md:snap-none md:h-auto md:space-x-0 md:grid md:grid-cols-4 md:gap-4`}
+          className={`snap-mandatory snap-x overflow-x-auto space-x-4 flex md:snap-none md:h-auto md:space-x-0 md:grid md:grid-cols-3 md:gap-4`}
         >
           {isFetching
             ? loaders

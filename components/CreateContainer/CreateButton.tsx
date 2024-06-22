@@ -5,7 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import {
   ITEM_COMMON_CLASSES,
-  ITEM_HEIGHT,
+  ITEM_SIZE,
   ITEM_HOVER_CLASSES,
 } from "@/components/ContentItem";
 import { useAtom } from "jotai";
@@ -38,7 +38,7 @@ export default function CreateButton() {
     <Button
       variant="outline"
       spinnerColor="stroke-neutral-50"
-      className={`${ITEM_COMMON_CLASSES} ${ITEM_HOVER_CLASSES} ${ITEM_HEIGHT}`}
+      className={`${ITEM_COMMON_CLASSES} ${ITEM_HOVER_CLASSES} ${ITEM_SIZE} h-full`}
       isLoading={isGlobalLoading.isActive}
       onClick={handleSubmit}
     >
