@@ -1,4 +1,5 @@
 "use server";
+import { generate, count } from "random-words";
 import {
   MAX_AFTER_YES_BUTTON_LENGTH,
   MAX_AFTER_YES_DESCRIPTION_LENGTH,
@@ -22,6 +23,9 @@ export async function createContent(params?: {
   let result,
     error: ErrorType = null;
   try {
+    const randomName = generate({
+      exactly: 2, join: " "
+    })
     const supabase = createClient();
     const { data } = await supabase
       .from("contents")
@@ -29,6 +33,7 @@ export async function createContent(params?: {
         font_family: params?.fontFamily || null,
         theme_color: params?.themeColor || null,
         background_color: params?.backgroundColor || null,
+        name: randomName
       })
       .select(`id`)
       .single();
