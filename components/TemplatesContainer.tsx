@@ -13,6 +13,7 @@ import { useAtom } from "jotai";
 import ContentItem from "./ContentItem";
 import ContentSideButton from "./ContentItem/ContentSideButton";
 import { UserRole } from "@/types/user";
+import { MAX_DRAFT_COUNT } from "./DraftContainer";
 
 export type TemplateType = {
   id: string;
@@ -24,15 +25,17 @@ export type TemplateType = {
 
 export default function TemplatesContainer({
   data,
-  isFetching,
   user,
+  isFetching,
+  isDisabled,
 }: {
   data: TemplateType[];
-  isFetching: boolean;
   user: {
     id: string;
     role: string[];
   };
+  isFetching: boolean;
+  isDisabled: boolean;
 }) {
   const { getFontClasses } = useFont();
   const [isGlobalLoading, setIsGlobalLoading] = useAtom(globalLoaderAtom);
@@ -43,6 +46,14 @@ export default function TemplatesContainer({
     e: React.MouseEvent<HTMLDivElement>,
     templateData: TemplateType
   ) => {
+    if (isDisabled) {
+      toast({
+        variant: "destructive",
+        title: `Max projects reached!`,
+        description: `You can only have ${MAX_DRAFT_COUNT} projects at a time. Consider removing one to add another.`,
+      });
+      return;
+    }
     setIsGlobalLoading({
       isActive: true,
       message: "Generating your page...",

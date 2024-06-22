@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { ERROR_DEFAULT_DESCRIPTION } from "@/constants/message";
 import TemplatesContainer, { TemplateType } from "./TemplatesContainer";
-import DraftContainer from "./DraftContainer";
+import DraftContainer, { MAX_DRAFT_COUNT } from "./DraftContainer";
 import ActiveContainer from "./ActiveContainer";
 import InactiveContainer from "./InactiveContainer";
 
@@ -121,6 +121,7 @@ export default function ProjectsContainer({
       <TemplatesContainer
         data={templatesData}
         isFetching={isLoadingTemplates}
+        isDisabled={(draftsData || []).length > MAX_DRAFT_COUNT}
         user={user}
       />
       <DraftContainer data={draftsData} onRefresh={getDrafts} />
