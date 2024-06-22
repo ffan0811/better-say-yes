@@ -1,6 +1,25 @@
 import { handleError } from "@/lib/utils";
 import { ErrorType } from "@/types/global";
 
+export const fetchContentData = async ({ contentId, tableName = "contents" }: { contentId: string, tableName?: 'contents' | 'templates' }): Promise<Record<string, any> | null> => {
+  const url = `https://${process.env.NEXT_PUBLIC_SUPABASE_HOST}/rest/v1/${tableName}?apikey=${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}&id=in.(${contentId})`;
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error("Failed to fetch content data");
+    }
+    const data = await res.json();
+    if (data.length > 0) {
+      return data[0];
+    }
+    return null
+  } catch (error) {
+    console.error("Error fetching content data:", error);
+    return null;
+  }
+};
+
 export const sendImagesToDB = async ({
   contentId,
   data,
