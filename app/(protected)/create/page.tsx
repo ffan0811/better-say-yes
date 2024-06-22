@@ -4,21 +4,10 @@ import { useSearchParams } from "next/navigation";
 import Logo from "@/components/Logo";
 import PaymentButton from "@/components/Payment/PaymentButton";
 import Link from "next/link";
-import { SidebarMenuType } from "@/types/sidebar";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import PageSwitcher from "@/components/PageSwitcher";
-import CreateImages from "@/components/CreateContainer/Images";
 import SaveButton from "@/components/CreateContainer/SaveButton";
 import { createClient } from "@/lib/supabase/client";
 import { ImageProvider } from "@/components/image-provider";
-import SelectFont from "@/components/selectFont";
-import BackgroundColorPicker from "@/components/BackgroundColorPicker";
-import ColorPicker from "@/components/ColorPicker";
 import ImageWrapper from "@/components/Production/ImageWrapper";
 import PreviewButton from "@/components/CreateContainer/PreviewButton";
 import ReLaunchButton from "@/components/ReLaunchButton";
@@ -31,25 +20,11 @@ import { getBlurUrls } from "@/actions/content";
 import LoaderEntirePage from "@/components/loaderEntirePage";
 import { useAtom } from "jotai";
 import { contentsAtom } from "@/atoms/content";
-
-const sidebarMenu = [
-  {
-    label: "Font",
-    value: SidebarMenuType.FONT,
-  },
-  {
-    label: "Background",
-    value: SidebarMenuType.BACKGROUND,
-  },
-  {
-    label: "Theme Color",
-    value: SidebarMenuType.THEME_COLOR,
-  },
-  {
-    label: "Images (AutoSave)",
-    value: SidebarMenuType.IMAGES,
-  },
-];
+import MobileMenu from "@/components/CreateContainer/MobileMenu";
+import MenuContent from "@/components/CreateContainer/MenuContent";
+import { previewAtom } from "@/atoms/preview";
+import { uploadingImageLoaderAtom } from "@/atoms/global";
+import { PageStepType } from "@/types/status";
 
 export default function CreatePage() {
   const [contentsData, setContentsData] = useState<Tables<"contents">>(null);
@@ -57,6 +32,10 @@ export default function CreatePage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [tableName, setTableName] = useState<string | null>(null);
   const [contentsClientData, setContentsClientData] = useAtom(contentsAtom);
+  const [preview, setPreview] = useAtom(previewAtom);
+  const [uploadingImageLoader, setUploadingImageLoader] = useAtom(
+    uploadingImageLoaderAtom
+  );
   const supabase = createClient();
   const { toast } = useToast();
 
@@ -92,8 +71,6 @@ export default function CreatePage() {
         .eq("id", paramsId)
         .single();
 
-      console.log("data", data);
-
       setContentsData(data);
 
       if (error) {
@@ -122,29 +99,17 @@ export default function CreatePage() {
     init();
   }, [paramsId, paramsIsTemplate, tableName]);
 
-  const comp = {
-    [SidebarMenuType.FONT]: (
-      <div className="flex justify-center">
-        <SelectFont />
-      </div>
-    ),
-    [SidebarMenuType.BACKGROUND]: (
-      <div className="flex justify-center">
-        <BackgroundColorPicker />
-      </div>
-    ),
-    [SidebarMenuType.THEME_COLOR]: (
-      <div className="flex justify-center">
-        <ColorPicker />
-      </div>
-    ),
-    [SidebarMenuType.IMAGES]: <CreateImages contentId={paramsId} />,
-  };
-  console.log(isLoading, contentsData, tableName, paramsIsTemplate, paramsId);
   if (isLoading && !contentsData)
     return <LoaderEntirePage text="Preparing your page..." />;
 
   if (!contentsData) return <p>Cannot find data</p>;
+
+  const handlePage = (direction: "prev" | "next") => {
+    setPreview({
+      ...preview,
+      stage: direction === "prev" ? PageStepType.MAIN : PageStepType.AFTER_YES,
+    });
+  };
 
   return (
     <ImageProvider contentId={paramsId}>
@@ -161,7 +126,10 @@ export default function CreatePage() {
             </div>
             <div className="flex items-center space-x-2">
               {/* <RefreshCcwIcon className="mr-4 opacity-80" /> */}
-              <SaveButton contentId={paramsId} />
+              <SaveButton
+                contentId={paramsId}
+                isImageLoading={uploadingImageLoader}
+              />
               <PreviewButton contentId={paramsId} />
               {contentsData.status === "draft" && (
                 <PaymentButton contentId={paramsId} />
@@ -173,22 +141,13 @@ export default function CreatePage() {
           </div>
         </nav>
         <div className="w-80 h-screen overflow-y-auto bg-neutral-900 justify-between fixed z-30 left-0 top-0 hidden md:flex">
-          <Accordion type="multiple" className="w-full mt-20">
-            {/* <InputWithLabel label="Project Name" /> */}
-            {sidebarMenu.map((ele) => (
-              <AccordionItem key={ele.value} className="px-5" value={ele.value}>
-                <AccordionTrigger>{ele.label}</AccordionTrigger>
-                <AccordionContent className="pt-2 pb-5">
-                  {comp[ele.value]}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          <MenuContent contentId={paramsId} className="mt-20" />
         </div>
         <div className="md:ml-80 mt-20">
           <CreateContainer contentId={paramsId} contentsData={contentsData} />
         </div>
-        <PageSwitcher />
+        <MobileMenu contentId={paramsId} />
+        <PageSwitcher onClick={handlePage} />
       </ImageWrapper>
     </ImageProvider>
   );

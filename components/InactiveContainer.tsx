@@ -66,7 +66,7 @@ export default function InactiveContainer({
         <CardTitle>Inactive</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid md:grid-cols-4 gap-4">
+        <div className="grid md:grid-cols-3 gap-4">
           {data.map((ele, idx) => (
             <ContentItem
               key={ele.id}

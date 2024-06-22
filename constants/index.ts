@@ -6,5 +6,7 @@ export const EXTERNAL_CONTACT =
   "https://artistic-newsprint-5cd.notion.site/Contact-Us-2222b7b8475f437398c248a803908e6e?pvs=4";
 export const EXTERNAL_MARKETING_WEBSITE =
   "https://www.instagram.com/bettersayyes";
+export const EXTERNAL_REFUND_POLICY="https://artistic-newsprint-5cd.notion.site/Refund-Policy-for-BetterSayYes-5bb82302d75141a8ae5f3c3d3cef9a30?pvs=4"
+export const EXTERNAL_SHOWCASE_SUBMISSION_FORM="https://form.jotform.com/241734168242455"
 export const EDITABLE_INPUT_CLASSES =
   "bg-transparent outline-none focus:border border-dashed border-neutral-500 whitespace-pre-line-line";
