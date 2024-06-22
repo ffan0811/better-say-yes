@@ -12,6 +12,8 @@ import { globalLoaderAtom } from "@/atoms/global";
 import { useAtom } from "jotai";
 import ContentItem from "./ContentItem";
 import ContentSideButton from "./ContentItem/ContentSideButton";
+import { UserRole } from "@/types/user";
+import { MAX_DRAFT_COUNT } from "./DraftContainer";
 
 export type TemplateType = {
   id: string;
@@ -23,12 +25,17 @@ export type TemplateType = {
 
 export default function TemplatesContainer({
   data,
+  user,
   isFetching,
-  isShowcase,
+  isDisabled,
 }: {
   data: TemplateType[];
+  user: {
+    id: string;
+    role: string[];
+  };
   isFetching: boolean;
-  isShowcase?: boolean;
+  isDisabled: boolean;
 }) {
   const { getFontClasses } = useFont();
   const [isGlobalLoading, setIsGlobalLoading] = useAtom(globalLoaderAtom);
@@ -39,6 +46,14 @@ export default function TemplatesContainer({
     e: React.MouseEvent<HTMLDivElement>,
     templateData: TemplateType
   ) => {
+    if (isDisabled) {
+      toast({
+        variant: "destructive",
+        title: `Max projects reached!`,
+        description: `You can only have ${MAX_DRAFT_COUNT} projects at a time. Consider removing one to add another.`,
+      });
+      return;
+    }
     setIsGlobalLoading({
       isActive: true,
       message: "Generating your page...",
@@ -71,9 +86,7 @@ export default function TemplatesContainer({
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>
-          {isShowcase ? "From the BetterSayYes Team" : "Start with Templates"}
-        </CardTitle>
+        <CardTitle>Start with Templates</CardTitle>
       </CardHeader>
       <CardContent>
         <div
@@ -88,9 +101,8 @@ export default function TemplatesContainer({
                     key={ele.id}
                     className={`snap-center shrink-0 ${fontClasses}`}
                     contentId={ele.id}
-                    type={isShowcase ? "link" : "button"}
+                    type="button"
                     href={`/my/templates/${ele.id}`}
-                    target={isShowcase ? "_blank" : undefined}
                     title={ele?.name}
                     onClick={(e) =>
                       !isGlobalLoading.isActive &&
@@ -99,30 +111,28 @@ export default function TemplatesContainer({
                     backgroundColor={ele.background_color}
                     themeColor={ele.theme_color}
                   >
-                    {isShowcase ? null : (
-                      <>
-                        <ContentSideButton
-                          type="link"
-                          href={`/my/templates/${ele.id}`}
-                          target="_blank"
-                          onClickLink={(e) => handleClickLink(e)}
-                        >
-                          <ExternalLinkIcon />
-                        </ContentSideButton>
-                        <ContentSideButton
-                          type="link"
-                          href={`/create?id=${ele.id}&isTemplate=true`}
-                          onClickLink={(e) => {
-                            e.stopPropagation();
-                            setIsGlobalLoading({
-                              isActive: true,
-                              message: "Preparing your page...",
-                            });
-                          }}
-                        >
-                          <Edit2Icon />
-                        </ContentSideButton>
-                      </>
+                    <ContentSideButton
+                      type="link"
+                      href={`/my/templates/${ele.id}`}
+                      target="_blank"
+                      onClickLink={(e) => handleClickLink(e)}
+                    >
+                      <ExternalLinkIcon />
+                    </ContentSideButton>
+                    {user.role.includes(UserRole.TEMPLATE_MANAGER) && (
+                      <ContentSideButton
+                        type="link"
+                        href={`/create?id=${ele.id}&isTemplate=true`}
+                        onClickLink={(e) => {
+                          e.stopPropagation();
+                          setIsGlobalLoading({
+                            isActive: true,
+                            message: "Preparing your page...",
+                          });
+                        }}
+                      >
+                        <Edit2Icon />
+                      </ContentSideButton>
                     )}
                   </ContentItem>
                 );

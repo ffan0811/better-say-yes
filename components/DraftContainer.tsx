@@ -10,7 +10,7 @@ import { useAtom } from "jotai";
 import ContentItem from "./ContentItem";
 import ContentSideButton from "./ContentItem/ContentSideButton";
 
-const MAX_DRAFT_COUNT = 5;
+export const MAX_DRAFT_COUNT = 5;
 
 export type DraftType = {
   id: string;

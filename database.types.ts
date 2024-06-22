@@ -113,18 +113,21 @@ export type Database = {
         Row: {
           id: string
           is_email_subscribed: boolean | null
+          role: string[] | null
           updated_at: string | null
           username: string | null
         }
         Insert: {
           id: string
           is_email_subscribed?: boolean | null
+          role?: string[] | null
           updated_at?: string | null
           username?: string | null
         }
         Update: {
           id?: string
           is_email_subscribed?: boolean | null
+          role?: string[] | null
           updated_at?: string | null
           username?: string | null
         }
