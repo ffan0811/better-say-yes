@@ -25,17 +25,17 @@ export default function AccountForm({
   const [username, setUsername] = useState<string | null>(
     user?.user_metadata.username
   );
-  const [isEmailNoSubscribed, setIsNoSubscribed] = useState<boolean>(false);
+  const [isEmailSubscribed, setIsSubscribed] = useState<boolean>(false);
 
   const { toast } = useToast();
   const router = useRouter();
 
   async function updateProfile({
     username,
-    isEmailNoSubscribed,
+    isEmailSubscribed,
   }: {
     username: string;
-    isEmailNoSubscribed?: boolean;
+    isEmailSubscribed?: boolean;
   }) {
     try {
       setLoading(true);
@@ -45,7 +45,7 @@ export default function AccountForm({
       const { error } = await supabase.auth.updateUser({
         data: {
           username: username,
-          is_email_subscribed: !isEmailNoSubscribed,
+          is_email_subscribed: isEmailSubscribed,
         },
       });
       if (error) throw new Error(error.message);
@@ -71,7 +71,7 @@ export default function AccountForm({
       });
       return;
     }
-    updateProfile({ username, isEmailNoSubscribed });
+    updateProfile({ username, isEmailSubscribed });
   };
 
   return (
@@ -94,10 +94,10 @@ export default function AccountForm({
 
       <div>
         <CheckboxWithText
-          id="isEmailNoSubscribed"
-          title="I don&#39;t want to receive emails about BetterSayYes and feature updates, marketing best practices, and promotions from BetterSayYes. By not checking the box, I agree to be opted in by default."
-          checked={isEmailNoSubscribed}
-          onCheckedChange={(checked) => setIsNoSubscribed(checked as boolean)}
+          id="isEmailSubscribed"
+          title="I want to receive promotion codes and emails about feature updates from BetterSayYes. If you do not check the box, you will be opted in by default."
+          checked={isEmailSubscribed}
+          onCheckedChange={(checked) => setIsSubscribed(checked as boolean)}
         />
       </div>
       <div className="pt-4">

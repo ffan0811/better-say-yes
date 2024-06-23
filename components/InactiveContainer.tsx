@@ -47,7 +47,6 @@ export default function InactiveContainer({
       .from("contents")
       .delete()
       .eq("id", contentId);
-    console.log("da", contentId, data);
     if (error) {
       toast({
         title: ERROR_DEFAULT_TITLE,

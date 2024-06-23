@@ -20,17 +20,17 @@ export default async function ShowcasePage() {
       <Link
         href={EXTERNAL_SHOWCASE_SUBMISSION_FORM}
         target="_blank"
-        className="bg-white hover:bg-white/80 transition-colors w-full text-center py-6 px-4 mb-8"
+        className="bg-white hover:bg-white/80 transition-colors w-full text-center py-6 px-4"
       >
         <p className="text-neutral-900 md:text-xl">
           Ready to show off your creativity? <br className="md:hidden" />
           Submit your site to our Showcase today!
         </p>
       </Link>
-      <div className="container space-y-8">
+      <div className="container space-y-8 py-20">
         {/* <TemplatesContainer data={data} isFetching={false} isShowcase />
         <ShowcaseContainer /> */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="px-4 grid md:grid-cols-3 gap-4 md:px-0">
           {data.map((ele, idx) => (
             <div>
               <ContentItem

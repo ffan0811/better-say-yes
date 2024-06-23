@@ -1,21 +1,16 @@
 import Layout from "@/components/Layout";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { createClient as createClientServer } from "@/lib/supabase/server";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { redirect } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { createClient as createClientServer } from "@/lib/supabase/server";
+import EmailSubscriptionContainer from "@/components/Settings/EmailSubscriptionContainer";
+import DeleteAccountContainer from "@/components/Settings/DeleteAccountContainer";
+import { Label } from "@/components/ui/label";
 import SignOutButton from "@/components/SignOutButton";
-import { SubmitButton } from "@/components/SubmitButton";
-import LoaderEntirePage from "@/components/loaderEntirePage";
 
 export default async function SettingsPage({
   searchParams,
@@ -28,64 +23,39 @@ export default async function SettingsPage({
     data: { user },
   } = await supabase.auth.getUser();
 
-  const deleteAccount = async () => {
-    "use server";
-    const supabase = createClient(
-      `https://${process.env.NEXT_PUBLIC_SUPABASE_HOST!}`,
-      process.env.SUPABASE_SERVICE_ROLE!
-    );
-
-    const { error } = await supabase.auth.admin.deleteUser(user.id);
-    if (error) {
-      return redirect(`/settings?message=${error.message}`);
-    }
-    return redirect(`/login`);
-  };
-
   return (
-    <Layout>
-      <div className="container px-4 md:px-0">
+    <Layout hasGap>
+      <div className="container px-4 md:px-0 space-y-8">
+        <div className="flex items-center space-x-4">
+          <p className="text-3xl font-medium tracking-tight">
+            Welcome, {user.user_metadata?.username || user.email}{" "}
+          </p>
+          <SignOutButton />
+        </div>
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center space-x-4">
-              <p>Welcome, {user.email}</p>
-              <SignOutButton />
+              Email Subscription
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <Dialog>
-              <DialogTrigger asChild>
-                <div className="text-right mt-8">
-                  <Button variant="destructive">Delete account</Button>
-                </div>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle>Delete account</DialogTitle>
-                  <DialogDescription>
-                    All of your data will be deleted. Are you sure?
-                    {searchParams?.message && (
-                      <span className="block mt-8 text-red-600">
-                        {searchParams.message}
-                      </span>
-                    )}
-                  </DialogDescription>
-                </DialogHeader>
-                <DialogFooter>
-                  <form>
-                    <SubmitButton
-                      formAction={deleteAccount}
-                      type="submit"
-                      variant="destructive"
-                    >
-                      Yes, I want to delete my account
-                    </SubmitButton>
-                  </form>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+            <div className="flex justify-between">
+              <div className="space-y-0.5">
+                <Label className="text-base">Marketing emails</Label>
+                <CardDescription>
+                  Receive emails about promotion codes, new features, and more.
+                </CardDescription>
+              </div>{" "}
+              <EmailSubscriptionContainer
+                isSubscribed={user.user_metadata?.is_email_subscribed}
+              />
+            </div>
           </CardContent>
         </Card>
+        <DeleteAccountContainer
+          userId={user.id}
+          errorMessage={searchParams.message}
+        />
       </div>
     </Layout>
   );

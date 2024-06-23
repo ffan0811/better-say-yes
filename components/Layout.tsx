@@ -18,7 +18,7 @@ export default function Layout({
   return (
     <main
       className={`min-h-screen flex flex-col items-center ${
-        hasGap ? "gap-20" : ""
+        hasGap ? "gap-10" : ""
       } ${className}`}
     >
       <Navigation className={navigationClassName} />

@@ -22,7 +22,6 @@ export default function GoogleLogin({ className = "" }: GoogleLoginType) {
     if (error) {
       throw new Error(error.message);
     }
-    console.log("Data", data);
 
     if (data.url) {
       redirect(data.url); // use the redirect API for your server framework

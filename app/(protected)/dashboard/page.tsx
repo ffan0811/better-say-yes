@@ -11,6 +11,8 @@ export default async function DashboardPage() {
 
   if (!user) return redirect("/login");
 
+  if (!user.user_metadata?.username) return redirect("/welcome");
+
   const { data, error } = await supabase
     .from("profiles")
     .select("id, role")
