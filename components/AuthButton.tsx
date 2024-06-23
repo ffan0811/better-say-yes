@@ -13,7 +13,7 @@ export default async function AuthButton() {
   } = await supabase.auth.getUser();
 
   return user ? (
-    <div className="flex space-x-4">
+    <div className="flex space-x-2">
       <Link
         href="/dashboard"
         className={`${buttonVariants({ variant: "default" })}`}

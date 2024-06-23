@@ -1,7 +1,7 @@
 export const SHORT_TITLE = "BetterSayYes";
-export const TITLE = "BetterSayYes: Your Fun, Personalized Decision-Making Page";
+export const TITLE = "BetterSayYes: Get a Yes with Your Fun, Personalized Pages";
 export const DESCRIPTION =
-    "Create and customize fun decision-making pages. Engage with creative questions, interactive yes or no options, and personalized images. Join us for 100% fun and success in every decision!";
+    "Create customized pages to get a yes in a fun and engaging way. Use creative questions and personalized images with yes or no options. Join us for 100% fun and success in getting that yes!";
 
 export const defaultUrl = process.env.NEXT_PUBLIC_SITE_URL
     ? `${process.env.NEXT_PUBLIC_SITE_URL}`
@@ -14,4 +14,3 @@ export const openGraphDefault = {
     locale: "en_US",
     type: "website"
 }
-

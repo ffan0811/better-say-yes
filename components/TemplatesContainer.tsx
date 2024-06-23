@@ -80,7 +80,7 @@ export default function TemplatesContainer({
   };
 
   const loaders = Array.from({ length: 6 }, (_, index) => (
-    <Loader key={index} className="shrink-0" />
+    <Loader key={index} className="shrink-0 aspect-video" />
   ));
 
   return (
@@ -144,5 +144,5 @@ export default function TemplatesContainer({
 }
 
 function Loader({ className = "" }: { className?: string }) {
-  return <Skeleton className={`w-full h-40 rounded-md ${className}`} />;
+  return <Skeleton className={`w-full rounded-md ${className}`} />;
 }
