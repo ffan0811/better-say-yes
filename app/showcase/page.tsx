@@ -30,7 +30,7 @@ export default async function ShowcasePage() {
       <div className="container space-y-8">
         {/* <TemplatesContainer data={data} isFetching={false} isShowcase />
         <ShowcaseContainer /> */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="px-4 grid md:grid-cols-3 gap-4 md:px-0">
           {data.map((ele, idx) => (
             <div>
               <ContentItem

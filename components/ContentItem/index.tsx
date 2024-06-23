@@ -37,7 +37,7 @@ export default function ContentItem({
   const COMMON_WRAPPER_CLASSES = `relative flex flex-col group ${ITEM_COMMON_CLASSES} ${ITEM_HOVER_CLASSES} ${ITEM_SIZE}`;
 
   const COMMON_BUTTON_CLASSES =
-    "hidden group-hover:flex absolute right-3 top-3 space-x-2";
+    "flex md:hidden group-hover:flex absolute right-3 top-3 space-x-2";
   if (type === "link") {
     return (
       <Link legacyBehavior passHref href={href || `/create?id=${contentId}`}>

@@ -99,7 +99,7 @@ export default function TemplatesContainer({
                 return (
                   <ContentItem
                     key={ele.id}
-                    className={`snap-center shrink-0 ${fontClasses}`}
+                    className={`snap-center shrink-0 max-w-[260px] md:max-w-none ${fontClasses}`}
                     contentId={ele.id}
                     type="button"
                     href={`/my/templates/${ele.id}`}

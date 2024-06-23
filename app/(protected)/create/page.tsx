@@ -119,10 +119,10 @@ export default function CreatePage() {
                 href="/dashboard
             "
               >
-                <Logo className="h-auto w-12 md:w-20" />
+                <Logo className="h-auto w-12 md:w-20 mr-4" />
               </Link>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 pr-5">
               {/* <RefreshCcwIcon className="mr-4 opacity-80" /> */}
               <SaveButton
                 contentId={paramsId}

@@ -11,8 +11,8 @@ export default function MobileMenu({ contentId }: { contentId: string }) {
           <MenuIcon />
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-h-[calc(100vh-theme(space.8))] max-w-[calc(100%-theme(space.8))] overflow-y-auto">
-        <MenuContent contentId={contentId} />
+      <DialogContent className="max-h-[calc(100vh-theme(space.8))] max-w-[calc(100%-theme(space.8))]">
+        <MenuContent className="overflow-y-auto h-5/6" contentId={contentId} />
       </DialogContent>
     </Dialog>
   );
