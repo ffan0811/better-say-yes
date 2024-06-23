@@ -1,4 +1,5 @@
 import { openGraphDefault } from "@/app/shared-metadata";
+import Footer from "@/components/Production/Footer";
 import ImageWrapper from "@/components/Production/ImageWrapper";
 import { ImageProvider } from "@/components/image-provider";
 import LoaderEntirePage from "@/components/loaderEntirePage";
@@ -37,7 +38,7 @@ export default async function TemplateContentPageLayout({
 
   const { data, error } = await supabase
     .from("templates")
-    .select("status,images")
+    .select("status,images,theme_color")
     .eq("id", params.contentId)
     .single();
 
@@ -62,7 +63,10 @@ export default async function TemplateContentPageLayout({
   return (
     <Suspense fallback={<LoaderEntirePage />}>
       <ImageProvider contentId={params.contentId}>
-        <ImageWrapper images={results}>{children}</ImageWrapper>
+        <ImageWrapper images={results}>
+          {children}
+          <Footer themeColor={data.theme_color} />
+        </ImageWrapper>
       </ImageProvider>
     </Suspense>
   );

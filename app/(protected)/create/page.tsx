@@ -17,25 +17,24 @@ import { ImageProps } from "@/types/image";
 import { useToast } from "@/components/ui/use-toast";
 import { ERROR_DEFAULT_TITLE } from "@/constants/message";
 import { getBlurUrls } from "@/actions/content";
-import LoaderEntirePage from "@/components/loaderEntirePage";
 import { useAtom } from "jotai";
 import { contentsAtom } from "@/atoms/content";
 import MobileMenu from "@/components/CreateContainer/MobileMenu";
 import MenuContent from "@/components/CreateContainer/MenuContent";
 import { previewAtom } from "@/atoms/preview";
-import { uploadingImageLoaderAtom } from "@/atoms/global";
+import { globalLoaderAtom, uploadingImageLoaderAtom } from "@/atoms/global";
 import { PageStepType } from "@/types/status";
 
 export default function CreatePage() {
   const [contentsData, setContentsData] = useState<Tables<"contents">>(null);
   const [images, setImages] = useState<ImageProps[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [tableName, setTableName] = useState<string | null>(null);
   const [contentsClientData, setContentsClientData] = useAtom(contentsAtom);
   const [preview, setPreview] = useAtom(previewAtom);
   const [uploadingImageLoader, setUploadingImageLoader] = useAtom(
     uploadingImageLoaderAtom
   );
+  const [globalLoader, setGlobalLoader] = useAtom(globalLoaderAtom);
   const supabase = createClient();
   const { toast } = useToast();
 
@@ -63,7 +62,7 @@ export default function CreatePage() {
     if (!tableName) return;
 
     try {
-      setIsLoading(true);
+      setGlobalLoader({ isActive: true, message: "Fetching data..." });
 
       const { data, error } = await supabase
         .from(tableName as "contents" | "templates")
@@ -90,7 +89,7 @@ export default function CreatePage() {
       setImages(fullImages);
     } catch (error) {
     } finally {
-      setIsLoading(false);
+      setGlobalLoader({ isActive: false, message: "" });
     }
   };
 
@@ -99,8 +98,7 @@ export default function CreatePage() {
     init();
   }, [paramsId, paramsIsTemplate, tableName]);
 
-  if (isLoading && !contentsData)
-    return <LoaderEntirePage text="Preparing your page..." />;
+  if (globalLoader.isActive && !contentsData) return null;
 
   if (!contentsData) return <p>Cannot find data</p>;
 
