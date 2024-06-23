@@ -1,7 +1,8 @@
+import { Tables } from "@/database.types";
 import { handleError } from "@/lib/utils";
 import { ErrorType } from "@/types/global";
 
-export const fetchContentData = async ({ contentId, tableName = "contents" }: { contentId: string, tableName?: 'contents' | 'templates' }): Promise<Record<string, any> | null> => {
+export const fetchContentData = async ({ contentId, tableName = "contents" }: { contentId: string, tableName?: 'contents' | 'templates' }): Promise<Tables<'contents' | 'templates'> | null> => {
   const url = `https://${process.env.NEXT_PUBLIC_SUPABASE_HOST}/rest/v1/${tableName}?apikey=${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}&id=in.(${contentId})`;
 
   try {
