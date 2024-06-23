@@ -94,11 +94,6 @@ export default function CookieSetting() {
       description: "Success!",
     });
   };
-
-  console.log(
-    list.find((ele) => ele.name === CookieType.COOKIE_CONSENT),
-    isLoading
-  );
   return (
     <>
       <Dialog>
