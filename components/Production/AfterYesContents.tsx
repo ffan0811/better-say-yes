@@ -7,7 +7,7 @@ export const TITLE_COMMON_CLASSES =
   "text-center text-base font-bold uppercase tracking-widest w-full";
 
 export const DESCRIPTION_COMMON_CLASSES =
-  "text-center break-words whitespace-pre-line-line";
+  "text-center break-words whitespace-pre-line";
 
 type AfterYesContentsProps = {
   contentId: string;

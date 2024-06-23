@@ -40,7 +40,7 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   isLoading?: boolean;
-  spinnerColor?: string;
+  theme?: "light" | "dark"; // spinner stroke color
   asChild?: boolean;
 }
 
@@ -53,7 +53,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       isLoading,
       asChild = false,
       disabled,
-      spinnerColor = "stroke-neutral-900",
+      theme = "dark",
       children,
       ...props
     },
@@ -67,7 +67,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || isLoading}
         {...props}
       >
-        {isLoading ? <Spinner color={spinnerColor} /> : children}
+        {isLoading ? (
+          <Spinner
+            color={
+              theme === "dark" ? "stroke-neutral-900" : "stroke-neutral-50"
+            }
+          />
+        ) : (
+          children
+        )}
       </Comp>
     );
   }

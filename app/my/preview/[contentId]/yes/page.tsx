@@ -8,7 +8,7 @@ import FontWrapper from "@/components/Production/FontWrapper";
 import { createClient } from "@/lib/supabase/server";
 import { FontType } from "@/types/font";
 
-export default async function TemplateContentDetailsYesPage({
+export default async function PreviewDetailsYesPage({
   params,
 }: {
   params: { contentId: string };
@@ -16,7 +16,7 @@ export default async function TemplateContentDetailsYesPage({
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("templates")
+    .from("contents")
     .select("*")
     .eq("id", params.contentId)
     .single();
@@ -24,6 +24,7 @@ export default async function TemplateContentDetailsYesPage({
   if (error) {
     return <p>Error: {error.message}</p>;
   }
+
   return (
     <FontWrapper fontFamily={data.font_family as FontType}>
       <ColorWrapper
@@ -31,7 +32,6 @@ export default async function TemplateContentDetailsYesPage({
         themeColor={data.theme_color}
       >
         <AfterYesContents
-          tableName="templates"
           className="min-h-screen"
           contentId={params.contentId}
           title={
