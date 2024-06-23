@@ -2,7 +2,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 // import Navigation from "@/components/Navigation";
-import { GoogleTagManager } from "@next/third-parties/google";
 import SessionProvider from "@/components/session-provider";
 import { FontProvider } from "@/components/font-provider";
 import { ColorProvider } from "@/components/color-provider";
@@ -65,7 +64,6 @@ export default function RootLayout({
           </SessionProvider>
         </ProgressBarProvider>
       </body>
-      <GoogleTagManager gtmId="GTM-NSF4S484" />
     </html>
   );
 }

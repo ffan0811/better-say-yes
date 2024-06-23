@@ -7,6 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { getCookie, setCookie } from "@/actions/cookie";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
@@ -25,6 +26,8 @@ const cookies = [
       "These cookies are used to collect information to analyze the traffic to our website and how visitors are using our website. The information collected through these tracking and performance cookies do not identify any individual visitor.",
   },
 ];
+
+const ANALYTICS_CONSENT_GIVEN = "analyticsConsentGiven";
 
 export default function CookieSetting() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -57,8 +60,8 @@ export default function CookieSetting() {
     value: CookieType;
   }) => {
     if (data.value === CookieType.ANALYTICS_CONSENT) {
-      console.log("window", window);
-      window.dataLayer.push({ event: "analyticsConsentGiven" });
+      window.analytics = window.analytics || [];
+      window.analytics.push(ANALYTICS_CONSENT_GIVEN);
     }
     await setCookie({
       name: data.value,
@@ -92,6 +95,10 @@ export default function CookieSetting() {
   return (
     <>
       <Dialog>
+        {typeof window !== "undefined" &&
+          window.analytics?.includes(ANALYTICS_CONSENT_GIVEN) && (
+            <GoogleAnalytics gaId="G-7THTQS3FPJ" />
+          )}
         {!list.find((ele) => ele.name === CookieType.COOKIE_CONSENT)?.value &&
           !isLoading && (
             <Alert className="fixed bottom-0 left-0 z-50 w-full shadow">
