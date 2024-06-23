@@ -14,12 +14,12 @@ export default async function AuthButton() {
 
   return user ? (
     <div className="flex space-x-2">
-      <Link
+      {/* <Link
         href="/dashboard"
         className={`${buttonVariants({ variant: "default" })}`}
       >
         Dashboard
-      </Link>
+      </Link> */}
       <Link
         href="/settings"
         className={`px-2 ${buttonVariants({
