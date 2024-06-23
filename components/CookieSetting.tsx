@@ -105,8 +105,8 @@ export default function CookieSetting() {
         pathname.includes("my") ||
         list.find((ele) => ele.name === CookieType.COOKIE_CONSENT)
           ?.value ? null : (
-          <Alert className="fixed bottom-0 left-0 z-50 w-full shadow">
-            <AlertTitle>Cookies</AlertTitle>
+          <Alert className="fixed bottom-4 left-4 z-50 w-80 shadow">
+            <AlertTitle className="mb-2">Cookies</AlertTitle>
             <AlertDescription>
               We use cookies and other tracking technologies to improve your
               browsing experience on our website, to show you personalized
