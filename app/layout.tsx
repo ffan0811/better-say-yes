@@ -11,7 +11,7 @@ import ProgressBarProvider from "@/components/progress-bar-provider";
 import { GlobalLoaderProvider } from "@/components/global-loader-provider";
 
 const defaultUrl = process.env.NEXT_PUBLIC_SITE_URL
-  ? `https://${process.env.NEXT_PUBLIC_SITE_URL}`
+  ? `${process.env.NEXT_PUBLIC_SITE_URL}`
   : "http://localhost:3000";
 
 const SHORT_TITLE = "BetterSayYes";
