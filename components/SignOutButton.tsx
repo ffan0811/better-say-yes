@@ -20,7 +20,7 @@ export default function SignOutButton() {
         size="icon"
         type="submit"
         className="px-2"
-        spinnerColor="stroke-neutral-50"
+        theme="light"
       >
         <LogOutIcon />
       </SubmitButton>

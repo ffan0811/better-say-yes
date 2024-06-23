@@ -59,7 +59,7 @@ export default function SaveButton({
       <Button
         size="icon"
         className="w-10"
-        spinnerColor="stroke-neutral-100"
+        theme="light"
         isLoading={isLoading || isImageLoading}
         onClick={handleSubmit}
         variant="outline"

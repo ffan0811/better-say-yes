@@ -14,10 +14,6 @@ export default async function ContentDetailsPage({
 }) {
   const supabase = createClient();
 
-  if (!params.contentId) {
-    return <p>Incorrect URL</p>;
-  }
-
   const { data, error } = await supabase
     .from("contents")
     .select("status,font_family,background_color,theme_color,question")
@@ -27,15 +23,6 @@ export default async function ContentDetailsPage({
   if (error) {
     return <p>Error: {error.message}</p>;
   }
-
-  if (!data) {
-    return <p>Cannot find data</p>;
-  }
-
-  if (data.status !== "active") {
-    return <p>Permission denied</p>;
-  }
-
   return (
     <FontWrapper fontFamily={data.font_family as FontType}>
       <ColorWrapper

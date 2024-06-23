@@ -37,7 +37,7 @@ export default function CreateButton() {
   return (
     <Button
       variant="outline"
-      spinnerColor="stroke-neutral-50"
+      theme="light"
       className={`${ITEM_COMMON_CLASSES} ${ITEM_HOVER_CLASSES} ${ITEM_SIZE} h-full`}
       isLoading={isGlobalLoading.isActive}
       onClick={handleSubmit}
