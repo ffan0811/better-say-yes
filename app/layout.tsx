@@ -9,15 +9,13 @@ import { ColorProvider } from "@/components/color-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import ProgressBarProvider from "@/components/progress-bar-provider";
 import { GlobalLoaderProvider } from "@/components/global-loader-provider";
-
-const defaultUrl = process.env.NEXT_PUBLIC_SITE_URL
-  ? `${process.env.NEXT_PUBLIC_SITE_URL}`
-  : "http://localhost:3000";
-
-const SHORT_TITLE = "BetterSayYes";
-const TITLE = "BetterSayYes: Your Fun, Personalized Decision-Making Page";
-const DESCRIPTION =
-  "Create and customize fun decision-making pages. Engage with creative questions, interactive yes or no options, and personalized images. Join us for 100% fun and success in every decision!";
+import {
+  DESCRIPTION,
+  SHORT_TITLE,
+  TITLE,
+  defaultUrl,
+  openGraphDefault,
+} from "./shared-metadata";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
@@ -25,12 +23,8 @@ export const metadata = {
   description: DESCRIPTION,
   applicationName: SHORT_TITLE,
   openGraph: {
-    title: TITLE,
-    description: DESCRIPTION,
-    siteName: SHORT_TITLE,
-    locale: "en_US",
-    type: "website",
-    url: defaultUrl,
+    ...openGraphDefault,
+    url: "/",
   },
   referrer: "no-referrer",
   keywords: ["BetterSayYes", "custom pages", "fun events", "fun projects"],

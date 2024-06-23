@@ -1,6 +1,23 @@
+import { openGraphDefault } from "@/app/shared-metadata";
 import { ImageProvider } from "@/components/image-provider";
 import LoaderEntirePage from "@/components/loaderEntirePage";
+import { Metadata } from "next";
 import { ReactNode, Suspense } from "react";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { contentId: string };
+}): Promise<Metadata> {
+  const id = params.contentId;
+
+  return {
+    openGraph: {
+      ...openGraphDefault,
+      url: `/my/${id}`,
+    },
+  };
+}
 
 export default async function ContentPageLayout({
   params,
