@@ -3,3 +3,8 @@ export interface ErrorType {
   message: string;
   data?: any;
 }
+
+export enum CookieType {
+  COOKIE_CONSENT = "cookieConsent",
+  ANALYTICS_CONSENT = "analyticsConsent",
+}
