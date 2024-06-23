@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 // import Navigation from "@/components/Navigation";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 import SessionProvider from "@/components/session-provider";
 import { FontProvider } from "@/components/font-provider";
 import { ColorProvider } from "@/components/color-provider";
@@ -16,6 +16,7 @@ import {
   defaultUrl,
   openGraphDefault,
 } from "./shared-metadata";
+import CookieSetting from "@/components/CookieSetting";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
@@ -54,6 +55,7 @@ export default function RootLayout({
                   <GlobalLoaderProvider>
                     <TooltipProvider delayDuration={100}>
                       {children}
+                      <CookieSetting />
                     </TooltipProvider>
                     <Toaster />
                   </GlobalLoaderProvider>
@@ -63,7 +65,7 @@ export default function RootLayout({
           </SessionProvider>
         </ProgressBarProvider>
       </body>
-      <GoogleAnalytics gaId="G-7THTQS3FPJ" />
+      <GoogleTagManager gtmId="GTM-NSF4S484" />
     </html>
   );
 }
