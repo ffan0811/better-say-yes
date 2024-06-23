@@ -17,6 +17,7 @@ import { CardDescription } from "./ui/card";
 import { Label } from "@radix-ui/react-label";
 import { Switch } from "./ui/switch";
 import { useToast } from "./ui/use-toast";
+import { usePathname } from "next/navigation";
 
 const cookies = [
   {
@@ -36,6 +37,7 @@ export default function CookieSetting() {
     { name: CookieType.ANALYTICS_CONSENT, value: false },
   ]);
   const { toast } = useToast();
+  const pathname = usePathname();
 
   useEffect(() => {
     const init = async () => {
@@ -92,6 +94,11 @@ export default function CookieSetting() {
       description: "Success!",
     });
   };
+
+  console.log(
+    list.find((ele) => ele.name === CookieType.COOKIE_CONSENT),
+    isLoading
+  );
   return (
     <>
       <Dialog>
@@ -99,37 +106,39 @@ export default function CookieSetting() {
           window.analytics?.includes(ANALYTICS_CONSENT_GIVEN) && (
             <GoogleAnalytics gaId="G-7THTQS3FPJ" />
           )}
-        {!list.find((ele) => ele.name === CookieType.COOKIE_CONSENT)?.value &&
-          !isLoading && (
-            <Alert className="fixed bottom-0 left-0 z-50 w-full shadow">
-              <AlertTitle>Cookies</AlertTitle>
-              <AlertDescription>
-                We use cookies and other tracking technologies to improve your
-                browsing experience on our website, to show you personalized
-                content and targeted ads, to analyze our website traffic, and to
-                understand where our visitors are coming from.
-                <div className="flex space-x-2 w-5/6 mx-auto mt-4">
-                  <DialogTrigger asChild>
-                    <Button className="w-full" variant="outline">
-                      Preferences
-                    </Button>
-                  </DialogTrigger>
-
-                  <Button
-                    className="w-full"
-                    onClick={() =>
-                      handleCookie({
-                        checked: true,
-                        value: CookieType.ANALYTICS_CONSENT,
-                      })
-                    }
-                  >
-                    Accept All
+        {isLoading ||
+        pathname.includes("my") ||
+        list.find((ele) => ele.name === CookieType.COOKIE_CONSENT)
+          ?.value ? null : (
+          <Alert className="fixed bottom-0 left-0 z-50 w-full shadow">
+            <AlertTitle>Cookies</AlertTitle>
+            <AlertDescription>
+              We use cookies and other tracking technologies to improve your
+              browsing experience on our website, to show you personalized
+              content and targeted ads, to analyze our website traffic, and to
+              understand where our visitors are coming from.
+              <div className="flex space-x-2 w-5/6 mx-auto mt-4">
+                <DialogTrigger asChild>
+                  <Button className="w-full" variant="outline">
+                    Preferences
                   </Button>
-                </div>
-              </AlertDescription>
-            </Alert>
-          )}
+                </DialogTrigger>
+
+                <Button
+                  className="w-full"
+                  onClick={() =>
+                    handleCookie({
+                      checked: true,
+                      value: CookieType.ANALYTICS_CONSENT,
+                    })
+                  }
+                >
+                  Accept All
+                </Button>
+              </div>
+            </AlertDescription>
+          </Alert>
+        )}
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Cookie settings</DialogTitle>
