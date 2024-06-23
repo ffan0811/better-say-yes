@@ -1,12 +1,10 @@
 import { DefaultLink } from "@/components/Production/Button";
 import ColorWrapper from "@/components/Production/ColorWrapper";
 import FontWrapper from "@/components/Production/FontWrapper";
-import ImageWrapper from "@/components/Production/ImageWrapper";
 import MainContents, {
   QUESTION_COMMON_CLASSES,
 } from "@/components/Production/MainContents";
 import { createClient } from "@/lib/supabase/server";
-import { generateCustomizedImages } from "@/lib/utils/image";
 import { FontType } from "@/types/font";
 
 export default async function TemplateDetailsPage({
@@ -22,7 +20,7 @@ export default async function TemplateDetailsPage({
 
   const { data, error } = await supabase
     .from("templates")
-    .select("status,font_family,background_color,theme_color,question,images")
+    .select("status,font_family,background_color,theme_color,question")
     .eq("id", params.contentId)
     .single();
 
@@ -38,35 +36,27 @@ export default async function TemplateDetailsPage({
     return <p>Permission denied</p>;
   }
 
-  const results = await generateCustomizedImages({
-    contentId: params.contentId,
-    tableName: "templates",
-    images: data.images,
-  });
-
   return (
-    <ImageWrapper images={results}>
-      <FontWrapper fontFamily={data.font_family as FontType}>
-        <ColorWrapper
-          backgroundColor={data.background_color}
-          themeColor={data.theme_color}
-        >
-          <div className="px-4 h-screen flex flex-col items-center justify-center">
-            <MainContents
-              title={<p className={QUESTION_COMMON_CLASSES}>{data.question}</p>}
+    <FontWrapper fontFamily={data.font_family as FontType}>
+      <ColorWrapper
+        backgroundColor={data.background_color}
+        themeColor={data.theme_color}
+      >
+        <div className="px-4 h-screen flex flex-col items-center justify-center">
+          <MainContents
+            title={<p className={QUESTION_COMMON_CLASSES}>{data.question}</p>}
+            themeColor={data.theme_color}
+          >
+            <DefaultLink
+              href={`/my/templates/${params.contentId}/yes`}
               themeColor={data.theme_color}
+              className="min-w-40"
             >
-              <DefaultLink
-                href={`/my/templates/${params.contentId}/yes`}
-                themeColor={data.theme_color}
-                className="min-w-40"
-              >
-                Yes
-              </DefaultLink>
-            </MainContents>
-          </div>
-        </ColorWrapper>
-      </FontWrapper>
-    </ImageWrapper>
+              Yes
+            </DefaultLink>
+          </MainContents>
+        </div>
+      </ColorWrapper>
+    </FontWrapper>
   );
 }

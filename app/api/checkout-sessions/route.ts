@@ -29,10 +29,7 @@ export async function POST(request: NextRequest) {
       mode: "payment",
       line_items: [
         {
-          price:
-            process.env.VERCEL_ENV === "production"
-              ? "price_1PQ2fBHszNRPHNEwcGLBaZwR"
-              : "price_1PQ5kNHszNRPHNEwWjWhhSpJ",
+          price: process.env.STRIPE_PRODUCT_ID,
           quantity: 1,
         },
       ],
@@ -41,6 +38,7 @@ export async function POST(request: NextRequest) {
         "origin"
       )}/payment/complete?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${headers().get("origin")}/create?id=${contentId}`,
+      allow_promotion_codes: true,
     };
 
     const checkoutSession: Stripe.Checkout.Session =
