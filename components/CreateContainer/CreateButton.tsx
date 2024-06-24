@@ -10,13 +10,29 @@ import {
 } from "@/components/ContentItem";
 import { useAtom } from "jotai";
 import { globalLoaderAtom } from "@/atoms/global";
+import {
+  ERROR_MAX_PROJECTS_REACHED_DESCRIPTION,
+  ERROR_MAX_PROJECTS_REACHED_TITLE,
+} from "@/constants/message";
 
-export default function CreateButton() {
+type CreateButtonProps = {
+  isDisabled?: boolean;
+};
+
+export default function CreateButton({ isDisabled }: CreateButtonProps) {
   const [isGlobalLoading, setIsGlobalLoading] = useAtom(globalLoaderAtom);
   const { toast } = useToast();
   const router = useRouter();
 
   const handleSubmit = async () => {
+    if (isDisabled) {
+      toast({
+        variant: "destructive",
+        title: ERROR_MAX_PROJECTS_REACHED_TITLE,
+        description: ERROR_MAX_PROJECTS_REACHED_DESCRIPTION,
+      });
+      return;
+    }
     setIsGlobalLoading({
       isActive: true,
       message: "Generating your page...",

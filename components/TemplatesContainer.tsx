@@ -13,7 +13,10 @@ import { useAtom } from "jotai";
 import ContentItem from "./ContentItem";
 import ContentSideButton from "./ContentItem/ContentSideButton";
 import { UserRole } from "@/types/user";
-import { MAX_DRAFT_COUNT } from "./DraftContainer";
+import {
+  ERROR_MAX_PROJECTS_REACHED_DESCRIPTION,
+  ERROR_MAX_PROJECTS_REACHED_TITLE,
+} from "@/constants/message";
 
 export type TemplateType = {
   id: string;
@@ -49,8 +52,8 @@ export default function TemplatesContainer({
     if (isDisabled) {
       toast({
         variant: "destructive",
-        title: `Max projects reached!`,
-        description: `You can only have ${MAX_DRAFT_COUNT} projects at a time. Consider removing one to add another.`,
+        title: ERROR_MAX_PROJECTS_REACHED_TITLE,
+        description: ERROR_MAX_PROJECTS_REACHED_DESCRIPTION,
       });
       return;
     }
