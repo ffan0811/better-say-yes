@@ -19,6 +19,7 @@ import {
 import { Separator } from "../ui/separator";
 import { ITEM_COMMON_CLASSES, ITEM_SIZE } from "../ContentItem";
 import { EXTERNAL_REFUND_POLICY } from "@/constants";
+import { ERROR_DEFAULT_TITLE } from "@/constants/message";
 
 export default function PaymentButton({ contentId }: { contentId: string }) {
   const supabase = createClient();
@@ -53,7 +54,8 @@ export default function PaymentButton({ contentId }: { contentId: string }) {
         }),
       });
       if (!res.ok) {
-        throw Error(res.statusText);
+        const data = await res.json();
+        throw Error(data?.message || "Failed to make a payment");
       }
       const { data } = await res.json();
 
@@ -70,11 +72,12 @@ export default function PaymentButton({ contentId }: { contentId: string }) {
       // error, display the localized error message to your customer
       // using `error.message`.
     } catch (e) {
-      console.error("checkoutSession", e);
-      // error = e;
-      // toast(`${FAIL_PAYMENT}: ${error.message}`, {
-      //   type: "error",
-      // });
+      const err = handleError(e);
+      toast({
+        variant: "destructive",
+        title: ERROR_DEFAULT_TITLE,
+        description: err.message,
+      });
     } finally {
       setIsLoading(false);
     }
