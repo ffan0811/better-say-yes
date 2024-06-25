@@ -1,11 +1,17 @@
 import Layout from "@/components/Layout";
 import ImageRotator from "@/components/ImageRotator";
-import MainContents, {
-  QUESTION_COMMON_CLASSES,
-} from "@/components/Production/MainContents";
-import { DefaultLink } from "@/components/Production/Button";
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 export default async function Index() {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) return redirect("/dashboard");
+
   return (
     <Layout navigationClassName="absolute top-0 w-full">
       <section className=" w-full h-screen flex justify-center items-center">

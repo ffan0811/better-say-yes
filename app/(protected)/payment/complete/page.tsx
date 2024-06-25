@@ -40,6 +40,9 @@ export default async function PaymentCompleted({
     status: string;
   } = checkoutSession.payment_intent as Stripe.PaymentIntent;
 
+  console.log("checkoutSession", checkoutSession);
+  console.log("paymentIntent", paymentIntent);
+
   const contentId = checkoutSession?.client_reference_id || "undefined";
 
   const { data, error } = await supabase
@@ -48,8 +51,8 @@ export default async function PaymentCompleted({
     .eq("id", contentId);
 
   const { error: storePaymentError } = await supabase.from("payments").upsert({
-    stripe_id: paymentIntent.id,
-    amount: paymentIntent.amount_received,
+    stripe_id: paymentIntent?.id || "",
+    amount: paymentIntent?.amount_received || 0,
   });
 
   console.log("error", error, storePaymentError);
@@ -87,7 +90,7 @@ export default async function PaymentCompleted({
               hesitate to contact our support team. Make sure to include your
               Order ID for faster assistance.
             </p>
-            <p>Your Order ID: {`${paymentIntent.id}`}</p>
+            <p>Your Order ID: {`${paymentIntent?.id || ""}`}</p>
             {/* {userId && <DonationDetector userId={userId} data={paymentIntent} />} */}
             {/* <p>{JSON.stringify(paymentIntent)}</p> */}
           </CardContent>
