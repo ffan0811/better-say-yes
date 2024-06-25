@@ -43,9 +43,7 @@ export default async function ShowcasePage() {
                 target="_blank"
               />
               <div className="text-right mt-1">
-                <p className="text-neutral-200 truncate">
-                  Q. {`${ele.question}`}
-                </p>
+                <p className="text-neutral-200 truncate">{ele.question}</p>
                 <p className="text-sm text-neutral-400">BetterSayYes</p>
               </div>
             </div>

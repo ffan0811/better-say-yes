@@ -38,7 +38,7 @@ export default function InactiveContainer({
     e.stopPropagation();
 
     const confirm = window.confirm(
-      `Are you sure you want to delete ${contentName}`
+      `You can't undo this action or receive a refund by deleting it. Are you sure you want to delete ${contentName}?`
     );
 
     if (!confirm) return;

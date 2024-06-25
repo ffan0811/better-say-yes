@@ -3,3 +3,4 @@ export const MAX_AFTER_YES_TITLE_LENGTH = 50;
 export const MAX_AFTER_YES_DESCRIPTION_LENGTH = 200;
 export const MAX_AFTER_YES_BUTTON_LENGTH = 40;
 export const MAX_PROJECT_NAME_LENGTH = 30;
+export const MAX_DRAFT_COUNT = 5;

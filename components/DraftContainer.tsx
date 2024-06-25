@@ -9,8 +9,7 @@ import { globalLoaderAtom } from "@/atoms/global";
 import { useAtom } from "jotai";
 import ContentItem from "./ContentItem";
 import ContentSideButton from "./ContentItem/ContentSideButton";
-
-export const MAX_DRAFT_COUNT = 5;
+import { MAX_DRAFT_COUNT } from "@/constants/content";
 
 export type DraftType = {
   id: string;
@@ -70,7 +69,7 @@ export default function DraftContainer({
       </CardHeader>
       <CardContent>
         <div className="grid md:grid-cols-3 gap-4">
-          {data.length > MAX_DRAFT_COUNT ? null : <CreateButton />}
+          <CreateButton isDisabled={data.length > MAX_DRAFT_COUNT - 1} />
           {data.map((ele, idx) => (
             <ContentItem
               key={ele.id}
