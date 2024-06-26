@@ -8,7 +8,7 @@ type NavigationProps = {
 
 export default function Navigation({ className = "" }: NavigationProps) {
   return (
-    <nav className={`container py-8 px-4 md:px-0 ${className}`}>
+    <nav className={`container py-8 px-4 ${className}`}>
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-4 md:space-x-16">
           <Link href="/dashboard">
