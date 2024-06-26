@@ -11,8 +11,8 @@ export const compressImages = async (
       const image = files[i];
       const result = await new Promise<File | null>((resolve) => {
         new Compressor(image, {
-          quality: options?.quality || 0.7,
-          maxWidth: options?.maxWidth || 600,
+          quality: options?.quality || 0.6,
+          maxWidth: options?.maxWidth || 1000,
           async success(compressedImage: File) {
             resolve(compressedImage);
           },

@@ -71,8 +71,8 @@ export const ImageProvider = ({
         try {
           setUploadingImageLoader(true);
           const thumbnails = await compressImages(images.data as File[], {
-            maxWidth: 5,
-            quality: 0.8,
+            maxWidth: 8,
+            quality: 0.4,
           });
           const { error } = await sendImagesToDB({
             contentId,
