@@ -97,49 +97,47 @@ export default function TemplatesContainer({
         >
           {isFetching
             ? loaders
-            : data.map((ele, idx) => {
-                const fontClasses = getFontClasses(ele.font_family as FontType);
-                return (
-                  <ContentItem
-                    key={ele.id}
-                    className={`snap-center shrink-0 max-w-[260px] md:max-w-none ${fontClasses}`}
-                    contentId={ele.id}
-                    type="button"
+            : data.map((ele, idx) => (
+                <ContentItem
+                  key={ele.id}
+                  className={`snap-center shrink-0 max-w-[260px] md:max-w-none`}
+                  contentId={ele.id}
+                  type="button"
+                  href={`/my/templates/${ele.id}`}
+                  title={ele?.name}
+                  onClick={(e) =>
+                    !isGlobalLoading.isActive &&
+                    handleCreateWithTemplate(e, ele)
+                  }
+                  backgroundColor={ele.background_color}
+                  themeColor={ele.theme_color}
+                  fontFamily={ele.font_family}
+                >
+                  <ContentSideButton
+                    type="link"
                     href={`/my/templates/${ele.id}`}
-                    title={ele?.name}
-                    onClick={(e) =>
-                      !isGlobalLoading.isActive &&
-                      handleCreateWithTemplate(e, ele)
-                    }
-                    backgroundColor={ele.background_color}
-                    themeColor={ele.theme_color}
+                    target="_blank"
+                    onClickLink={(e) => handleClickLink(e)}
                   >
+                    <ExternalLinkIcon />
+                  </ContentSideButton>
+                  {user.role.includes(UserRole.TEMPLATE_MANAGER) && (
                     <ContentSideButton
                       type="link"
-                      href={`/my/templates/${ele.id}`}
-                      target="_blank"
-                      onClickLink={(e) => handleClickLink(e)}
+                      href={`/create?id=${ele.id}&isTemplate=true`}
+                      onClickLink={(e) => {
+                        e.stopPropagation();
+                        setIsGlobalLoading({
+                          isActive: true,
+                          message: "Preparing your page...",
+                        });
+                      }}
                     >
-                      <ExternalLinkIcon />
+                      <Edit2Icon />
                     </ContentSideButton>
-                    {user.role.includes(UserRole.TEMPLATE_MANAGER) && (
-                      <ContentSideButton
-                        type="link"
-                        href={`/create?id=${ele.id}&isTemplate=true`}
-                        onClickLink={(e) => {
-                          e.stopPropagation();
-                          setIsGlobalLoading({
-                            isActive: true,
-                            message: "Preparing your page...",
-                          });
-                        }}
-                      >
-                        <Edit2Icon />
-                      </ContentSideButton>
-                    )}
-                  </ContentItem>
-                );
-              })}
+                  )}
+                </ContentItem>
+              ))}
         </div>
       </CardContent>
     </Card>
