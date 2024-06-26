@@ -46,7 +46,7 @@ export default function CreateContainer({
           "Description: Click me to edit",
         afterYesButtonText:
           contentsData?.after_yes_button_text ||
-          "Click me to edit\nHover me to add a link",
+          "Click me to edit, Hover me to add a link",
         afterYesButtonLink: contentsData?.after_yes_button_link || "",
         secretCode: contentsData?.secret_code || "",
         fontFamily: myFontFamily,
