@@ -17,6 +17,10 @@ export default async function ShowcasePage() {
 
   return (
     <Layout>
+      <h2 className="sr-only">
+        Ready to show off your creative personalized pages and inspire others?
+        Submit your site to our Showcase today!
+      </h2>
       <Link
         href={EXTERNAL_SHOWCASE_SUBMISSION_FORM}
         target="_blank"

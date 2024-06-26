@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import ImageRotator from "@/components/ImageRotator";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { DESCRIPTION } from "./shared-metadata";
 
 export default async function Index() {
   const supabase = createClient();
@@ -15,6 +16,7 @@ export default async function Index() {
   return (
     <Layout navigationClassName="absolute top-0 w-full">
       <section className=" w-full h-screen flex justify-center items-center">
+        <h2 className="sr-only">{DESCRIPTION}</h2>
         <div className="flex items-center flex-col w-full h-full justify-center  md:flex-row text-7xl 2xl:text-9xl font-bold md:space-x-12">
           <span>100%</span>
           <div className="">
