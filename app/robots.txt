@@ -3,4 +3,9 @@ Allow: /
 Disallow: /dashboard
 Disallow: /settings
 
+User-agent: facebookexternalhit
+Allow: /
+Disallow: /dashboard
+Disallow: /settings
+
 Sitemap: https://bettersayyes.com/sitemap.xml
