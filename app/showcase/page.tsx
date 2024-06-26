@@ -41,6 +41,7 @@ export default async function ShowcasePage() {
                 key={ele.id}
                 backgroundColor={ele.background_color}
                 themeColor={ele.theme_color}
+                fontFamily={ele.font_family}
                 type="link"
                 title={ele?.name || `Draft ${idx}`}
                 href={`/my/templates/${ele.id}`}

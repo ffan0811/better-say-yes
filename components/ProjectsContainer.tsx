@@ -51,7 +51,9 @@ export default function ProjectsContainer({
 
     const { data, error } = await supabase
       .from("contents")
-      .select("id, background_color, theme_color, name, created_at, updated_at")
+      .select(
+        "id, background_color, theme_color, font_family, name, created_at, updated_at"
+      )
       .eq("user_id", user.id)
       .eq("status", "draft")
       .order("updated_at", { ascending: false });
@@ -72,7 +74,9 @@ export default function ProjectsContainer({
 
     const { data, error } = await supabase
       .from("contents")
-      .select("id, background_color, theme_color, name, created_at, updated_at")
+      .select(
+        "id, background_color, theme_color, font_family, name, created_at, updated_at"
+      )
       .eq("user_id", user.id)
       .eq("status", "active")
       .order("updated_at", { ascending: false });

@@ -15,6 +15,7 @@ export type ActiveType = {
   id: string;
   background_color: string;
   theme_color: string;
+  font_family: string;
   name: string;
   created_at: string;
   updated_at: string;
@@ -103,6 +104,7 @@ export default function ActiveContainer({
               type="link"
               backgroundColor={ele.background_color}
               themeColor={ele.theme_color}
+              fontFamily={ele.font_family}
               onClickLink={() => {
                 setIsGlobalLoading({
                   isActive: true,

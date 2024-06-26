@@ -1,5 +1,8 @@
+"use client";
+import { FontType } from "@/types/font";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { useFont } from "../font-provider";
 
 export const ITEM_COMMON_CLASSES =
   "border w-full text-lg rounded-md flex items-center justify-center whitespace-pre-line-line p-4";
@@ -13,6 +16,7 @@ type ContentItemProps = {
   contentId?: string;
   type: "link" | "button";
   title: string;
+  fontFamily?: string;
   href?: string;
   target?: "_blank";
   className?: string;
@@ -27,6 +31,7 @@ export default function ContentItem({
   contentId,
   type,
   title,
+  fontFamily,
   href,
   target,
   className = "",
@@ -34,6 +39,9 @@ export default function ContentItem({
   onClick,
   onClickLink,
 }: ContentItemProps) {
+  const { getFontClasses } = useFont();
+  const fontClasses = getFontClasses(fontFamily as FontType);
+
   const COMMON_WRAPPER_CLASSES = `relative flex flex-col group ${ITEM_COMMON_CLASSES} ${ITEM_HOVER_CLASSES} ${ITEM_SIZE}`;
 
   const COMMON_BUTTON_CLASSES =
@@ -43,7 +51,7 @@ export default function ContentItem({
       <Link legacyBehavior passHref href={href || `/create?id=${contentId}`}>
         <a
           data-disable-nprogress={true}
-          className={`${COMMON_WRAPPER_CLASSES} aspect-video ${className}`}
+          className={`${COMMON_WRAPPER_CLASSES} aspect-video ${fontClasses} ${className}`}
           style={{
             background: backgroundColor,
             color: themeColor,
@@ -58,10 +66,11 @@ export default function ContentItem({
       </Link>
     );
   }
+
   return (
     <div
       onClick={onClick}
-      className={`${COMMON_WRAPPER_CLASSES} aspect-video ${className}`}
+      className={`${COMMON_WRAPPER_CLASSES} aspect-video ${fontClasses} ${className}`}
       style={{
         background: backgroundColor,
         color: themeColor,
