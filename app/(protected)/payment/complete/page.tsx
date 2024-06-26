@@ -72,7 +72,13 @@ export default async function PaymentCompleted({
                 : "Thank you for your purchase! Your custom page is now live. Click the button below to open and share it."}
             </p>
             {!isError && (
-              <div className="mt-4 text-center">
+              <div className="mt-4 text-center space-x-4">
+                <Link
+                  href="/dashboard"
+                  className={buttonVariants({ variant: "outline" })}
+                >
+                  Dashboard
+                </Link>
                 <Link
                   href={`/my/${contentId}`}
                   target="_blank"
