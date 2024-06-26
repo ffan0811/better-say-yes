@@ -1,11 +1,12 @@
 User-agent: *
-Allow: /
-Disallow: /dashboard
-Disallow: /settings
+Disallow: /
+
+User-agent: *
+Allow: /$
+Allow: /showcase$
 
 User-agent: facebookexternalhit
-Allow: /
-Disallow: /dashboard
-Disallow: /settings
+Allow: /$
+Allow: /showcase$
 
 Sitemap: https://bettersayyes.com/sitemap.xml
