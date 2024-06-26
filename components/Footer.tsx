@@ -1,9 +1,5 @@
 import Link from "next/link";
-import {
-  EXTERNAL_CONTACT,
-  EXTERNAL_PRIVACY,
-  EXTERNAL_TERMS_AND_CONDITIONS,
-} from "@/constants";
+import { EXTERNAL_CONTACT } from "@/constants";
 
 const links = [
   {
