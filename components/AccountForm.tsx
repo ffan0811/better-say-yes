@@ -5,10 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { type User } from "@supabase/supabase-js";
 import { InputWithLabel } from "./ui/input";
 import { Button } from "./ui/button";
-import {
-  ERROR_DEFAULT_DESCRIPTION,
-  ERROR_DEFAULT_TITLE,
-} from "@/constants/message";
+import { ERROR_DEFAULT_TITLE } from "@/constants/message";
 import { useToast } from "./ui/use-toast";
 import { CheckboxWithText } from "./ui/checkbox";
 import { handleError } from "@/lib/utils";
@@ -39,6 +36,16 @@ export default function AccountForm({
   }) {
     try {
       setLoading(true);
+
+      const { data, error: usernameError } = await supabase
+        .from("profiles")
+        .select("username")
+        .eq("username", username);
+
+      if (usernameError) throw new Error(usernameError.message);
+      if ((data || []).length > 0) {
+        throw new Error("the username already exists");
+      }
 
       // email_verified and phone_verified of user metadata will be always false
       // Ref: https://github.com/orgs/supabase/discussions/20191#discussioncomment-8046171
@@ -89,6 +96,8 @@ export default function AccountForm({
         type="text"
         value={username || ""}
         required
+        minLength={3}
+        maxLength={18}
         onChange={(e) => setUsername(e.target.value)}
       />
 
