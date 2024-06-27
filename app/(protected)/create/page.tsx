@@ -7,7 +7,7 @@ import Link from "next/link";
 import PageSwitcher from "@/components/PageSwitcher";
 import SaveButton from "@/components/CreateContainer/SaveButton";
 import { createClient } from "@/lib/supabase/client";
-import { ImageProvider } from "@/components/image-provider";
+import { useImages } from "@/components/image-provider";
 import ImageWrapper from "@/components/Production/ImageWrapper";
 import PreviewButton from "@/components/CreateContainer/PreviewButton";
 import ReLaunchButton from "@/components/ReLaunchButton";
@@ -22,7 +22,7 @@ import { contentsAtom } from "@/atoms/content";
 import MobileMenu from "@/components/CreateContainer/MobileMenu";
 import MenuContent from "@/components/CreateContainer/MenuContent";
 import { previewAtom } from "@/atoms/preview";
-import { globalLoaderAtom, uploadingImageLoaderAtom } from "@/atoms/global";
+import { globalLoaderAtom } from "@/atoms/global";
 import { PageStepType } from "@/types/status";
 
 export default function CreatePage() {
@@ -31,9 +31,7 @@ export default function CreatePage() {
   const [tableName, setTableName] = useState<string | null>(null);
   const [contentsClientData, setContentsClientData] = useAtom(contentsAtom);
   const [preview, setPreview] = useAtom(previewAtom);
-  const [uploadingImageLoader, setUploadingImageLoader] = useAtom(
-    uploadingImageLoaderAtom
-  );
+  const { isAdding, isDeleting } = useImages();
   const [globalLoader, setGlobalLoader] = useAtom(globalLoaderAtom);
   const supabase = createClient();
   const { toast } = useToast();
@@ -110,43 +108,41 @@ export default function CreatePage() {
   };
 
   return (
-    <ImageProvider contentId={paramsId}>
-      <ImageWrapper images={images}>
-        <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500 overflow-x-auto">
-          <div className="flex justify-between items-center w-full px-5">
-            <div className="flex items-center space-x-16">
-              <Link
-                href="/dashboard
+    <ImageWrapper images={images}>
+      <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500 overflow-x-auto">
+        <div className="flex justify-between items-center w-full px-5">
+          <div className="flex items-center space-x-16">
+            <Link
+              href="/dashboard
             "
-              >
-                <Logo className="h-auto w-12 md:w-20 mr-4" />
-              </Link>
-            </div>
-            <div className="flex items-center space-x-2 pr-5">
-              {/* <RefreshCcwIcon className="mr-4 opacity-80" /> */}
-              <SaveButton
-                contentId={paramsId}
-                isImageLoading={uploadingImageLoader}
-              />
-              <PreviewButton contentId={paramsId} />
-              {contentsData.status === "draft" && (
-                <PaymentButton contentId={paramsId} />
-              )}
-              {contentsData.status === "inactive" && (
-                <ReLaunchButton contentId={paramsId} />
-              )}
-            </div>
+            >
+              <Logo className="h-auto w-12 md:w-20 mr-4" />
+            </Link>
           </div>
-        </nav>
-        <div className="w-80 h-screen overflow-y-auto bg-neutral-900 justify-between fixed z-30 left-0 top-0 hidden md:flex">
-          <MenuContent contentId={paramsId} className="mt-20" />
+          <div className="flex items-center space-x-2 pr-5">
+            {/* <RefreshCcwIcon className="mr-4 opacity-80" /> */}
+            <SaveButton
+              contentId={paramsId}
+              isImageLoading={isAdding || isDeleting}
+            />
+            <PreviewButton contentId={paramsId} />
+            {contentsData.status === "draft" && (
+              <PaymentButton contentId={paramsId} />
+            )}
+            {contentsData.status === "inactive" && (
+              <ReLaunchButton contentId={paramsId} />
+            )}
+          </div>
         </div>
-        <div className="md:ml-80 mt-20">
-          <CreateContainer contentId={paramsId} contentsData={contentsData} />
-        </div>
-        <MobileMenu contentId={paramsId} />
-        <PageSwitcher onClick={handlePage} />
-      </ImageWrapper>
-    </ImageProvider>
+      </nav>
+      <div className="w-80 h-screen overflow-y-auto bg-neutral-900 justify-between fixed z-30 left-0 top-0 hidden md:flex">
+        <MenuContent contentId={paramsId} className="mt-20" />
+      </div>
+      <div className="md:ml-80 mt-20">
+        <CreateContainer contentId={paramsId} contentsData={contentsData} />
+      </div>
+      <MobileMenu contentId={paramsId} />
+      <PageSwitcher onClick={handlePage} />
+    </ImageWrapper>
   );
 }

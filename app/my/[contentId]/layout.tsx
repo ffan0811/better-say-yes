@@ -6,7 +6,7 @@ import LoaderEntirePage from "@/components/loaderEntirePage";
 import { Tables } from "@/database.types";
 import { fetchContentData } from "@/fetch/contents";
 import { createClient } from "@/lib/supabase/server";
-import { generateCustomizedImages } from "@/lib/utils/image";
+import { generateCustomizedImages } from "@/lib/utils/generateBlurPlaceholder";
 import { Metadata } from "next";
 import { ReactNode, Suspense } from "react";
 

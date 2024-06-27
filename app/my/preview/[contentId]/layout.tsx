@@ -3,7 +3,7 @@ import ImageWrapper from "@/components/Production/ImageWrapper";
 import { ImageProvider } from "@/components/image-provider";
 import LoaderEntirePage from "@/components/loaderEntirePage";
 import { createClient } from "@/lib/supabase/server";
-import { generateCustomizedImages } from "@/lib/utils/image";
+import { generateCustomizedImages } from "@/lib/utils/generateBlurPlaceholder";
 import { ReactNode, Suspense } from "react";
 
 export default async function PreviewPageLayout({

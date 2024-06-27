@@ -1,3 +1,4 @@
+import { ImageProps } from "@/types/image";
 import sharp from "sharp";
 
 const cache = new Map<string, string>();
@@ -34,5 +35,33 @@ export default async function getBase64ImageUrl({
     url = `data:${mimeType};base64,${base64}`;
     cache.set(imageName, url);
     return url;
-  } catch (error) { }
+  } catch (error) {}
 }
+
+export const generateCustomizedImages = async ({
+  images,
+  contentId,
+  tableName,
+}: {
+  images: string[];
+  contentId: string;
+  tableName: string;
+}) => {
+  let reducedResults: ImageProps[] = [];
+  const blurImagePromises = (images || []).map((imageName) => {
+    return getBase64ImageUrl({
+      imageName,
+      storageUrl: `/${tableName}`,
+      contentId,
+    });
+  });
+  const imagesWithBlurDataUrls = await Promise.all(blurImagePromises);
+
+  for (let i = 0; i < (images || []).length; i++) {
+    reducedResults.push({
+      src: { blob: "", value: images[i] },
+      blurDataUrl: imagesWithBlurDataUrls[i],
+    });
+  }
+  return reducedResults;
+};

@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { handleError } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/server";
-import { createImageFileNames } from "@/lib/utils/image";
 
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const contentId = formData.get("contentId");
-    const tableName = formData.get("tableName") as 'contents' | 'templates';
+    const tableName = formData.get("tableName") as "contents" | "templates";
     const images = formData.getAll("images") as File[];
     const thumbnails = formData.getAll("thumbnails") as File[];
+    const fileNames = formData.getAll("fileNames") as string[];
 
     const supabase = createClient();
     if (!contentId) {
@@ -29,8 +29,6 @@ export async function POST(req: NextRequest) {
       .eq("id", contentId)
       .single();
 
-    const fileNames = createImageFileNames(images) as string[];
-
     await Promise.all([
       ...images.map(async (ele: File, index) => {
         try {
@@ -39,7 +37,7 @@ export async function POST(req: NextRequest) {
             .upload(`${contentId}/${fileNames[index]}`, ele, {
               upsert: true,
             });
-    
+
           if (error) {
             throw new Error(error.message);
           }
@@ -54,16 +52,15 @@ export async function POST(req: NextRequest) {
             .upload(`${contentId}/thumbnail-${fileNames[index]}`, ele, {
               upsert: true,
             });
-    
+
           if (error) {
             throw new Error(error.message);
           }
         } catch (err) {
           console.error(`Error uploading thumbnail ${index}:`, err);
         }
-      })
+      }),
     ]);
-    
 
     const { error: dbError } = await supabase
       .from(tableName || "contents")

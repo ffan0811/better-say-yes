@@ -18,11 +18,6 @@ type AfterYesContentsProps = {
   className?: string;
 };
 
-const getImageSrc = (src: string, contentId: string, tableName: string) => {
-  if (src.includes("blob")) return src;
-  return `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${tableName}/${contentId}/${src}`;
-};
-
 export default function AfterYesContents({
   contentId,
   title,
@@ -42,15 +37,20 @@ export default function AfterYesContents({
           {button}
         </div>
         {(viewableImages || []).map((ele) => {
-          const src = getImageSrc(ele.src, contentId, tableName);
+          let src = "";
+          if (ele.src.blob) {
+            src = ele.src.blob;
+          } else if (ele.src.value) {
+            src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${tableName}/${contentId}/${ele.src.value}`;
+          }
           return (
             <Image
-              key={ele.src}
+              key={ele.src.value || ele.src.blob}
               alt="better say yes images"
               className="mb-5 transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
               style={{ transform: "translate3d(0, 0, 0)" }}
               placeholder={ele.blurDataUrl ? "blur" : undefined}
-              blurDataURL={ele.blurDataUrl || ""}
+              blurDataURL={ele.blurDataUrl || src || ""}
               src={src}
               width={720}
               height={480}

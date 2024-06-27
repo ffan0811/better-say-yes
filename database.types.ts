@@ -109,6 +109,42 @@ export type Database = {
           },
         ]
       }
+      pricing: {
+        Row: {
+          created_at: string
+          currency: Database["public"]["Enums"]["currencies"]
+          discount_percentage: number
+          expiry_month: number | null
+          id: number
+          name: string
+          price: number
+          stripe_price_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          currency?: Database["public"]["Enums"]["currencies"]
+          discount_percentage?: number
+          expiry_month?: number | null
+          id?: number
+          name: string
+          price: number
+          stripe_price_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          currency?: Database["public"]["Enums"]["currencies"]
+          discount_percentage?: number
+          expiry_month?: number | null
+          id?: number
+          name?: string
+          price?: number
+          stripe_price_id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           id: string

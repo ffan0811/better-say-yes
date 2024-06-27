@@ -6,13 +6,14 @@ import { buttonVariants } from "@/components/ui/button";
 import { useAtom } from "jotai";
 import { contentsAtom } from "@/atoms/content";
 import Image from "next/image";
+import { ImageProps, ImageSrcProps } from "@/types/image";
 
 interface UploadImageType {
   contentId: string;
-  data: { src: string; blurDataUrl?: string }[];
+  data: ImageProps[];
   handleImages: (files: FileList | null) => void;
   handleExtraImages: (files: FileList | null) => void;
-  handleDeleteImage: (index: number, img: string) => void;
+  handleDeleteImage: (index: number, img: ImageSrcProps) => void;
 }
 
 export const LIMIT_IMAGE_NUMBER = 20;
@@ -56,10 +57,11 @@ export default function UploadImage({
       {data.length > 0 ? (
         <Fragment>
           {data.map((img, i) => {
-            let src = img.src;
-            if (img.src.includes("blob")) {
-            } else {
-              src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${contentsData.tableName}/${contentId}/${img.src}`;
+            let src = "";
+            if (img.src?.blob) {
+              src = img.src.blob;
+            } else if (img.src?.value) {
+              src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${contentsData.tableName}/${contentId}/${img.src.value}`;
             }
             return (
               <div
