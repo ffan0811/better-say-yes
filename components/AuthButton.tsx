@@ -1,9 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { Button, buttonVariants } from "./ui/button";
-import SignOutButton from "@/components/SignOutButton";
-import { SettingsIcon } from "lucide-react";
+import { buttonVariants } from "./ui/button";
 
 export default async function AuthButton() {
   const supabase = createClient();
@@ -13,7 +10,7 @@ export default async function AuthButton() {
   } = await supabase.auth.getUser();
 
   return user ? (
-    <div className="flex items-center space-x-4">
+    <div className="flex items-center space-x-4 text-sm md:text-base">
       <Link href="/dashboard">
         Welcome, {user.user_metadata?.username || user.email || ""}
       </Link>
