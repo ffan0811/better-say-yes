@@ -11,7 +11,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
     <nav className={`container py-8 px-4 ${className}`}>
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-4 md:space-x-16">
-          <Link href="/dashboard">
+          <Link href="/">
             <Logo className={`h-auto w-16 md:w-28`} />
           </Link>
           <ul className="flex items-center text-sm md:text-base md:space-x-8">
