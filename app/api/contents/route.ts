@@ -7,13 +7,21 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
     const contentId = formData.get("contentId");
     const tableName = formData.get("tableName") as "contents" | "templates";
-    const images = formData.getAll("images") as File[];
-    const thumbnails = formData.getAll("thumbnails") as File[];
+    let images = formData.getAll("images") as File[];
+    let thumbnails = formData.getAll("thumbnails") as File[];
     const fileNames = formData.getAll("fileNames") as string[];
 
     const supabase = createClient();
     if (!contentId) {
       return NextResponse.json({ message: "bad request" }, { status: 400 });
+    }
+
+    if (images.length > 20) {
+      images = images.slice(0, 20);
+    }
+
+    if (thumbnails.length > 20) {
+      thumbnails = thumbnails.slice(0, 20);
     }
 
     // const { error: removeError } = await supabase.storage

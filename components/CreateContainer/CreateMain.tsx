@@ -4,11 +4,11 @@ import { previewAtom } from "@/atoms/preview";
 import { PageStepType } from "@/types/status";
 import { contentsAtom } from "@/atoms/content";
 import DynamicHeightTextarea from "@/components/DynamicHeightTextarea";
-import { DefaultButton, OutlineButton } from "../Production/Button";
+import { DefaultButton } from "../Production/Button";
 import { EDITABLE_INPUT_CLASSES } from "@/constants";
 import { useColor } from "../color-provider";
-import NoButton from "../Production/NoButton";
 import MainContents, {
+  ANSWER_BUTTON_COMMON_CLASSES,
   QUESTION_COMMON_CLASSES,
 } from "../Production/MainContents";
 import MaxLength from "../MaxLength";
@@ -52,7 +52,7 @@ export default function CreateMain({}: {}) {
         <DefaultButton
           themeColor={themeColor}
           onClick={handleYes}
-          className="min-w-40"
+          className={ANSWER_BUTTON_COMMON_CLASSES}
         >
           Yes
         </DefaultButton>

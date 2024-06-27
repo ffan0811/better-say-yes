@@ -38,7 +38,7 @@ export default async function PreviewDetailsPage({
             <DefaultLink
               href={`/my/preview/${params.contentId}/yes`}
               themeColor={data.theme_color}
-              className="min-w-40"
+              className="min-w-32 md:min-w-40"
             >
               Yes
             </DefaultLink>

@@ -13,14 +13,11 @@ export default async function AuthButton() {
   } = await supabase.auth.getUser();
 
   return user ? (
-    <div className="flex space-x-2">
+    <div className="flex items-center space-x-4">
+      <Link href="/dashboard">
+        Welcome, {user.user_metadata?.username || user.email || ""}
+      </Link>
       {/* <Link
-        href="/dashboard"
-        className={`${buttonVariants({ variant: "default" })}`}
-      >
-        Dashboard
-      </Link> */}
-      <Link
         href="/settings"
         className={`px-2 ${buttonVariants({
           variant: "outline",
@@ -28,7 +25,7 @@ export default async function AuthButton() {
         })}`}
       >
         <SettingsIcon />
-      </Link>
+      </Link> */}
       {/* <SignOutButton /> */}
     </div>
   ) : (

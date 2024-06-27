@@ -34,7 +34,7 @@ export default function NoButton({ themeColor }: NoButtonProps) {
       <OutlineButton
         themeColor={themeColor}
         variant="outline"
-        className="min-w-40"
+        className="min-w-32 md:min-w-40"
         onClick={() => {
           setOpen(true);
         }}

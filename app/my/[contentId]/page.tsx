@@ -2,6 +2,7 @@ import { DefaultLink } from "@/components/Production/Button";
 import ColorWrapper from "@/components/Production/ColorWrapper";
 import FontWrapper from "@/components/Production/FontWrapper";
 import MainContents, {
+  ANSWER_BUTTON_COMMON_CLASSES,
   QUESTION_COMMON_CLASSES,
 } from "@/components/Production/MainContents";
 import { createClient } from "@/lib/supabase/server";
@@ -37,7 +38,7 @@ export default async function ContentDetailsPage({
             <DefaultLink
               href={`/my/${params.contentId}/yes`}
               themeColor={data.theme_color}
-              className="min-w-40"
+              className={ANSWER_BUTTON_COMMON_CLASSES}
             >
               Yes
             </DefaultLink>
