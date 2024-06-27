@@ -1,5 +1,5 @@
 "use server";
-import { generate, count } from "random-words";
+import { generate } from "random-words";
 import {
   MAX_AFTER_YES_BUTTON_LENGTH,
   MAX_AFTER_YES_DESCRIPTION_LENGTH,
@@ -9,7 +9,7 @@ import {
 } from "@/constants/content";
 import { createClient } from "@/lib/supabase/server";
 import { handleError } from "@/lib/utils";
-import { generateCustomizedImages } from "@/lib/utils/image";
+import { generateCustomizedImages } from "@/lib/utils/generateBlurPlaceholder";
 import { ContentsType } from "@/types/content";
 import { FontType } from "@/types/font";
 import { ErrorType } from "@/types/global";
@@ -24,8 +24,9 @@ export async function createContent(params?: {
     error: ErrorType = null;
   try {
     const randomName = generate({
-      exactly: 2, join: " "
-    })
+      exactly: 2,
+      join: " ",
+    });
     const supabase = createClient();
     const { data } = await supabase
       .from("contents")
@@ -33,7 +34,7 @@ export async function createContent(params?: {
         font_family: params?.fontFamily || null,
         theme_color: params?.themeColor || null,
         background_color: params?.backgroundColor || null,
-        name: randomName
+        name: randomName,
       })
       .select(`id`)
       .single();
@@ -98,7 +99,7 @@ export async function deleteImage({
 }: {
   contentId: string;
   imageName: string;
-  tableName: 'contents' | 'templates'
+  tableName: "contents" | "templates";
 }) {
   let result,
     error: ErrorType = null;
@@ -106,19 +107,28 @@ export async function deleteImage({
     const supabase = createClient();
     const { error } = await supabase.storage
       .from(tableName)
-      .remove([`${contentId}/${imageName}`, `${contentId}/thumbnail-${imageName}`]);
+      .remove([
+        `${contentId}/${imageName}`,
+        `${contentId}/thumbnail-${imageName}`,
+      ]);
 
-    const { data: previousImages } = await supabase.from(tableName).select("images").eq("id", contentId).single();
+    const { data: previousImages } = await supabase
+      .from(tableName)
+      .select("images")
+      .eq("id", contentId)
+      .single();
 
     const newImages = previousImages.images.filter((ele) => ele !== imageName);
-    const { error: dbError } = await supabase.from(tableName).update({ images: newImages }).eq('id', contentId);
+    const { error: dbError } = await supabase
+      .from(tableName)
+      .update({ images: newImages })
+      .eq("id", contentId);
 
     if (error) {
       throw new Error(error.message);
     }
     if (dbError) {
       throw new Error(dbError.message);
-
     }
   } catch (e) {
     const err = handleError(e);
@@ -128,7 +138,53 @@ export async function deleteImage({
   return { result, error };
 }
 
-export async function getBlurUrls({contentId, tableName, images}: {contentId: string, tableName: string, images: string[]}) {
+export async function deleteFolder({
+  contentId,
+  tableName,
+}: {
+  contentId: string;
+  tableName: "contents" | "templates";
+}) {
+  console.log("contentId", contentId);
+  console.log("tableName", tableName);
+  let result,
+    error: ErrorType = null;
+  try {
+    const supabase = createClient();
+    const { data, error } = await supabase.storage
+      .from(tableName)
+      .remove([`${contentId}/*`]); // This does not supported by supabase
+    console.log("data", data);
+
+    const { error: dbError } = await supabase
+      .from(tableName)
+      .update({ images: null })
+      .eq("id", contentId);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+    if (dbError) {
+      throw new Error(dbError.message);
+    }
+  } catch (e) {
+    const err = handleError(e);
+    console.log("err", err);
+    error = err;
+  }
+
+  return { result, error };
+}
+
+export async function getBlurUrls({
+  contentId,
+  tableName,
+  images,
+}: {
+  contentId: string;
+  tableName: string;
+  images: string[];
+}) {
   let result: ImageProps[],
     error: ErrorType = null;
   try {
@@ -138,7 +194,6 @@ export async function getBlurUrls({contentId, tableName, images}: {contentId: st
       images,
     });
     result = data;
-    
   } catch (e) {
     const err = handleError(e);
     error = err;

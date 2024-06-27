@@ -75,9 +75,6 @@ export default function CookieSetting() {
         item.name === data.value ? { ...item, value: data.checked } : item
       )
     );
-    toast({
-      description: "Success!",
-    });
     setCookieConsentTrue();
   };
 

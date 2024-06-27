@@ -1,10 +1,4 @@
-import { ImageProps } from "@/types/image";
 import { v4 as uuidv4 } from "uuid";
-import getBase64ImageUrl from "@/lib/utils/generateBlurPlaceholder";
-
-
-// import fetch from "node-fetch";
-// import sharp from "sharp";
 
 export const validateImage = (file: File) => {
   const ACCEPTED_IMAGE_TYPES = [
@@ -49,23 +43,3 @@ export const createImageFileNames = (images: File | File[]) => {
     return createImageFileName(images); // Return single string instead of array
   }
 };
-
-export const generateCustomizedImages = async ({images, contentId, tableName}:{images: string[], contentId: string, tableName: string;}) => {
-  let reducedResults: ImageProps[] = [];
-  const blurImagePromises = (images || []).map((imageName) => {
-    return getBase64ImageUrl({
-      imageName,
-      storageUrl: `/${tableName}`,
-      contentId
-    });
-  });
-  const imagesWithBlurDataUrls = await Promise.all(blurImagePromises);
-
-  for (let i = 0; i < (images || []).length; i++) {
-    reducedResults.push({
-      src: images[i],
-      blurDataUrl: imagesWithBlurDataUrls[i],
-    });
-  }
-  return reducedResults
-}
