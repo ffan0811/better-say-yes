@@ -111,7 +111,7 @@ export default function PaymentButton({ contentId }: { contentId: string }) {
     <Dialog>
       <DialogTrigger asChild>
         <Button disabled={isLoading} onClick={handleSave}>
-          {isLoading ? "Saving..." : "Pay and Launch"}
+          {isLoading ? "Saving..." : "Launch"}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[calc(100%-theme(space.8))] md:max-w-xl">
@@ -135,8 +135,7 @@ export default function PaymentButton({ contentId }: { contentId: string }) {
               Surprise your loved ones with your creativity!
             </p>
             <Button onClick={handlePayment} isLoading={isLoading}>
-              Pay Only{" "}
-              {`${process.env.NEXT_PUBLIC_CURRENCY}${process.env.NEXT_PUBLIC_PRICE}`}{" "}
+              Pay&nbsp;<span className="text-xs line-through">$10</span>&nbsp;$5
               and Launch
             </Button>
             <div className="text-sm mt-4 text-neutral-500 leading-tight tracking-tight">

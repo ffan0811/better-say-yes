@@ -52,7 +52,6 @@ export const ImageProvider = ({
 
   const [images, setImages] = useState<ImagesType | null>(null);
   const [viewableImages, setViewableImages] = useState<ImageProps[]>([]);
-  console.log("viewableImages", viewableImages);
   const [isFetching, setIsFetching] = useState<boolean>(false);
   const [addingStatus, setAddingStatus] = useState<boolean>(false);
   const [deletingStatus, setDeletingStatus] = useState<boolean>(false);

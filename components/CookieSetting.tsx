@@ -87,9 +87,6 @@ export default function CookieSetting() {
       )
     );
     await setCookie({ name: CookieType.COOKIE_CONSENT, value: "true" });
-    toast({
-      description: "Success!",
-    });
   };
   return (
     <>
