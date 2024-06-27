@@ -1,17 +1,17 @@
 import Layout from "@/components/Layout";
 import ImageRotator from "@/components/ImageRotator";
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+// import { createClient } from "@/lib/supabase/server";
+// import { redirect } from "next/navigation";
 import { DESCRIPTION } from "./shared-metadata";
 
 export default async function Index() {
-  const supabase = createClient();
+  // const supabase = createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser();
 
-  if (user) return redirect("/dashboard");
+  // if (user) return redirect("/dashboard");
 
   return (
     <Layout navigationClassName="absolute top-0 w-full">
