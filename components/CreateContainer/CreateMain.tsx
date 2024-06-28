@@ -13,10 +13,12 @@ import MainContents, {
 } from "../Production/MainContents";
 import MaxLength from "../MaxLength";
 import { MAX_QUESTION_LENGTH } from "@/constants/content";
+import { usePathname } from "next/navigation";
 
 export default function CreateMain({}: {}) {
   const [preview, setPreview] = useAtom(previewAtom);
   const [contents, setContents] = useAtom(contentsAtom);
+  const pathname = usePathname();
   const { themeColor } = useColor();
 
   const handleYes = () => {
@@ -28,8 +30,14 @@ export default function CreateMain({}: {}) {
       stage: PageStepType.AFTER_YES,
     });
   };
+
+  const isCreatePage = pathname.includes("create");
   return (
-    <div className="flex justify-center items-center flex-col w-full h-[calc(100vh-5rem)]">
+    <div
+      className={`flex justify-center items-center flex-col w-full ${
+        isCreatePage ? "h-[calc(100vh-5rem)]" : "h-screen"
+      }`}
+    >
       <MainContents
         title={
           <MaxLength

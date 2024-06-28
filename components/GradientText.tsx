@@ -11,7 +11,7 @@ export default function GradientText({
 }: GradientTextProps) {
   return (
     <p
-      className={`text-7xl leading-loose font-black rainbow-text ${className}`}
+      className={`rainbow-text text-4xl md:text-7xl leading-tight font-black text-center ${className}`}
     >
       {children}
     </p>

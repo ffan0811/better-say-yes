@@ -31,43 +31,44 @@ const contents = [
   {
     title: "Say Sorry in the Sweetest Way",
     description:
-      "Want to apologize to your lover in a fun and heartfelt way? Create your custom yes-or-no pages filled with cute images of you two. There's no way they can say no to such a thoughtful gesture!",
+      "Want to apologize to your lover in a fun and heartfelt way?\nCreate your BetterSayYes page.\nThere's no way they can say no to such a thoughtful gesture!",
   },
   {
     title: "Plan the Perfect Family Getaway",
     description:
-      "Want to suggest a family trip to a specific destination? Create yes-or-no pages with stunning images of the destination. They won't be able to say no to your exciting travel plans!",
+      "Want to suggest a family trip to a specific destination?\nCreate your BetterSayYes page.\nThey won't be able to say no to your exciting travel plans!",
   },
   {
     title: "Turn Every No into a Yes",
     description:
-      "Want to get a yes from someone in a fun and witty way? Create personalized yes-or-no pages that they can't refuse. Make your request with a smile and watch the magic happen!",
+      "Want to get a yes from someone in a fun and witty way?\nCreate your BetterSayYes page.\nMake your request with a smile and watch the magic happen!",
   },
 ];
 
 export default function UseCasesSection() {
   const container = useRef(null);
+  const textContainer = useRef(null);
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ["start start", "end end"],
   });
+  const { scrollYProgress: textScrollProgress } = useScroll({
+    target: textContainer,
+    offset: ["start end", "end start"],
+  });
+
+  const scale = useTransform(textScrollProgress, [0, 0.5], [0.6, 1]);
 
   return (
     <div ref={container}>
-      <motion.div
-        initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ amount: 0.8 }}
-        className="sticky top-[20vh] h-[144px]"
-      >
-        {/* <div className="splash" style={{ background }} /> */}
-        <motion.div variants={cardVariants}>
-          <GradientText className="text-center">
-            The Best Way to Get a 'Yes'
-            {/* Create your own customized pages and surprise your loved ones */}
+      <div ref={textContainer} className="sticky top-[20vh]">
+        <motion.div style={{ scale }}>
+          <GradientText className="">
+            The Best Way to <br className="lg:hidden" />
+            Get a 'Yes'
           </GradientText>
         </motion.div>
-      </motion.div>
+      </div>
 
       {contents.map((ele, i) => {
         const targetScale = 1 - (contents.length - i) * 0.05;
@@ -117,7 +118,7 @@ function Card({
   return (
     <div
       ref={container}
-      className="h-screen flex justify-center items-center sticky top-20"
+      className="h-screen flex justify-center items-center sticky top-24 md:top-20"
     >
       <motion.div
         className="relative p-6 rounded-2.5xl max-w-[80%]"
@@ -130,9 +131,13 @@ function Card({
           rotate,
         }}
       >
-        <div className="rounded-2.5xl md:p-10 xl:p-16 bg-neutral-900 h-full text-center">
-          <p className="md:text-2xl xl:text-4xl font-bold mb-4">{title}</p>
-          <p className="md:text-lg xl:text-2xl">{description}</p>
+        <div className="rounded-2.5xl md:p-10 p-4 xl:p-16 bg-neutral-900 h-full text-center">
+          <p className="text-xl md:text-3xl xl:text-4xl font-bold mb-4">
+            {title}
+          </p>
+          <p className="md:text-xl xl:text-2xl text-neutral-300 whitespace-pre-line">
+            {description}
+          </p>
         </div>
       </motion.div>
     </div>

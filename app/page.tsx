@@ -1,3 +1,4 @@
+import { Inter } from "next/font/google";
 import Layout from "@/components/Layout";
 import ImageRotator from "@/components/ImageRotator";
 // import { createClient } from "@/lib/supabase/server";
@@ -7,6 +8,12 @@ import UseCasesSection from "@/components/LandingPage/UseCasesSection";
 import SmoothScroll from "@/components/SmoothScroll";
 import TrySection from "@/components/LandingPage/TrySection";
 import CTASection from "@/components/LandingPage/CTASection";
+import SecondarySection from "@/components/LandingPage/SecondarySection";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export default function Index() {
   // const supabase = createClient();
@@ -19,7 +26,10 @@ export default function Index() {
 
   return (
     <SmoothScroll>
-      <Layout navigationClassName="absolute top-0 w-full">
+      <Layout
+        navigationClassName="absolute top-0 w-full"
+        className={inter.className}
+      >
         <section className="w-full h-screen flex justify-center items-center">
           <h2 className="sr-only">{DESCRIPTION}</h2>
           <div className="flex items-center flex-col w-full h-full justify-center  md:flex-row text-7xl 2xl:text-9xl font-bold md:space-x-12">
@@ -31,14 +41,17 @@ export default function Index() {
             <span>fun</span>
           </div>
         </section>
+        <section className="h-screen mb-40 -mt-40">
+          <SecondarySection />
+        </section>
         <section className="">
           {/* <SecondarySection /> */}
           <UseCasesSection />
         </section>
-        <section className="w-full h-full mb-32">
+        <section className="w-full h-full mb-32 hidden md:block">
           <TrySection />
         </section>
-        <CTASection className="w-full h-screen flex flex-col items-center justify-center" />
+        <CTASection className="w-full h-screen flex flex-col items-center justify-center px-4" />
       </Layout>
     </SmoothScroll>
   );

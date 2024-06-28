@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { DefaultButton } from "../Production/Button";
 import { EDITABLE_INPUT_CLASSES } from "@/constants";
 import { contentsAtom } from "@/atoms/content";
@@ -35,11 +36,17 @@ import {
 export default function CreateAfterYes({ contentId }: { contentId: string }) {
   const [contents, setContents] = useAtom(contentsAtom);
   const [tempLink, setTempLink] = useState<string>(contents.afterYesButtonLink);
-
+  const pathname = usePathname();
   const { themeColor } = useColor();
 
+  const isCreatePage = pathname.includes("create");
+
   return (
-    <div className="min-h-[calc(100vh-5rem)]">
+    <div
+      className={`${
+        isCreatePage ? "min-h-[calc(100vh-5rem)]" : "min-h-screen"
+      }`}
+    >
       <AfterYesContents
         tableName={contents.tableName}
         contentId={contentId}
