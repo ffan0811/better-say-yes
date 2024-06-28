@@ -44,7 +44,8 @@ const contents = [
       "Want to get a yes from someone in a fun and witty way? Create personalized yes-or-no pages that they can't refuse. Make your request with a smile and watch the magic happen!",
   },
 ];
-export default function UseCases() {
+
+export default function UseCasesSection() {
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
     target: container,
@@ -57,11 +58,14 @@ export default function UseCases() {
         initial="offscreen"
         whileInView="onscreen"
         viewport={{ amount: 0.8 }}
-        className="sticky top-[80px] h-[144px]"
+        className="sticky top-[20vh] h-[144px]"
       >
         {/* <div className="splash" style={{ background }} /> */}
         <motion.div variants={cardVariants}>
-          <GradientText>The Best Way to Get a 'Yes'</GradientText>
+          <GradientText className="text-center">
+            The Best Way to Get a 'Yes'
+            {/* Create your own customized pages and surprise your loved ones */}
+          </GradientText>
         </motion.div>
       </motion.div>
 
@@ -105,30 +109,30 @@ function Card({
   const scale = useTransform(progress, range, [1, targetScale]);
   const rotate = useTransform(
     scrollYProgress,
-    [0, 1],
+    [0, 0.7],
     [index % 2 === 0 ? 5 : -5, 0],
     { ease: easeIn }
   );
+
   return (
     <div
       ref={container}
-      className="h-screen flex justify-center items-center sticky top-0"
-      style={{ top: 80 }}
+      className="h-screen flex justify-center items-center sticky top-20"
     >
       <motion.div
-        className="relative p-6 rounded-2.5xl max-w-[900px] h-[300px]"
+        className="relative p-6 rounded-2.5xl max-w-[80%]"
         style={{
           backgroundImage:
             "linear-gradient(45deg, rgba(255,0,229,0.1), rgba(62,244,58,0.1), rgba(250,255,0, 0.1), rgba(0,102,255,0.1))",
-          opacity: scrollYProgress,
+          // opacity: scrollYProgress,
           top: `calc(-5vh + ${index * 25}px)`,
           scale,
           rotate,
         }}
       >
-        <div className="rounded-2.5xl p-6 bg-neutral-900 h-full">
-          <p>{title}</p>
-          <p>{description}</p>
+        <div className="rounded-2.5xl md:p-10 xl:p-16 bg-neutral-900 h-full text-center">
+          <p className="md:text-2xl xl:text-4xl font-bold mb-4">{title}</p>
+          <p className="md:text-lg xl:text-2xl">{description}</p>
         </div>
       </motion.div>
     </div>

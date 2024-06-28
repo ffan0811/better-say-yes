@@ -3,7 +3,7 @@ import ImageRotator from "@/components/ImageRotator";
 // import { createClient } from "@/lib/supabase/server";
 // import { redirect } from "next/navigation";
 import { DESCRIPTION } from "./shared-metadata";
-import UseCases from "@/components/LandingPage/UseCases";
+import UseCasesSection from "@/components/LandingPage/UseCasesSection";
 import SmoothScroll from "@/components/SmoothScroll";
 import TrySection from "@/components/LandingPage/TrySection";
 import CTASection from "@/components/LandingPage/CTASection";
@@ -33,7 +33,7 @@ export default function Index() {
         </section>
         <section className="">
           {/* <SecondarySection /> */}
-          <UseCases />
+          <UseCasesSection />
         </section>
         <section className="w-full h-full mb-32">
           <TrySection />

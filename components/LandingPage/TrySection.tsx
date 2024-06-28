@@ -34,7 +34,8 @@ export default function TrySection() {
     id: "",
     images: ["logo_white.png"],
     name: "",
-    question: "Try it out by customizing colors, fonts, or text here",
+    question:
+      "Long enough explanation!\nTry it out yourself by\ncustomizing colors, fonts, or text here.",
     secret_code: "",
     status: "active",
     theme_color: "rgb(255,255,255)",
