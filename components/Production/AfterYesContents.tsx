@@ -28,7 +28,6 @@ export default function AfterYesContents({
   className = "",
 }: AfterYesContentsProps) {
   const { viewableImages } = useImages();
-  console.log("asdfasfd", viewableImages);
 
   return (
     <div className={`w-full h-full p-4 ${className}`}>

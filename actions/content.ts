@@ -145,8 +145,6 @@ export async function deleteFolder({
   contentId: string;
   tableName: "contents" | "templates";
 }) {
-  console.log("contentId", contentId);
-  console.log("tableName", tableName);
   let result,
     error: ErrorType = null;
   try {
@@ -154,7 +152,6 @@ export async function deleteFolder({
     const { data, error } = await supabase.storage
       .from(tableName)
       .remove([`${contentId}/*`]); // This does not supported by supabase
-    console.log("data", data);
 
     const { error: dbError } = await supabase
       .from(tableName)
@@ -169,7 +166,6 @@ export async function deleteFolder({
     }
   } catch (e) {
     const err = handleError(e);
-    console.log("err", err);
     error = err;
   }
 
