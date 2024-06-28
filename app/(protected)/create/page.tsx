@@ -142,7 +142,7 @@ export default function CreatePage() {
         <CreateContainer contentId={paramsId} contentsData={contentsData} />
       </div>
       <MobileMenu contentId={paramsId} />
-      <PageSwitcher onClick={handlePage} />
+      <PageSwitcher className="fixed right-4 bottom-4" onClick={handlePage} />
     </ImageWrapper>
   );
 }

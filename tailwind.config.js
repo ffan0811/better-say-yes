@@ -14,6 +14,9 @@ module.exports = {
           "background-hover": "hsl(var(--btn-background-hover))",
         },
       },
+      borderRadius: {
+        "2.5xl": "20px",
+      },
     },
   },
   plugins: [],

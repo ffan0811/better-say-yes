@@ -67,6 +67,7 @@ export const ImageProvider = ({
     images: ImagesType;
     fileNames: string[];
   }) => {
+    if (!contentId) return;
     try {
       setAddingStatus(true);
       const thumbnails = await compressImages(images.data as File[], {
@@ -157,7 +158,7 @@ export const ImageProvider = ({
   };
 
   useEffect(() => {
-    if (!contentId || !images) return;
+    if (!images) return;
 
     if (images.action === "add") {
       // Update viewableImages

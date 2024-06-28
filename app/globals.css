@@ -14,3 +14,38 @@ button {
 textarea {
   resize: none;
 }
+
+@keyframes rainbow-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.rainbow-text {
+  font-weight: bold;
+  background: linear-gradient(
+    270deg,
+    #00ffff,
+    #f4883a,
+    #ff0000,
+    #faff00,
+    #ff00e5,
+    #3ef43a,
+    #faff00,
+    #0066ff,
+    #ebff00,
+    #493af4,
+    #00ff57,
+    #fa00ff
+  );
+  background-size: 600% 600%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow-gradient 25s ease infinite;
+}
