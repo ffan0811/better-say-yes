@@ -18,6 +18,7 @@ export default function CTASection({ className = "" }: { className: string }) {
       <div
         ref={container}
         className="overflow-x-hidden absolute w-full h-full opacity-10 text-[18vw] font-black tracking-tighter flex items-center justify-evenly flex-col"
+        style={{ zIndex: -1 }}
       >
         <Slider left="25%" progress={scrollYProgress} direction="left" />
         <Slider left="-25%" progress={scrollYProgress} direction="right" />
