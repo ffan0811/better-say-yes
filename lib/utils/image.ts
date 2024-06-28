@@ -1,3 +1,4 @@
+import { ImageProps } from "@/types/image";
 import { v4 as uuidv4 } from "uuid";
 
 export const validateImage = (file: File) => {
@@ -42,4 +43,24 @@ export const createImageFileNames = (images: File | File[]) => {
   } else {
     return createImageFileName(images); // Return single string instead of array
   }
+};
+
+export const getSrc = ({
+  image,
+  contentId,
+  tableName = "contents",
+}: {
+  image: ImageProps;
+  contentId?: string;
+  tableName?: "contents" | "templates";
+}) => {
+  let src = "";
+  if (image.src.blob) {
+    src = image.src.blob;
+  } else if (image.src.value && contentId) {
+    src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${tableName}/${contentId}/${image.src.value}`;
+  } else if (image.src.value) {
+    src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${image.src.value}`;
+  }
+  return src;
 };

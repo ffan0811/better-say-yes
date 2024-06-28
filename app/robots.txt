@@ -1,12 +1,27 @@
 User-agent: *
-Disallow: /dashboard
-Disallow: /settings
+Disallow: /
+
+User-agent: *
+Allow: /$
+Allow: /showcase$
 
 User-agent: facebookexternalhit
 Allow: /$
 Allow: /showcase$
 
 User-agent: googlebot
+Allow: /$
+Allow: /showcase$
+
+User-agent: bingbot
+Allow: /$
+Allow: /showcase$
+
+User-agent: Twitterbot
+Allow: /$
+Allow: /showcase$
+
+User-agent: LinkedInBot
 Allow: /$
 Allow: /showcase$
 

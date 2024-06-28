@@ -56,6 +56,8 @@ export const ImageProvider = ({
   const [addingStatus, setAddingStatus] = useState<boolean>(false);
   const [deletingStatus, setDeletingStatus] = useState<boolean>(false);
 
+  console.log("viewableImages", viewableImages);
+
   const saveImages = async ({
     contentId,
     tableName,
@@ -67,6 +69,7 @@ export const ImageProvider = ({
     images: ImagesType;
     fileNames: string[];
   }) => {
+    if (!contentId) return;
     try {
       setAddingStatus(true);
       const thumbnails = await compressImages(images.data as File[], {
@@ -157,7 +160,9 @@ export const ImageProvider = ({
   };
 
   useEffect(() => {
-    if (!contentId || !images) return;
+    if (!images) return;
+
+    console.log("iag", images);
 
     if (images.action === "add") {
       // Update viewableImages

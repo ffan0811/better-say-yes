@@ -32,9 +32,11 @@ const sidebarMenu = [
 export default function MenuContent({
   contentId,
   className = "",
+  isAllOpen,
 }: {
   contentId: string;
   className?: string;
+  isAllOpen?: boolean;
 }) {
   const comp = {
     [SidebarMenuType.FONT]: (
@@ -56,7 +58,11 @@ export default function MenuContent({
   };
 
   return (
-    <Accordion type="multiple" className={`w-full ${className}`}>
+    <Accordion
+      type="multiple"
+      className={`w-full ${className}`}
+      defaultValue={isAllOpen && sidebarMenu.map((ele) => ele.value)}
+    >
       {/* <InputWithLabel label="Project Name" /> */}
       {sidebarMenu.map((ele) => (
         <AccordionItem key={ele.value} className="px-5" value={ele.value}>
