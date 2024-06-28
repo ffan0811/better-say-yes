@@ -7,6 +7,7 @@ import { useAtom } from "jotai";
 import { contentsAtom } from "@/atoms/content";
 import Image from "next/image";
 import { ImageProps, ImageSrcProps } from "@/types/image";
+import { getSrc } from "@/lib/utils/image";
 
 interface UploadImageType {
   contentId: string;
@@ -57,12 +58,11 @@ export default function UploadImage({
       {data.length > 0 ? (
         <Fragment>
           {data.map((img, i) => {
-            let src = "";
-            if (img.src?.blob) {
-              src = img.src.blob;
-            } else if (img.src?.value) {
-              src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${contentsData.tableName}/${contentId}/${img.src.value}`;
-            }
+            const src = getSrc({
+              image: img,
+              contentId,
+              tableName: contentsData.tableName,
+            });
             return (
               <div
                 key={i}

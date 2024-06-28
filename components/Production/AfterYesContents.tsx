@@ -2,6 +2,7 @@
 import { ReactNode } from "react";
 import Image from "next/image";
 import { useImages } from "../image-provider";
+import { getSrc } from "@/lib/utils/image";
 
 export const TITLE_COMMON_CLASSES =
   "text-center text-base font-bold uppercase tracking-widest w-full";
@@ -27,6 +28,7 @@ export default function AfterYesContents({
   className = "",
 }: AfterYesContentsProps) {
   const { viewableImages } = useImages();
+  console.log("asdfasfd", viewableImages);
 
   return (
     <div className={`w-full h-full p-4 ${className}`}>
@@ -37,12 +39,7 @@ export default function AfterYesContents({
           {button}
         </div>
         {(viewableImages || []).map((ele) => {
-          let src = "";
-          if (ele.src.blob) {
-            src = ele.src.blob;
-          } else if (ele.src.value) {
-            src = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${tableName}/${contentId}/${ele.src.value}`;
-          }
+          const src = getSrc({ image: ele, contentId, tableName });
           return (
             <Image
               key={ele.src.value || ele.src.blob}

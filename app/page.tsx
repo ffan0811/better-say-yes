@@ -3,17 +3,8 @@ import ImageRotator from "@/components/ImageRotator";
 // import { createClient } from "@/lib/supabase/server";
 // import { redirect } from "next/navigation";
 import { DESCRIPTION } from "./shared-metadata";
-import GradientText from "@/components/GradientText";
-import SecondarySection from "@/components/LandingPage/SecondarySection";
 import UseCases from "@/components/LandingPage/UseCases";
 import SmoothScroll from "@/components/SmoothScroll";
-import MenuContent from "@/components/CreateContainer/MenuContent";
-import CreateContainer from "@/components/CreateContainer";
-import PageSwitcher from "@/components/PageSwitcher";
-import MainContents, {
-  ANSWER_BUTTON_COMMON_CLASSES,
-} from "@/components/Production/MainContents";
-import { DefaultButton, DefaultLink } from "@/components/Production/Button";
 import TrySection from "@/components/LandingPage/TrySection";
 import CTASection from "@/components/LandingPage/CTASection";
 
@@ -41,7 +32,7 @@ export default function Index() {
           </div>
         </section>
         <section className="">
-          <SecondarySection />
+          {/* <SecondarySection /> */}
           <UseCases />
         </section>
         <section className="w-full h-full mb-32">

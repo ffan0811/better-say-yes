@@ -6,7 +6,26 @@ import {
   useTransform,
   MotionValue,
   easeIn,
+  Variants,
 } from "framer-motion";
+import GradientText from "../GradientText";
+
+const cardVariants: Variants = {
+  offscreen: {
+    y: -80,
+    opacity: 0,
+    // scale: 0.8,
+  },
+  onscreen: {
+    y: 0,
+    opacity: 1,
+    // scale: 1,
+    transition: {
+      type: "spring",
+      duration: 1.5,
+    },
+  },
+};
 
 const contents = [
   {
@@ -34,6 +53,18 @@ export default function UseCases() {
 
   return (
     <div ref={container}>
+      <motion.div
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ amount: 0.8 }}
+        className="sticky top-[80px] h-[144px]"
+      >
+        {/* <div className="splash" style={{ background }} /> */}
+        <motion.div variants={cardVariants}>
+          <GradientText>The Best Way to Get a 'Yes'</GradientText>
+        </motion.div>
+      </motion.div>
+
       {contents.map((ele, i) => {
         const targetScale = 1 - (contents.length - i) * 0.05;
         return (
@@ -81,10 +112,11 @@ function Card({
   return (
     <div
       ref={container}
-      className="h-screen flex items-center justify-center sticky top-0"
+      className="h-screen flex justify-center items-center sticky top-0"
+      style={{ top: 80 }}
     >
       <motion.div
-        className="relative  p-6 rounded-2.5xl max-w-[900px] h-[300px]"
+        className="relative p-6 rounded-2.5xl max-w-[900px] h-[300px]"
         style={{
           backgroundImage:
             "linear-gradient(45deg, rgba(255,0,229,0.1), rgba(62,244,58,0.1), rgba(250,255,0, 0.1), rgba(0,102,255,0.1))",
