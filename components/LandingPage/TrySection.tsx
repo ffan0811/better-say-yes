@@ -27,7 +27,7 @@ export default function TrySection() {
     // images: ["logo_in_black_circle.png"],
     // name: "",
     question:
-      "Long enough explanation!\n\nTry it out yourself by\ncustomizing colors, fonts, or text here.",
+      "Long enough explanation!\n\nTry it out yourself by\ncustomizing colors, fonts, or text here.\n(Please note: BetterSayYes works best on PC!)\n",
     // secret_code: "",
     status: "active",
     theme_color: "rgb(255,255,255)",
