@@ -56,7 +56,7 @@ export default function Index() {
           {/* <SecondarySection /> */}
           <UseCasesSection />
         </section>
-        <section className="w-full h-full mb-32 hidden md:block">
+        <section className="w-full h-full mb-16 md:mb-32 ">
           <TrySection />
         </section>
         <CTASection className="w-full h-screen flex flex-col items-center justify-center px-4" />
