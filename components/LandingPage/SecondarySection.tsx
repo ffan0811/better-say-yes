@@ -22,10 +22,13 @@ export default function SecondarySection({
       className={`flex items-center justify-center h-full ${className}`}
     >
       <motion.div style={{ scale }}>
-        <GradientText>
+        <h2
+          className="text-4xl md:text-7xl font-black text-center"
+          style={{ lineHeight: 1.3 }}
+        >
           Create Personalized Pages and <br className="hidden lg:block" />
           Surprise Your Loved Ones
-        </GradientText>
+        </h2>
       </motion.div>
     </div>
   );
