@@ -9,6 +9,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import TrySection from "@/components/LandingPage/TrySection";
 import CTASection from "@/components/LandingPage/CTASection";
 import SecondarySection from "@/components/LandingPage/SecondarySection";
+import Link from "next/link";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,8 +27,15 @@ export default function Index() {
 
   return (
     <SmoothScroll>
+      <Link
+        href="https://instagram.com/bettersayyes"
+        target="_blank"
+        className="h-8 w-full tracking-wider flex items-center justify-center bg-white text-neutral-950"
+      >
+        Follow us @bettersayyes and receive a 20% promo code!
+      </Link>
       <Layout
-        navigationClassName="absolute top-0 w-full"
+        navigationClassName="absolute top-8 w-full"
         className={inter.className}
       >
         <section className="w-full h-screen flex justify-center items-center">

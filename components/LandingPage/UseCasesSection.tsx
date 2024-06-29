@@ -9,6 +9,8 @@ import {
   Variants,
 } from "framer-motion";
 import GradientText from "../GradientText";
+import { CircleArrowRightIcon } from "lucide-react";
+import Link from "next/link";
 
 const cardVariants: Variants = {
   offscreen: {
@@ -32,16 +34,19 @@ const contents = [
     title: "Say Sorry in the Sweetest Way",
     description:
       "Want to apologize to your lover in a fun and heartfelt way?\nCreate your BetterSayYes page.\nThere's no way they can say no to such a thoughtful gesture!",
+    href: "/showcase",
   },
   {
     title: "Plan the Perfect Family Getaway",
     description:
       "Want to suggest a family trip to a specific destination?\nCreate your BetterSayYes page.\nThey won't be able to say no to your exciting travel plans!",
+    href: "/showcase",
   },
   {
     title: "Turn Every No into a Yes",
     description:
       "Want to get a yes from someone in a fun and witty way?\nCreate your BetterSayYes page.\nMake your request with a smile and watch the magic happen!",
+    href: "/showcase",
   },
 ];
 
@@ -90,6 +95,7 @@ export default function UseCasesSection() {
 function Card({
   title,
   description,
+  href,
   index,
   progress,
   range,
@@ -97,6 +103,7 @@ function Card({
 }: {
   title: string;
   description: string;
+  href: string;
   index: number;
   progress: MotionValue<number>;
   range: [number, number];
@@ -131,14 +138,21 @@ function Card({
           rotate,
         }}
       >
-        <div className="rounded-2.5xl md:p-10 p-4 xl:p-16 bg-neutral-900 h-full text-center">
-          <p className="text-xl md:text-3xl xl:text-4xl font-bold mb-4">
-            {title}
-          </p>
-          <p className="md:text-xl xl:text-2xl text-neutral-300 whitespace-pre-line">
-            {description}
-          </p>
-        </div>
+        <Link
+          href={href}
+          target="_blank"
+          className="hover:opacity-80 transition-opacity"
+        >
+          <div className="rounded-2.5xl md:p-10 p-4 xl:p-16 bg-neutral-900 h-full text-center">
+            <p className="text-xl md:text-3xl xl:text-4xl font-bold mb-4 flex items-center justify-center">
+              <span>{title}</span>
+              <CircleArrowRightIcon className="w-7 h-7 ml-2 cursor-pointer" />
+            </p>
+            <p className="md:text-xl xl:text-2xl text-neutral-300 whitespace-pre-line">
+              {description}
+            </p>
+          </div>
+        </Link>
       </motion.div>
     </div>
   );
