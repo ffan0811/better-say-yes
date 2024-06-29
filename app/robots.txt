@@ -3,26 +3,20 @@ Disallow: /
 
 User-agent: *
 Allow: /$
-Allow: /showcase$
 
 User-agent: facebookexternalhit
 Allow: /$
-Allow: /showcase$
 
 User-agent: googlebot
 Allow: /$
-Allow: /showcase$
 
 User-agent: bingbot
 Allow: /$
-Allow: /showcase$
 
 User-agent: Twitterbot
 Allow: /$
-Allow: /showcase$
 
 User-agent: LinkedInBot
 Allow: /$
-Allow: /showcase$
 
 Sitemap: https://bettersayyes.com/sitemap.xml
