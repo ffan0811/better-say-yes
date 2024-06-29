@@ -32,7 +32,7 @@ export default function Index() {
         target="_blank"
         className="h-12 md:h-8 px-4 py-1 text-sm md:text-base w-full tracking-wider flex items-center justify-center bg-white text-neutral-950"
       >
-        Follow us @bettersayyes and receive a 20% promo code!
+        Follow us @bettersayyes and receive a 10% promo code!
       </Link>
       <Layout
         navigationClassName="absolute top-12 md:top-8 w-full"

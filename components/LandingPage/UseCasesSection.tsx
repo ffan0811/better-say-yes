@@ -128,7 +128,7 @@ function Card({
       className="h-screen flex justify-center items-center sticky top-24 md:top-20"
     >
       <motion.div
-        className="relative p-6 rounded-2.5xl max-w-[80%]"
+        className="relative p-6 rounded-2.5xl max-w-[95%] md:max-w-[80%]"
         style={{
           backgroundImage:
             "linear-gradient(45deg, rgba(255,0,229,0.1), rgba(62,244,58,0.1), rgba(250,255,0, 0.1), rgba(0,102,255,0.1))",

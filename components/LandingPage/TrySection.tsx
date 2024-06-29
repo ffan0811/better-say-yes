@@ -7,19 +7,13 @@ import PageSwitcher from "../PageSwitcher";
 import { previewAtom } from "@/atoms/preview";
 import { PageStepType } from "@/types/status";
 import { ImageProvider } from "../image-provider";
+import MobileMenu from "../CreateContainer/MobileMenu";
+import { useState } from "react";
+import ImageWrapper from "../Production/ImageWrapper";
 
 export default function TrySection() {
   const [preview, setPreview] = useAtom(previewAtom);
-
-  const handlePage = (direction: "prev" | "next") => {
-    setPreview({
-      ...preview,
-      stage: direction === "prev" ? PageStepType.MAIN : PageStepType.AFTER_YES,
-    });
-  };
-
-  const contentId = "";
-  const data = {
+  const [data, setData] = useState({
     after_yes_button_link: "https://instagram.com/bettersayyes",
     after_yes_button_text: "@bettersayyes",
     after_yes_description:
@@ -39,26 +33,40 @@ export default function TrySection() {
     theme_color: "rgb(255,255,255)",
     // updated_at: "",
     // user_id: "",
+  });
+  const [images, setImages] = useState([
+    { src: { value: "events/event_hidden_promo.png" } },
+  ]);
+
+  const handlePage = (direction: "prev" | "next") => {
+    setPreview({
+      ...preview,
+      stage: direction === "prev" ? PageStepType.MAIN : PageStepType.AFTER_YES,
+    });
   };
+
+  const contentId = "";
 
   return (
     <ImageProvider contentId={contentId}>
-      {/* <ImageWrapper
-        images={[{ src: { value: "logo/logo_in_black_circle.png" } }]}
-      > */}
-      <div className="flex min-h-screen relative w-full h-full mt-10">
-        <div className="h-full w-80 sticky top-0">
-          <MenuContent contentId={contentId} className="w-full" isAllOpen />
+      <ImageWrapper images={images}>
+        <div className="flex min-h-screen relative w-full h-full mt-10">
+          <div className="h-full w-80 sticky top-0 hidden md:block">
+            <MenuContent contentId={contentId} className="w-full" isAllOpen />
+          </div>
+          <div className="top-0 w-full md:w-[calc(100%-20rem)] h-full sticky">
+            <CreateContainer contentId={contentId} contentsData={data} />
+            <MobileMenu
+              className="absolute left-4 bottom-4"
+              contentId={contentId}
+            />
+            <PageSwitcher
+              className="absolute right-4 bottom-4"
+              onClick={handlePage}
+            />
+          </div>
         </div>
-        <div className="top-0 w-[calc(100%-20rem)] h-full sticky">
-          <CreateContainer contentId={contentId} contentsData={data} />
-          <PageSwitcher
-            className="absolute right-4 bottom-4"
-            onClick={handlePage}
-          />
-        </div>
-      </div>
-      {/* </ImageWrapper> */}
+      </ImageWrapper>
     </ImageProvider>
   );
 }
