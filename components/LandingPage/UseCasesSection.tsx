@@ -110,7 +110,7 @@ function Card({
   const scale = useTransform(progress, range, [1, targetScale]);
   const rotate = useTransform(
     scrollYProgress,
-    [0, 0.7],
+    [0, 0.8],
     [index % 2 === 0 ? 5 : -5, 0],
     { ease: easeIn }
   );
