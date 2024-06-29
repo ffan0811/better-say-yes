@@ -19,7 +19,7 @@ export default function SecondarySection({
   return (
     <div
       ref={container}
-      className={`flex items-center justify-center h-full ${className}`}
+      className={`flex items-center justify-center h-full px-2 md:px-0 ${className}`}
     >
       <motion.div style={{ scale }}>
         <h2
