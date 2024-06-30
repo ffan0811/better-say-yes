@@ -135,11 +135,13 @@ export default function CreatePage() {
           </div>
         </div>
       </nav>
-      <div className="w-80 h-screen overflow-y-auto bg-neutral-900 justify-between fixed z-30 left-0 top-0 hidden md:flex">
-        <MenuContent contentId={paramsId} className="mt-20" />
-      </div>
-      <div className="md:ml-80 mt-20">
-        <CreateContainer contentId={paramsId} contentsData={contentsData} />
+      <div className="flex mt-20">
+        <div className="w-80 min-w-80 h-[calc(100vh-5rem)] overflow-y-auto bg-neutral-900 justify-between hidden md:flex">
+          <MenuContent contentId={paramsId} />
+        </div>
+        <div className="w-full md:w-[calc(100vw-20rem)]">
+          <CreateContainer contentId={paramsId} contentsData={contentsData} />
+        </div>
       </div>
       <MobileMenu contentId={paramsId} className="fixed left-4 bottom-4" />
       <PageSwitcher className="fixed right-4 bottom-4" onClick={handlePage} />

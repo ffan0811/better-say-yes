@@ -69,12 +69,10 @@ export default function CreateContainer({
   return (
     <FontWrapper fontFamily={font as FontType}>
       <ColorWrapper backgroundColor={backgroundColor} themeColor={themeColor}>
-        <div className="">
-          {preview.stage === PageStepType.MAIN && <CreateMain />}
-          {preview.stage === PageStepType.AFTER_YES && (
-            <CreateAfterYes contentId={contentId} />
-          )}
-        </div>
+        {preview.stage === PageStepType.MAIN && <CreateMain />}
+        {preview.stage === PageStepType.AFTER_YES && (
+          <CreateAfterYes contentId={contentId} />
+        )}
       </ColorWrapper>
     </FontWrapper>
   );
