@@ -15,15 +15,6 @@ textarea {
   resize: none;
 }
 
-/* react-best-gradient-color-picker */
-div[class^="core_rbgcpHandle"] {
-  z-index: 50 !important;
-}
-
-div[role="button"] {
-  z-index: 50 !important;
-}
-
 @keyframes rainbow-gradient {
   0% {
     background-position: 0% 50%;
