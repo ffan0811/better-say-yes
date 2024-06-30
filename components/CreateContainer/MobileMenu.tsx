@@ -19,9 +19,9 @@ export default function MobileMenu({
       </DialogTrigger>
       <DialogContent
         style={{ zIndex: 50 }}
-        className="max-h-[calc(100vh-theme(space.8))] max-w-[calc(100%-theme(space.4))]"
+        className="max-w-[calc(100%-theme(space.4))]"
       >
-        <div className="h-[calc(100vh-theme(space.8))] pb-8 overflow-y-auto">
+        <div className="h-[calc(100vh-theme(space.40))] pt-4 overflow-y-auto">
           <MenuContent contentId={contentId} />
         </div>
       </DialogContent>

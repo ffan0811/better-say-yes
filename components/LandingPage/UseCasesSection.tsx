@@ -11,43 +11,28 @@ import {
 import GradientText from "../GradientText";
 import { CircleArrowRightIcon } from "lucide-react";
 import Link from "next/link";
-
-const cardVariants: Variants = {
-  offscreen: {
-    y: -80,
-    opacity: 0,
-    // scale: 0.8,
-  },
-  onscreen: {
-    y: 0,
-    opacity: 1,
-    // scale: 1,
-    transition: {
-      type: "spring",
-      duration: 1.5,
-    },
-  },
-};
+import { Button, buttonVariants } from "../ui/button";
 
 const contents = [
   {
-    title: "Say Sorry in the Sweetest Way",
-    description:
-      "Want to apologize to your lover in a fun and heartfelt way?\nCreate your BetterSayYes page.\nThere's no way they can say no to such a thoughtful gesture!",
-    href: "/showcase",
+    title: "Step 1",
+    description: "Think of a question you want a 'yes' for.",
+    // href: "/showcase",
   },
   {
-    title: "Plan the Perfect Family Getaway",
-    description:
-      "Want to suggest a family trip to a specific destination?\nCreate your BetterSayYes page.\nThey won't be able to say no to your exciting travel plans!",
-    href: "/showcase",
+    title: "Step 2",
+    description: "Upload images to share after they say 'yes'.",
+    // href: "/showcase",
   },
   {
-    title: "Turn Every No into a Yes",
+    title: "Step 3",
     description:
-      "Want to get a yes from someone in a fun and witty way?\nCreate your BetterSayYes page.\nMake your request with a smile and watch the magic happen!",
-    href: "/showcase",
+      "Launch your customized page,\nshare it with your loved ones, and make them happy!",
   },
+  // {
+  //   title: "Check out demos",
+  //   href: "/showcase",
+  // },
 ];
 
 export default function UseCasesSection() {
@@ -102,8 +87,8 @@ function Card({
   targetScale,
 }: {
   title: string;
-  description: string;
-  href: string;
+  description?: string;
+  href?: string;
   index: number;
   progress: MotionValue<number>;
   range: [number, number];
@@ -128,7 +113,7 @@ function Card({
       className="h-screen flex justify-center items-center sticky top-24 md:top-20"
     >
       <motion.div
-        className="relative p-6 rounded-2.5xl max-w-[95%] md:max-w-[80%]"
+        className=" relative p-6 rounded-2.5xl w-[95%] h-[250px] md:w-[80%] md:h-[300px]"
         style={{
           backgroundImage:
             "linear-gradient(45deg, rgba(255,0,229,0.1), rgba(62,244,58,0.1), rgba(250,255,0, 0.1), rgba(0,102,255,0.1))",
@@ -138,21 +123,38 @@ function Card({
           rotate,
         }}
       >
-        <Link
-          href={href}
-          target="_blank"
-          className="hover:opacity-80 transition-opacity"
-        >
-          <div className="rounded-2.5xl md:p-10 p-4 xl:p-16 bg-neutral-900 h-full text-center">
-            <p className="text-xl md:text-3xl xl:text-4xl font-bold mb-4 flex items-center justify-center">
+        <div className="flex items-center justify-center flex-col rounded-2.5xl md:p-10 p-4 xl:p-16 bg-neutral-900 h-full text-center">
+          {href ? (
+            <Link
+              className="text-xl md:text-3xl xl:text-4xl font-bold flex items-center justify-center"
+              href={href}
+            >
               <span>{title}</span>
-              <CircleArrowRightIcon className="w-7 h-7 ml-2 cursor-pointer" />
+              {href && (
+                <CircleArrowRightIcon className="w-7 h-7 ml-2 cursor-pointer" />
+              )}
+            </Link>
+          ) : (
+            <p className="text-xl md:text-3xl xl:text-4xl font-bold flex items-center justify-center">
+              <span>{title}</span>
             </p>
-            <p className="md:text-xl xl:text-2xl text-neutral-300 whitespace-pre-line">
+          )}
+          {description && (
+            <p className="md:text-xl xl:text-2xl text-neutral-300 whitespace-pre-line mt-4">
               {description}
             </p>
-          </div>
-        </Link>
+          )}
+          {index === contents.length - 1 && (
+            <Link
+              href="/showcase"
+              className={`mt-4 md:text-lg md:px-8 md:py-6 ${buttonVariants({
+                variant: "default",
+              })}`}
+            >
+              Check out our demos
+            </Link>
+          )}
+        </div>
       </motion.div>
     </div>
   );
