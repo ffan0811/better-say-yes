@@ -1,7 +1,5 @@
 "use client";
-import ColorPickerLibrary, {
-  useColorPicker,
-} from "react-best-gradient-color-picker";
+import ColorPickerLibrary from "react-best-gradient-color-picker";
 import { useColor } from "./color-provider";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
@@ -9,16 +7,15 @@ import { contentsAtom } from "@/atoms/content";
 
 export default function BackgroundColorPicker() {
   const { backgroundColor, setBackgroundColor } = useColor();
-  const { setDegrees } = useColorPicker(backgroundColor, setBackgroundColor);
   const [contents, setContents] = useAtom(contentsAtom);
 
-  useEffect(() => {
-    if (!backgroundColor) return;
-    const isLinearGradient = backgroundColor.includes("linear");
-    if (!isLinearGradient) return;
+  // useEffect(() => {
+  //   if (!backgroundColor) return;
+  //   const isLinearGradient = backgroundColor.includes("linear");
+  //   if (!isLinearGradient) return;
 
-    setDegrees(45);
-  }, []);
+  //   setDegrees(45);
+  // }, []);
 
   // TODO: move it somewhere so that it can keep this component reusable
   useEffect(() => {
