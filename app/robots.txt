@@ -1,22 +1,25 @@
-User-agent: *
-Disallow: /
-
-User-agent: *
+user-agent: *
 Allow: /$
+Disallow: /
 
 User-agent: facebookexternalhit
 Allow: /$
+Disallow: /
 
 User-agent: googlebot
 Allow: /$
+Disallow: /
 
 User-agent: bingbot
 Allow: /$
+Disallow: /
 
 User-agent: Twitterbot
 Allow: /$
+Disallow: /
 
 User-agent: LinkedInBot
 Allow: /$
+Disallow: /
 
 Sitemap: https://bettersayyes.com/sitemap.xml
