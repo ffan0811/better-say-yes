@@ -1,6 +1,25 @@
 user-agent: *
 Allow: /
 Disallow: /my/
-Host: www.bettersayyes.com
+
+User-agent: facebookexternalhit
+Allow: /
+Disallow: /my/
+
+User-agent: googlebot
+Allow: /
+Disallow: /my/
+
+User-agent: bingbot
+Allow: /
+Disallow: /my/
+
+User-agent: Twitterbot
+Allow: /
+Disallow: /my/
+
+User-agent: LinkedInBot
+Allow: /
+Disallow: /my/
 
 Sitemap: https://bettersayyes.com/sitemap.xml
