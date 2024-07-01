@@ -1,5 +1,5 @@
 user-agent: *
-Allow: /$
+Allow: /
 Disallow: /my/
 Host: www.bettersayyes.com
 
