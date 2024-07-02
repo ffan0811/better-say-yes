@@ -48,6 +48,7 @@ export default function CreateAfterYes({ contentId }: { contentId: string }) {
       }`}
     >
       <AfterYesContents
+        secretCode={contents.secretCode}
         tableName={contents.tableName}
         contentId={contentId}
         title={

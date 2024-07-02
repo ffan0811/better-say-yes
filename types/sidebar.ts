@@ -3,4 +3,5 @@ export enum SidebarMenuType {
   THEME_COLOR = "themeColor",
   FONT = "font",
   IMAGES = "images",
+  CONTENTS = "contents",
 }

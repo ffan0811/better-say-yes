@@ -49,6 +49,9 @@ export default function CreateContainer({
           "Click me to edit, Hover me to add a link",
         afterYesButtonLink: contentsData?.after_yes_button_link || "",
         secretCode: contentsData?.secret_code || "",
+        secretCodeQuestion:
+          contentsData?.secret_code_question ||
+          "Enter secret code: Click me to edit",
         fontFamily: myFontFamily,
         themeColor: myThemeColor,
         backgroundColor: myBackgroundColor,

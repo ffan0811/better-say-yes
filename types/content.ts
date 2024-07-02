@@ -1,5 +1,5 @@
 export type ContentsType = {
-  tableName: 'contents' | 'templates' | null;
+  tableName: "contents" | "templates" | null;
   name: string;
   question: string;
   alertAfterYes?: string;
@@ -8,6 +8,7 @@ export type ContentsType = {
   afterYesButtonText?: string;
   afterYesButtonLink?: string;
   secretCode?: string;
+  secretCodeQuestion?: string;
   fontFamily?: string;
   themeColor?: string;
   backgroundColor?: string;

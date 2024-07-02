@@ -1,5 +1,5 @@
 export enum PageStepType {
-  SECRET = "secret",
+  // SECRET = "secret",
   MAIN = "main",
   AFTER_YES = "afterYes",
 }

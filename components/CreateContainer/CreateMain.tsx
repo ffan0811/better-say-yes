@@ -1,6 +1,6 @@
 "use client";
 import { useAtom } from "jotai";
-import { previewAtom } from "@/atoms/preview";
+import { isLockedContentAtom, previewAtom } from "@/atoms/preview";
 import { PageStepType } from "@/types/status";
 import { contentsAtom } from "@/atoms/content";
 import DynamicHeightTextarea from "@/components/DynamicHeightTextarea";
@@ -14,12 +14,21 @@ import MainContents, {
 import MaxLength from "../MaxLength";
 import { MAX_QUESTION_LENGTH } from "@/constants/content";
 import { usePathname } from "next/navigation";
+import SecretCodeContents from "./SecretCodeContents";
+import { useEffect } from "react";
 
 export default function CreateMain({}: {}) {
+  const [isLocked, setIsLocked] = useAtom(isLockedContentAtom);
   const [preview, setPreview] = useAtom(previewAtom);
   const [contents, setContents] = useAtom(contentsAtom);
   const pathname = usePathname();
   const { themeColor } = useColor();
+
+  useEffect(() => {
+    if (!contents.secretCode) {
+      setIsLocked(false);
+    }
+  }, [contents.secretCode]);
 
   const handleYes = () => {
     if (contents.alertAfterYes) {
@@ -54,6 +63,14 @@ export default function CreateMain({}: {}) {
               }}
             />
           </MaxLength>
+        }
+        secretCode={
+          <SecretCodeContents
+            secretCode={contents.secretCode}
+            secretCodeQuestion={contents.secretCodeQuestion}
+            themeColor={contents.themeColor}
+            isEditSecretCodeQuestionDisabled={false}
+          />
         }
         themeColor={themeColor}
       >

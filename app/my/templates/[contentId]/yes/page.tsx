@@ -31,6 +31,8 @@ export default async function TemplateContentDetailsYesPage({
         themeColor={data.theme_color}
       >
         <AfterYesContents
+          secretCode={data.secret_code}
+          baseUrl="/my/templates"
           tableName="templates"
           className="min-h-screen"
           contentId={params.contentId}
