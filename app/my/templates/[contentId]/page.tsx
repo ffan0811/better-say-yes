@@ -1,3 +1,4 @@
+import SecretCodeContents from "@/components/CreateContainer/SecretCodeContents";
 import { DefaultLink } from "@/components/Production/Button";
 import ColorWrapper from "@/components/Production/ColorWrapper";
 import FontWrapper from "@/components/Production/FontWrapper";
@@ -17,7 +18,9 @@ export default async function TemplateDetailsPage({
 
   const { data, error } = await supabase
     .from("templates")
-    .select("status,font_family,background_color,theme_color,question")
+    .select(
+      "status,font_family,background_color,theme_color,question,secret_code,secret_code_question"
+    )
     .eq("id", params.contentId)
     .single();
 
@@ -35,6 +38,15 @@ export default async function TemplateDetailsPage({
           <MainContents
             title={<p className={QUESTION_COMMON_CLASSES}>{data.question}</p>}
             themeColor={data.theme_color}
+            secretCode={
+              data.secret_code && (
+                <SecretCodeContents
+                  secretCode={data.secret_code}
+                  secretCodeQuestion={data.secret_code_question}
+                  themeColor={data.theme_color}
+                />
+              )
+            }
           >
             <DefaultLink
               href={`/my/templates/${params.contentId}/yes`}

@@ -4,11 +4,11 @@ import { useAtom } from "jotai";
 import CreateContainer from "../CreateContainer";
 import MenuContent from "../CreateContainer/MenuContent";
 import PageSwitcher from "../PageSwitcher";
-import { previewAtom } from "@/atoms/preview";
+import { isLockedContentAtom, previewAtom } from "@/atoms/preview";
 import { PageStepType } from "@/types/status";
 import { ImageProvider } from "../image-provider";
 import MobileMenu from "../CreateContainer/MobileMenu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ImageWrapper from "../Production/ImageWrapper";
 
 export default function TrySection() {
@@ -29,6 +29,7 @@ export default function TrySection() {
     question:
       "Long enough explanation!\n\nTry it out yourself by\ncustomizing colors, fonts, or text here.\n(Please note: BetterSayYes works best on PC!)\n",
     // secret_code: "",
+    secret_code_question: "Enter secret code",
     status: "active",
     theme_color: "rgb(255,255,255)",
     // updated_at: "",
@@ -37,6 +38,14 @@ export default function TrySection() {
   const [images, setImages] = useState([
     { src: { value: "events/event_hidden_promo.png" } },
   ]);
+  const [isLocked, setIsLocked] = useAtom(isLockedContentAtom);
+
+  useEffect(() => {
+    setIsLocked(false);
+    return () => {
+      setIsLocked(true);
+    };
+  }, []);
 
   const handlePage = (direction: "prev" | "next") => {
     setPreview({

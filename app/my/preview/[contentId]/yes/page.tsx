@@ -32,6 +32,8 @@ export default async function PreviewDetailsYesPage({
         themeColor={data.theme_color}
       >
         <AfterYesContents
+          secretCode={data.secret_code}
+          baseUrl="/my/preview"
           className="min-h-screen"
           contentId={params.contentId}
           title={

@@ -9,6 +9,7 @@ import CreateImages from "@/components/CreateContainer/Images";
 import SelectFont from "@/components/selectFont";
 import BackgroundColorPicker from "@/components/BackgroundColorPicker";
 import ColorPicker from "@/components/ColorPicker";
+import CreateContents from "./CreateContents";
 
 const sidebarMenu = [
   {
@@ -26,6 +27,10 @@ const sidebarMenu = [
   {
     label: "Images",
     value: SidebarMenuType.IMAGES,
+  },
+  {
+    label: "Contents",
+    value: SidebarMenuType.CONTENTS,
   },
 ];
 
@@ -55,6 +60,7 @@ export default function MenuContent({
       </div>
     ),
     [SidebarMenuType.IMAGES]: <CreateImages contentId={contentId} />,
+    [SidebarMenuType.CONTENTS]: <CreateContents />,
   };
 
   return (
@@ -67,7 +73,7 @@ export default function MenuContent({
       {sidebarMenu.map((ele) => (
         <AccordionItem key={ele.value} className="px-5" value={ele.value}>
           <AccordionTrigger>{ele.label}</AccordionTrigger>
-          <AccordionContent className="pt-2 pb-5">
+          <AccordionContent className="pt-2 pb-5 px-1">
             {comp[ele.value]}
           </AccordionContent>
         </AccordionItem>

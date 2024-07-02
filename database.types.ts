@@ -24,6 +24,7 @@ export type Database = {
           name: string | null
           question: string | null
           secret_code: string | null
+          secret_code_question: string | null
           status: Database["public"]["Enums"]["content_status"]
           theme_color: string | null
           updated_at: string | null
@@ -43,6 +44,7 @@ export type Database = {
           name?: string | null
           question?: string | null
           secret_code?: string | null
+          secret_code_question?: string | null
           status?: Database["public"]["Enums"]["content_status"]
           theme_color?: string | null
           updated_at?: string | null
@@ -62,6 +64,7 @@ export type Database = {
           name?: string | null
           question?: string | null
           secret_code?: string | null
+          secret_code_question?: string | null
           status?: Database["public"]["Enums"]["content_status"]
           theme_color?: string | null
           updated_at?: string | null
@@ -192,6 +195,7 @@ export type Database = {
           name: string | null
           question: string | null
           secret_code: string | null
+          secret_code_question: string | null
           status: Database["public"]["Enums"]["content_status"]
           theme_color: string | null
           updated_at: string | null
@@ -211,6 +215,7 @@ export type Database = {
           name?: string | null
           question?: string | null
           secret_code?: string | null
+          secret_code_question?: string | null
           status?: Database["public"]["Enums"]["content_status"]
           theme_color?: string | null
           updated_at?: string | null
@@ -230,6 +235,7 @@ export type Database = {
           name?: string | null
           question?: string | null
           secret_code?: string | null
+          secret_code_question?: string | null
           status?: Database["public"]["Enums"]["content_status"]
           theme_color?: string | null
           updated_at?: string | null

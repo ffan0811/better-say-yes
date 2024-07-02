@@ -79,6 +79,7 @@ export async function saveContents({
         ),
         after_yes_button_link: contents.afterYesButtonLink,
         secret_code: contents.secretCode,
+        secret_code_question: contents.secretCodeQuestion,
         font_family: contents.fontFamily,
         background_color: contents.backgroundColor,
         theme_color: contents.themeColor,

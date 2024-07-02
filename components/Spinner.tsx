@@ -1,15 +1,23 @@
+import { CSSProperties } from "react";
+
 interface SpinnerType {
   color?: string;
   className?: string;
+  style?: CSSProperties;
 }
 
 export default function Spinner({
   className = "",
   color = "stroke-neutral-900",
+  style,
 }: SpinnerType) {
   return (
     <div aria-label="Loading..." role="status" className={`${className}`}>
-      <svg className={`h-6 w-6 animate-spin ${color}`} viewBox="0 0 256 256">
+      <svg
+        className={`h-6 w-6 animate-spin ${color}`}
+        viewBox="0 0 256 256"
+        style={style}
+      >
         <line
           x1="128"
           y1="32"

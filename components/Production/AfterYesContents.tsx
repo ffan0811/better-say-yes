@@ -1,8 +1,11 @@
 "use client";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import Image from "next/image";
 import { useImages } from "../image-provider";
 import { getSrc } from "@/lib/utils/image";
+import { useAtom } from "jotai";
+import { isLockedContentAtom } from "@/atoms/preview";
+import { useRouter } from "next/navigation";
 
 export const TITLE_COMMON_CLASSES =
   "text-center text-base font-bold uppercase tracking-widest w-full";
@@ -17,6 +20,8 @@ type AfterYesContentsProps = {
   button: ReactNode;
   tableName?: "contents" | "templates";
   className?: string;
+  baseUrl?: string;
+  secretCode?: string;
 };
 
 export default function AfterYesContents({
@@ -26,8 +31,19 @@ export default function AfterYesContents({
   button,
   tableName = "contents",
   className = "",
+  baseUrl,
+  secretCode,
 }: AfterYesContentsProps) {
   const { viewableImages } = useImages();
+  const [isLocked, setIsLocked] = useAtom(isLockedContentAtom);
+  const router = useRouter();
+  useEffect(() => {
+    if (secretCode && isLocked && baseUrl) {
+      router.push(`${baseUrl}/${contentId}`);
+    }
+  }, [secretCode, isLocked, baseUrl]);
+
+  if (secretCode && isLocked) return null;
 
   return (
     <div className={`w-full h-full p-4 ${className}`}>
