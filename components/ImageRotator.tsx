@@ -8,6 +8,8 @@ const images = [
   "./images/yes4.svg",
   "./images/yes5.svg",
   "./images/yes6.svg",
+  "./images/yes7.svg",
+  "./images/yes8.svg",
 ];
 
 export default function ImageRotator({ className }: { className?: string }) {
