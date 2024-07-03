@@ -10,7 +10,7 @@ export default async function AuthButton() {
   } = await supabase.auth.getUser();
 
   return user ? (
-    <div className="flex items-center space-x-4 text-sm md:text-base">
+    <div className="flex items-center space-x-4 text-sm md:text-base text-right">
       <Link href="/dashboard">
         Welcome, {user.user_metadata?.username || user.email || ""}
       </Link>
