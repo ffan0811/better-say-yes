@@ -59,9 +59,9 @@ export default function SecretCodeContents({
   };
 
   return (
-    <div className="">
+    <div className="w-2/6 max-w-sm">
       <DynamicHeightTextarea
-        className={`font-medium w-full leading-5 ${EDITABLE_INPUT_CLASSES}`}
+        className={`font-medium w-full leading-5 text-lg ${EDITABLE_INPUT_CLASSES}`}
         value={contents.secretCodeQuestion}
         maxLength={MAX_SECRET_QUESTION_LENGTH}
         onChange={(e) => {
@@ -73,7 +73,7 @@ export default function SecretCodeContents({
         <ProductionInput
           themeColor={themeColor}
           // placeholder="Enter secret code"
-          className="max-w-72 text-md h-10 pr-10"
+          className="text-lg h-10 pr-10"
           value={codeOnClient}
           onChange={handleChange}
           // type="password"

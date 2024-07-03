@@ -12,7 +12,7 @@ export const compressImages = async (
       const result = await new Promise<File | null>((resolve) => {
         new Compressor(image, {
           quality: options?.quality || 0.6,
-          maxWidth: options?.maxWidth || 1000,
+          maxWidth: options?.maxWidth || 800,
           async success(compressedImage: File) {
             resolve(compressedImage);
           },
