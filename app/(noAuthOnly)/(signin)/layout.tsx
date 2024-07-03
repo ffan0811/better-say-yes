@@ -1,7 +1,6 @@
 import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { SubmitButton as EmailSubmitButton } from "./submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ResponsiveWrapper from "@/components/ResponsiveWrapper";
@@ -14,11 +13,15 @@ import {
 } from "@/components/ui/card";
 import GoogleLogin from "@/components/GoogleLogin";
 import { Separator } from "@/components/ui/separator";
+import { SubmitButton } from "@/components/SubmitButton";
+import { ReactNode } from "react";
 
-export default function Login({
+export default function SignInLayout({
   searchParams,
+  children,
 }: {
   searchParams: { message: string };
+  children: ReactNode;
 }) {
   const signIn = async (formData: FormData) => {
     "use server";
@@ -63,15 +66,16 @@ export default function Login({
                 placeholder="you@example.com"
                 required
               />
-              <EmailSubmitButton formAction={signIn} className="mb-2">
+              <SubmitButton formAction={signIn} className="mb-2">
                 Continue with Email
-              </EmailSubmitButton>
+              </SubmitButton>
               {searchParams?.message && (
                 <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
                   {searchParams.message}
                 </p>
               )}
             </form>
+            {children}
           </CardContent>
         </Card>
       </ResponsiveWrapper>
