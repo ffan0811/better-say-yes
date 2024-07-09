@@ -2,7 +2,12 @@ import ContentItem from "@/components/ContentItem";
 import Layout from "@/components/Layout";
 import { EXTERNAL_SHOWCASE_SUBMISSION_FORM } from "@/constants";
 import { createClient } from "@/lib/supabase/server";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  robots: "noindex, nofollow",
+};
 
 export default async function ShowcasePage() {
   const supabase = createClient();

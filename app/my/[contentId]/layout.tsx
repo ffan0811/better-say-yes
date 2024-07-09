@@ -19,6 +19,7 @@ export async function generateMetadata({
   const data: Tables<"contents"> = await fetchContentData({ contentId: id });
 
   return {
+    robots: "noindex, nofollow",
     openGraph: {
       ...openGraphDefault,
       title: SHORT_TITLE,
