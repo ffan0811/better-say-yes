@@ -4,7 +4,12 @@ import { ImageProvider } from "@/components/image-provider";
 import LoaderEntirePage from "@/components/loaderEntirePage";
 import { createClient } from "@/lib/supabase/server";
 import { generateCustomizedImages } from "@/lib/utils/generateBlurPlaceholder";
+import { Metadata } from "next";
 import { ReactNode, Suspense } from "react";
+
+export const metadata: Metadata = {
+  robots: "noindex, nofollow",
+};
 
 export default async function PreviewPageLayout({
   params,

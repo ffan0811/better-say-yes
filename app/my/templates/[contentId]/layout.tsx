@@ -16,6 +16,7 @@ export async function generateMetadata({
   const id = params.contentId;
 
   return {
+    robots: "noindex, nofollow",
     openGraph: {
       ...openGraphDefault,
       url: `/my/templates/${id}`,
