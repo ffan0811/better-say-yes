@@ -22,4 +22,8 @@ User-agent: LinkedInBot
 Allow: /
 Disallow: /my/
 
+User-agent: Yeti
+Allow: /
+Disallow: /my/
+
 Sitemap: https://bettersayyes.com/sitemap.xml
