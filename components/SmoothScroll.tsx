@@ -11,7 +11,10 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
     }
 
     requestAnimationFrame(raf);
-  });
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
 
   return children;
 }
