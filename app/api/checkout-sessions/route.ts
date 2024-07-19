@@ -19,9 +19,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "please login" }, { status: 400 });
     }
 
-    const { contentId } = await request.json();
+    const { contentId, priceId } = await request.json();
 
-    if (!contentId) {
+    if (!contentId || !priceId) {
       return NextResponse.json({ message: "bad request" }, { status: 400 });
     }
 
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       mode: "payment",
       line_items: [
         {
-          price: process.env.STRIPE_PRODUCT_ID,
+          price: priceId,
           quantity: 1,
         },
       ],

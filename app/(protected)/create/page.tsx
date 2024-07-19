@@ -24,6 +24,9 @@ import MenuContent from "@/components/CreateContainer/MenuContent";
 import { previewAtom } from "@/atoms/preview";
 import { globalLoaderAtom } from "@/atoms/global";
 import { PageStepType } from "@/types/status";
+import usePayment from "@/components/hooks/usePayment";
+import { User } from "@supabase/supabase-js";
+import usePricing from "@/components/hooks/usePricing";
 
 export default function CreatePage() {
   const [contentsData, setContentsData] = useState<Tables<"contents">>(null);
@@ -35,10 +38,27 @@ export default function CreatePage() {
   const [globalLoader, setGlobalLoader] = useAtom(globalLoaderAtom);
   const supabase = createClient();
   const { toast } = useToast();
+  const [user, setUser] = useState<User | null>(null);
+  const { count: paymentCount } = usePayment({ userId: user?.id || "" });
+  const { pricing } = usePricing();
 
   const searchFunc = useSearchParams();
-  const paramsId = searchFunc.get("id");
+  const contentId = searchFunc.get("id");
   const paramsIsTemplate = searchFunc.get("isTemplate");
+
+  const getUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      setUser(user);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   useEffect(() => {
     if (paramsIsTemplate === "true") {
@@ -65,7 +85,7 @@ export default function CreatePage() {
       const { data, error } = await supabase
         .from(tableName as "contents" | "templates")
         .select("*")
-        .eq("id", paramsId)
+        .eq("id", contentId)
         .single();
 
       setContentsData(data);
@@ -80,7 +100,7 @@ export default function CreatePage() {
       }
 
       const { result: fullImages } = await getBlurUrls({
-        contentId: paramsId,
+        contentId: contentId,
         tableName: tableName,
         images: data?.images || [],
       });
@@ -92,9 +112,9 @@ export default function CreatePage() {
   };
 
   useEffect(() => {
-    if (!paramsId) return;
+    if (!contentId) return;
     init();
-  }, [paramsId, paramsIsTemplate, tableName]);
+  }, [contentId, paramsIsTemplate, tableName]);
 
   if (globalLoader.isActive && !contentsData) return null;
 
@@ -122,26 +142,31 @@ export default function CreatePage() {
           <div className="flex items-center space-x-2 pr-5">
             {/* <RefreshCcwIcon className="mr-4 opacity-80" /> */}
             <SaveButton
-              contentId={paramsId}
+              contentId={contentId}
               isImageLoading={isAdding || isDeleting}
             />
-            <PreviewButton contentId={paramsId} />
+            <PreviewButton contentId={contentId} />
             {contentsData.status === "draft" && (
-              <PaymentButton contentId={paramsId} />
+              <PaymentButton
+                contentId={contentId}
+                user={user}
+                isFirstOrder={paymentCount === 0}
+                pricing={pricing}
+              />
             )}
             {contentsData.status === "inactive" && (
-              <ReLaunchButton contentId={paramsId} />
+              <ReLaunchButton contentId={contentId} />
             )}
           </div>
         </div>
       </nav>
       <div className="w-80 h-screen overflow-y-auto bg-neutral-900 justify-between fixed z-30 left-0 top-0 hidden md:flex">
-        <MenuContent contentId={paramsId} className="mt-20" />
+        <MenuContent contentId={contentId} className="mt-20" />
       </div>
       <div className="md:ml-80 mt-20">
-        <CreateContainer contentId={paramsId} contentsData={contentsData} />
+        <CreateContainer contentId={contentId} contentsData={contentsData} />
       </div>
-      <MobileMenu contentId={paramsId} className="fixed left-4 bottom-4" />
+      <MobileMenu contentId={contentId} className="fixed left-4 bottom-4" />
       <PageSwitcher className="fixed right-4 bottom-4" onClick={handlePage} />
     </ImageWrapper>
   );
