@@ -74,6 +74,7 @@ export default function CreateAfterYes({ contentId }: { contentId: string }) {
             }}
           />
         }
+        isConfetti={contents.isConfetti}
         button={
           <Dialog>
             <Tooltip>

@@ -15,4 +15,5 @@ export const contentsAtom = atom<ContentsType>({
   fontFamily: "",
   themeColor: "",
   backgroundColor: "",
+  isConfetti: true,
 });

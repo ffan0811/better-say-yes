@@ -44,6 +44,7 @@ export default async function ContentDetailsYesPage({
               {data.after_yes_description}
             </p>
           }
+          isConfetti={data.is_confetti}
           button={
             data.after_yes_button_text ? (
               data.after_yes_button_link ? (

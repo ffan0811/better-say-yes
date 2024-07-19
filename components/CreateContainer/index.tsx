@@ -11,10 +11,11 @@ import { useFont } from "../font-provider";
 import FontWrapper from "../Production/FontWrapper";
 import ColorWrapper from "../Production/ColorWrapper";
 import { FontType } from "@/types/font";
+import { Tables } from "@/database.types";
 
 type CreateContainerProps = {
   contentId: string;
-  contentsData: any;
+  contentsData: Tables<"contents"> | Tables<"templates">;
 };
 
 export default function CreateContainer({
@@ -26,12 +27,12 @@ export default function CreateContainer({
   const { backgroundColor, themeColor, setThemeColor, setBackgroundColor } =
     useColor();
   const { font, setFont } = useFont();
-
   useEffect(() => {
     const myBackgroundColor =
       contentsData?.background_color || "rgb(255, 255, 255)";
     const myThemeColor = contentsData?.theme_color || "rgb(0,0,0)";
-    const myFontFamily: FontType = contentsData?.font_family || "system";
+    const myFontFamily =
+      (contentsData?.font_family as FontType) || ("system" as FontType);
     // Get data from db otherwise insert default contents
     setContents((prev) => {
       return {
@@ -55,6 +56,7 @@ export default function CreateContainer({
         fontFamily: myFontFamily,
         themeColor: myThemeColor,
         backgroundColor: myBackgroundColor,
+        isConfetti: !!contentsData?.is_confetti,
       };
     });
 
