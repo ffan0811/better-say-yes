@@ -107,6 +107,8 @@ export default function PaymentButton({ contentId }: { contentId: string }) {
     }
   };
 
+  const isFree = process.env.NEXT_PUBLIC_PRICE === "0";
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -116,7 +118,9 @@ export default function PaymentButton({ contentId }: { contentId: string }) {
       </DialogTrigger>
       <DialogContent className="max-w-[calc(100%-theme(space.8))] md:max-w-xl">
         <DialogHeader className="mb-3">
-          <DialogTitle className="text-center">Payment</DialogTitle>
+          <DialogTitle className="text-center">
+            {isFree ? "Launch" : "Payment"}
+          </DialogTitle>
         </DialogHeader>
         <div className="flex items-center justify-center flex-col md:flex-row text-center md:text-left">
           <div
@@ -135,24 +139,45 @@ export default function PaymentButton({ contentId }: { contentId: string }) {
               Surprise your loved ones with your creativity!
             </p>
             <Button onClick={handlePayment} isLoading={isLoading}>
-              Pay&nbsp;<span className="text-xs line-through">$10</span>&nbsp;$5
-              and Launch
+              {isFree ? (
+                <>Launch for Free</>
+              ) : (
+                <>
+                  Pay&nbsp;
+                  <span className="text-xs line-through">
+                    {process.env.NEXT_PUBLIC_CURRENCY}
+                    {process.env.NEXT_PUBLIC_ORIGINAL_PRICE}
+                  </span>
+                  &nbsp;{process.env.NEXT_PUBLIC_CURRENCY}
+                  {process.env.NEXT_PUBLIC_PRICE} and Launch
+                </>
+              )}
             </Button>
             <div className="text-sm mt-4 text-neutral-500 leading-tight tracking-tight">
-              <p>
-                * Your page will go on live as soon as you complete the payment.
-              </p>
-              <p>
-                * By clicking the button above, you confirm that you have
-                reviewed our{" "}
-                <a
-                  href={EXTERNAL_REFUND_POLICY}
-                  target="_blank"
-                  className="underline"
-                >
-                  refund policy.
-                </a>
-              </p>
+              {isFree ? (
+                <p>
+                  * Your page will go on live as soon as you complete the
+                  process.
+                </p>
+              ) : (
+                <p>
+                  * Your page will go on live as soon as you complete the
+                  payment.
+                </p>
+              )}
+              {isFree ? null : (
+                <p>
+                  * By clicking the button above, you confirm that you have
+                  reviewed our{" "}
+                  <a
+                    href={EXTERNAL_REFUND_POLICY}
+                    target="_blank"
+                    className="underline"
+                  >
+                    refund policy.
+                  </a>
+                </p>
+              )}
             </div>
           </div>
         </div>
