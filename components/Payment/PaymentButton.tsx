@@ -1,8 +1,7 @@
 "use client";
-import { createClient } from "@/lib/supabase/client";
 import { Button } from "../ui/button";
 import getStripe from "@/lib/stripe/get-stripe";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { User } from "@supabase/supabase-js";
 import { useAtom } from "jotai";
 import { contentsAtom } from "@/atoms/content";
@@ -20,45 +19,50 @@ import { Separator } from "../ui/separator";
 import { ITEM_COMMON_CLASSES, ITEM_SIZE } from "../ContentItem";
 import { EXTERNAL_REFUND_POLICY } from "@/constants";
 import { ERROR_DEFAULT_TITLE } from "@/constants/message";
+import { Tables } from "@/database.types";
 
-export default function PaymentButton({ contentId }: { contentId: string }) {
-  const supabase = createClient();
-  const [user, setUser] = useState<User | null>(null);
+export default function PaymentButton({
+  contentId,
+  user,
+  isFirstOrder,
+  pricing,
+}: {
+  contentId: string;
+  user: User;
+  isFirstOrder?: boolean;
+  pricing: Tables<"pricing">[];
+}) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [contents, setContents] = useAtom(contentsAtom);
   const { toast } = useToast();
 
-  const getUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (user) {
-      setUser(user);
-    }
-  };
-
-  useEffect(() => {
-    getUser();
-  }, []);
+  const { isFree, freePricing, paidPricing } = useMemo(
+    () => ({
+      isFree: isFirstOrder,
+      freePricing: pricing.find((ele) => ele.name === "free"),
+      paidPricing: pricing.find((ele) => ele.name === "default"),
+    }),
+    [isFirstOrder, pricing]
+  );
 
   const handlePayment = async () => {
     try {
       setIsLoading(true);
       const stripe = await getStripe();
+      const priceId = isFree
+        ? freePricing?.stripe_price_id
+        : paidPricing?.stripe_price_id;
 
       const res = await fetch(`/api/checkout-sessions`, {
         method: "POST",
-        body: JSON.stringify({
-          contentId,
-        }),
+        body: JSON.stringify({ contentId, priceId }),
       });
+
       if (!res.ok) {
         const data = await res.json();
         throw Error(data?.message || "Failed to make a payment");
       }
       const { data } = await res.json();
-
       const { error } = await stripe!.redirectToCheckout({
         // Make the id field from the Checkout Session creation API response
         // available to this file, so you can provide it as parameter here
@@ -107,8 +111,6 @@ export default function PaymentButton({ contentId }: { contentId: string }) {
     }
   };
 
-  const isFree = process.env.NEXT_PUBLIC_PRICE === "0";
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -143,22 +145,23 @@ export default function PaymentButton({ contentId }: { contentId: string }) {
                 <>Launch for Free</>
               ) : (
                 <>
-                  Pay&nbsp;
-                  <span className="text-xs line-through">
-                    {process.env.NEXT_PUBLIC_CURRENCY}
-                    {process.env.NEXT_PUBLIC_ORIGINAL_PRICE}
-                  </span>
-                  &nbsp;{process.env.NEXT_PUBLIC_CURRENCY}
-                  {process.env.NEXT_PUBLIC_PRICE} and Launch
+                  Pay&nbsp;{paidPricing.currency}
+                  {paidPricing.price} and Launch
                 </>
               )}
             </Button>
             <div className="text-sm mt-4 text-neutral-500 leading-tight tracking-tight">
               {isFree ? (
-                <p>
-                  * Your page will go on live as soon as you complete the
-                  process.
-                </p>
+                <>
+                  <p>
+                    * Your page will go on live as soon as you complete the
+                    process.
+                  </p>
+                  <p>
+                    * Your first purchase is on us! After that, we'll charge
+                    just a little for content.
+                  </p>
+                </>
               ) : (
                 <p>
                   * Your page will go on live as soon as you complete the
