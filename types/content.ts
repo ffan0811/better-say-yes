@@ -12,4 +12,5 @@ export type ContentsType = {
   fontFamily?: string;
   themeColor?: string;
   backgroundColor?: string;
+  isConfetti: boolean;
 };

@@ -21,6 +21,7 @@ export type Database = {
           font_family: string | null
           id: string
           images: string[] | null
+          is_confetti: boolean | null
           name: string | null
           question: string | null
           secret_code: string | null
@@ -41,6 +42,7 @@ export type Database = {
           font_family?: string | null
           id?: string
           images?: string[] | null
+          is_confetti?: boolean | null
           name?: string | null
           question?: string | null
           secret_code?: string | null
@@ -61,6 +63,7 @@ export type Database = {
           font_family?: string | null
           id?: string
           images?: string[] | null
+          is_confetti?: boolean | null
           name?: string | null
           question?: string | null
           secret_code?: string | null
@@ -186,6 +189,7 @@ export type Database = {
           font_family: string | null
           id: string
           images: string[] | null
+          is_confetti: boolean | null
           name: string | null
           question: string | null
           secret_code: string | null
@@ -206,6 +210,7 @@ export type Database = {
           font_family?: string | null
           id?: string
           images?: string[] | null
+          is_confetti?: boolean | null
           name?: string | null
           question?: string | null
           secret_code?: string | null
@@ -226,6 +231,7 @@ export type Database = {
           font_family?: string | null
           id?: string
           images?: string[] | null
+          is_confetti?: boolean | null
           name?: string | null
           question?: string | null
           secret_code?: string | null

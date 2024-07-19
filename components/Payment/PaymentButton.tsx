@@ -111,6 +111,8 @@ export default function PaymentButton({
     }
   };
 
+  if (!freePricing || !paidPricing) return null;
+
   return (
     <Dialog>
       <DialogTrigger asChild>

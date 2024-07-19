@@ -83,6 +83,7 @@ export async function saveContents({
         font_family: contents.fontFamily,
         background_color: contents.backgroundColor,
         theme_color: contents.themeColor,
+        is_confetti: contents.isConfetti,
       })
       .eq("id", id);
   } catch (e) {

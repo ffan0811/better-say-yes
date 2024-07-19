@@ -1,9 +1,11 @@
 "use client";
 import { useAtom } from "jotai";
-import { InputWithLabel } from "../ui/input";
+import { InputWithLabel, LABEL_WRAPPER_CLASSES } from "../ui/input";
 import { contentsAtom } from "@/atoms/content";
 import { isLockedContentAtom, previewAtom } from "@/atoms/preview";
 import { PageStepType } from "@/types/status";
+import { Checkbox } from "../ui/checkbox";
+import { Label } from "../ui/label";
 
 export default function CreateContents() {
   const [contents, setContents] = useAtom(contentsAtom);
@@ -11,7 +13,24 @@ export default function CreateContents() {
   const [isLocked, setIsLocked] = useAtom(isLockedContentAtom);
 
   return (
-    <div>
+    <div className="space-y-8">
+      <div>
+        <div className={`flex flex-row space-x-2 mb-2`}>
+          <Checkbox
+            id="confetti"
+            checked={contents.isConfetti}
+            onCheckedChange={(checked: boolean) => {
+              setContents((prev) => {
+                return { ...prev, isConfetti: checked };
+              });
+            }}
+          />
+          <Label htmlFor="confetti">Confetti</Label>
+        </div>
+        <p className="text-sm text-muted-foreground">
+          Show confetti when your loved one say yes.
+        </p>
+      </div>
       <InputWithLabel
         label="Secret Code"
         placeholder="Enter secret code"
