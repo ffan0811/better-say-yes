@@ -10,6 +10,7 @@ import { ImageProvider } from "../image-provider";
 import MobileMenu from "../CreateContainer/MobileMenu";
 import { useEffect, useState } from "react";
 import ImageWrapper from "../Production/ImageWrapper";
+import { Tables } from "@/database.types";
 
 export default function TrySection() {
   const [preview, setPreview] = useAtom(previewAtom);
@@ -34,9 +35,10 @@ export default function TrySection() {
     theme_color: "rgb(255,255,255)",
     // updated_at: "",
     // user_id: "",
+    is_confetti: true,
   });
   const [images, setImages] = useState([
-    { src: { value: "events/event_hidden_promo.png" } },
+    { src: { value: "events/hamster.jpeg" } },
   ]);
   const [isLocked, setIsLocked] = useAtom(isLockedContentAtom);
 
@@ -64,7 +66,10 @@ export default function TrySection() {
             <MenuContent contentId={contentId} className="w-full" isAllOpen />
           </div>
           <div className="top-0 w-full md:w-[calc(100%-20rem)] h-full sticky">
-            <CreateContainer contentId={contentId} contentsData={data} />
+            <CreateContainer
+              contentId={contentId}
+              contentsData={data as Tables<"contents">}
+            />
             <MobileMenu
               className="absolute left-4 bottom-4"
               contentId={contentId}
