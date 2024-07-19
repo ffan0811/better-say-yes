@@ -39,8 +39,8 @@ export default function PaymentButton({
   const { isFree, freePricing, paidPricing } = useMemo(
     () => ({
       isFree: isFirstOrder,
-      freePricing: pricing.find((ele) => ele?.name === "free"),
-      paidPricing: pricing.find((ele) => ele?.name === "default"),
+      freePricing: (pricing || []).find((ele) => ele?.name === "free"),
+      paidPricing: (pricing || []).find((ele) => ele?.name === "default"),
     }),
     [isFirstOrder, pricing]
   );
