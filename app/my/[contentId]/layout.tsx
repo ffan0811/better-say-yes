@@ -1,4 +1,8 @@
-import { SHORT_TITLE, openGraphDefault } from "@/app/shared-metadata";
+import {
+  DESCRIPTION,
+  SHORT_TITLE,
+  openGraphDefault,
+} from "@/app/shared-metadata";
 import Footer from "@/components/Production/Footer";
 import ImageWrapper from "@/components/Production/ImageWrapper";
 import { ImageProvider } from "@/components/image-provider";
@@ -23,7 +27,7 @@ export async function generateMetadata({
     openGraph: {
       ...openGraphDefault,
       title: SHORT_TITLE,
-      description: data.question,
+      description: data?.question ?? DESCRIPTION,
       url: `/my/${id}`,
     },
   };

@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 // import Navigation from "@/components/Navigation";
@@ -63,6 +64,7 @@ export default function RootLayout({
             </ColorProvider>
           </SessionProvider>
         </ProgressBarProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
