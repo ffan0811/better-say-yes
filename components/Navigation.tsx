@@ -18,6 +18,9 @@ export default function Navigation({ className = "" }: NavigationProps) {
             <li>
               <Link href="/showcase">Showcase</Link>
             </li>
+            <li>
+              <Link target="_blank" href="https://www.etsy.com/shop/BetterSayYes">Shop</Link>
+            </li>
             {/* <li>
               <Link href="/pricing">Pricing</Link>
             </li> */}
