@@ -14,7 +14,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
           <Link href="/">
             <Logo className={`h-auto w-16 md:w-28`} />
           </Link>
-          <ul className="flex items-center text-sm md:text-base md:space-x-8">
+          <ul className="flex items-center text-sm space-x-3 md:text-base md:space-x-8">
             <li>
               <Link href="/showcase">Showcase</Link>
             </li>
