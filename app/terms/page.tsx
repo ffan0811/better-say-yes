@@ -183,7 +183,7 @@ export default function TermsOfUse() {
             <p className="mb-4">
               If you have any questions about these Terms, please visit our{" "}
               <a
-                href="https://www.notion.so/Contact-Us-2222b7b8475f437398c248a803908e6e?pvs=21"
+                href="https://www.notion.so/Contact-Us-241d729cc4a5803c89aac90bf98dd2eb?source=copy_link"
                 className="text-blue-500 hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
