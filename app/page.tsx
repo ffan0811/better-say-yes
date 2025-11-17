@@ -16,6 +16,9 @@ const inter = Inter({
   display: "swap",
 });
 
+// Optimize caching for the landing page
+export const revalidate = 3600; // Revalidate every hour
+
 export default function Index() {
   // const supabase = createClient();
 
