@@ -2,8 +2,6 @@ import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
 export const updateSession = async (request: NextRequest) => {
-  // This `try/catch` block is only here for the interactive tutorial.
-  // Feel free to remove once you have Supabase connected.
   try {
     // Create an unmodified response
     let response = NextResponse.next({
@@ -62,7 +60,19 @@ export const updateSession = async (request: NextRequest) => {
 
     // This will refresh session if expired - required for Server Components
     // https://supabase.com/docs/guides/auth/server-side/nextjs
-    await supabase.auth.getUser();
+    // Check if we have auth cookies first to skip unnecessary work
+    const hasAuthCookies = Array.from(request.cookies.getAll()).some(
+      cookie => cookie.name.includes('sb-') && cookie.name.includes('auth-token')
+    );
+    
+    if (hasAuthCookies) {
+      // Refresh session - this validates and refreshes expired tokens
+      // Use Promise.race with a timeout to prevent blocking navigation too long
+      await Promise.race([
+        supabase.auth.getUser(),
+        new Promise<void>((resolve) => setTimeout(() => resolve(), 1000))
+      ]);
+    }
 
     return response;
   } catch (e) {
