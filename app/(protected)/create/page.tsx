@@ -47,12 +47,20 @@ export default function CreatePage() {
   const paramsIsTemplate = searchFunc.get("isTemplate");
 
   const getUser = async () => {
+    // First try getSession (faster, reads from cookies)
     const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (user) {
-      setUser(user);
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (session?.user) {
+      setUser(session.user);
+    } else {
+      // Fallback to getUser if no session (validates with server)
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        setUser(user);
+      }
     }
   };
 
