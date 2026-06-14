@@ -14,8 +14,6 @@ import {
   openGraphDefault,
 } from "./shared-metadata";
 import CookieSetting from "@/components/CookieSetting";
-import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages } from "next-intl/server";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
@@ -43,37 +41,20 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Load messages for the current locale
-  let messages = {};
-  try {
-    const locale = await getLocale();
-    messages = await getMessages();
-  } catch (importError) {
-    console.error("Error loading messages:", importError);
-    // Fallback to English if there's an error
-    try {
-      messages = (await import(`../messages/en.json`)).default;
-    } catch (fallbackError) {
-      console.error("Error loading fallback messages:", fallbackError);
-    }
-  }
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="bg-neutral-900 text-foreground">
-        <NextIntlClientProvider messages={messages}>
-          <ProgressBarProvider>
-            <ThemeProvider attribute="class" defaultTheme="dark">
-              <GlobalLoaderProvider>
-                <TooltipProvider delayDuration={100}>
-                  {children}
-                  <CookieSetting />
-                </TooltipProvider>
-                <Toaster />
-              </GlobalLoaderProvider>
-            </ThemeProvider>
-          </ProgressBarProvider>
-        </NextIntlClientProvider>
+        <ProgressBarProvider>
+          <ThemeProvider attribute="class" defaultTheme="dark">
+            <GlobalLoaderProvider>
+              <TooltipProvider delayDuration={100}>
+                {children}
+                <CookieSetting />
+              </TooltipProvider>
+              <Toaster />
+            </GlobalLoaderProvider>
+          </ThemeProvider>
+        </ProgressBarProvider>
         <SpeedInsights />
       </body>
     </html>

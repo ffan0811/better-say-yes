@@ -11,28 +11,24 @@ import {
 import GradientText from "../GradientText";
 import { CircleArrowRightIcon } from "lucide-react";
 import Link from "next/link";
-import { Button, buttonVariants } from "../ui/button";
-import { useTranslations, useLocale } from "next-intl";
-import { getLocalizedPath } from "@/lib/utils/link";
+import { buttonVariants } from "../ui/button";
 
 export default function UseCasesSection() {
-  const t = useTranslations("landing.useCases");
-  const locale = useLocale() as "en" | "ko";
-
   const contents = [
     {
-      title: t("step1.title"),
-      description: t("step1.description"),
+      title: "Step 1",
+      description: "Think of a question you want a 'yes' for.",
       // href: "/showcase",
     },
     {
-      title: t("step2.title"),
-      description: t("step2.description"),
+      title: "Step 2",
+      description: "Upload images to share after they say 'yes'.",
       // href: "/showcase",
     },
     {
-      title: t("step3.title"),
-      description: t("step3.description"),
+      title: "Step 3",
+      description:
+        "Launch your customized page,\nshare it with your loved ones, and make them happy!",
     },
     // {
     //   title: "Check out demos",
@@ -56,7 +52,9 @@ export default function UseCasesSection() {
     <div ref={container}>
       <div ref={textContainer} className="sticky top-[20vh]">
         <motion.div style={{ scale }}>
-          <GradientText className="">{t("title")}</GradientText>
+          <GradientText className="">
+            The Best Way to Get a 'Yes'
+          </GradientText>
         </motion.div>
       </div>
 
@@ -97,8 +95,6 @@ function Card({
   targetScale: number;
   isLast: boolean;
 }) {
-  const t = useTranslations("landing.useCases");
-  const locale = useLocale() as "en" | "ko";
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
     target: container,
@@ -151,12 +147,12 @@ function Card({
           )}
           {isLast && (
             <Link
-              href={getLocalizedPath("/showcase", locale)}
+              href="/showcase"
               className={`mt-4 md:text-lg md:px-8 md:py-6 ${buttonVariants({
                 variant: "default",
               })}`}
             >
-              {t("checkDemos")}
+              Check out our demos
             </Link>
           )}
         </div>

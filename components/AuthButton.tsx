@@ -1,13 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
-import { getTranslations, getLocale } from "next-intl/server";
-import { getLocalizedPath } from "@/lib/utils/link";
 
 export default async function AuthButton() {
   const supabase = createClient();
-  const t = await getTranslations("common");
-  const locale = (await getLocale()) as "en" | "ko";
 
   const {
     data: { user },
@@ -15,11 +11,11 @@ export default async function AuthButton() {
 
   return user ? (
     <div className="flex items-center space-x-4 text-sm md:text-base text-right">
-      <Link href={getLocalizedPath("/dashboard", locale)}>
-        {t("welcome")}, {user.user_metadata?.username || user.email || ""}
+      <Link href="/dashboard">
+        Welcome, {user.user_metadata?.username || user.email || ""}
       </Link>
       {/* <Link
-        href={getLocalizedPath("/settings", locale)}
+        href="/settings"
         className={`px-2 ${buttonVariants({
           variant: "outline",
           size: "icon",
@@ -31,10 +27,10 @@ export default async function AuthButton() {
     </div>
   ) : (
     <Link
-      href={getLocalizedPath("/login", locale)}
+      href="/login"
       className={`${buttonVariants({ variant: "default" })}`}
     >
-      {t("getStarted")}
+      Get Started
     </Link>
   );
 }

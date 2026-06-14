@@ -11,7 +11,6 @@ import EmailSubscriptionContainer from "@/components/Settings/EmailSubscriptionC
 import DeleteAccountContainer from "@/components/Settings/DeleteAccountContainer";
 import { Label } from "@/components/ui/label";
 import SignOutButton from "@/components/SignOutButton";
-import { getTranslations } from "next-intl/server";
 
 export default async function SettingsPage({
   searchParams,
@@ -19,7 +18,6 @@ export default async function SettingsPage({
   searchParams: { message?: string };
 }) {
   const supabase = createClientServer();
-  const t = await getTranslations("settings");
 
   const {
     data: { user },
@@ -30,26 +28,24 @@ export default async function SettingsPage({
       <div className="container px-4 md:px-0 space-y-8">
         <div className="flex items-center space-x-4">
           <p className="text-3xl font-medium tracking-tight">
-            {t("title", {
-              username: user.user_metadata?.username || user.email,
-            })}
+            Welcome, {user.user_metadata?.username || user.email}
           </p>
           <SignOutButton />
         </div>
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center space-x-4">
-              {t("emailSubscription.title")}
+              Email Subscription
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex justify-between">
               <div className="space-y-0.5">
                 <Label className="text-base">
-                  {t("emailSubscription.marketingEmails")}
+                  Marketing emails
                 </Label>
                 <CardDescription>
-                  {t("emailSubscription.description")}
+                  Receive emails about promotion codes, new features, and more.
                 </CardDescription>
               </div>{" "}
               <EmailSubscriptionContainer

@@ -1,7 +1,3 @@
-const createNextIntlPlugin = require('next-intl/plugin');
- 
-const withNextIntl = createNextIntlPlugin('./i18n.ts');
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -30,14 +26,11 @@ const nextConfig = {
   },
 };
 
-// First apply next-intl, then Sentry
-let config = withNextIntl(nextConfig);
-
 // Injected content via Sentry wizard below
 const { withSentryConfig } = require("@sentry/nextjs");
 
-config = withSentryConfig(
-  config,
+const config = withSentryConfig(
+  nextConfig,
   {
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options

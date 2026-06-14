@@ -11,7 +11,6 @@ import { Button } from "../ui/button";
 import { SubmitButton } from "@/components/SubmitButton";
 import { createClient } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
-import { useTranslations } from 'next-intl';
 
 export default function DeleteAccountContainer({
   userId,
@@ -20,8 +19,6 @@ export default function DeleteAccountContainer({
   userId: string;
   errorMessage?: string;
 }) {
-  const t = useTranslations('settings.deleteAccount');
-
   const deleteAccount = async () => {
     "use server";
     const supabase = createClient(
@@ -40,14 +37,14 @@ export default function DeleteAccountContainer({
     <Dialog>
       <DialogTrigger asChild>
         <div className="mt-8">
-          <Button variant="destructive">{t('button')}</Button>
+          <Button variant="destructive">Delete account</Button>
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{t('title')}</DialogTitle>
+          <DialogTitle>Delete account</DialogTitle>
           <DialogDescription>
-            {t('description')}
+            All of your data will be deleted. Are you sure?
             {errorMessage && (
               <span className="block mt-8 text-red-600">{errorMessage}</span>
             )}
@@ -60,7 +57,7 @@ export default function DeleteAccountContainer({
               type="submit"
               variant="destructive"
             >
-              {t('confirm')}
+              Yes, I want to delete my account
             </SubmitButton>
           </form>
         </DialogFooter>

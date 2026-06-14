@@ -1,15 +1,12 @@
 "use client";
 import { useRef } from "react";
-import GradientText from "../GradientText";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useTranslations } from 'next-intl';
 
 export default function SecondarySection({
   className = "",
 }: {
   className?: string;
 }) {
-  const t = useTranslations('landing.secondary');
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
     target: container,
@@ -28,7 +25,7 @@ export default function SecondarySection({
           className="text-4xl md:text-7xl font-black text-center"
           style={{ lineHeight: 1.3 }}
         >
-          {t('title')}
+          Create Personalized Pages and Surprise Your Loved Ones
         </h2>
       </motion.div>
     </div>

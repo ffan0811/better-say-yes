@@ -1,0 +1,177 @@
+"use client";
+
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
+import { User } from "@supabase/supabase-js";
+
+import { getBlurUrls } from "@/actions/content";
+import { contentsAtom } from "@/atoms/content";
+import { globalLoaderAtom } from "@/atoms/global";
+import { previewAtom } from "@/atoms/preview";
+import CreateContainer from "@/components/CreateContainer";
+import MenuContent from "@/components/CreateContainer/MenuContent";
+import MobileMenu from "@/components/CreateContainer/MobileMenu";
+import PreviewButton from "@/components/CreateContainer/PreviewButton";
+import SaveButton from "@/components/CreateContainer/SaveButton";
+import usePayment from "@/components/hooks/usePayment";
+import usePricing from "@/components/hooks/usePricing";
+import { useImages } from "@/components/image-provider";
+import Logo from "@/components/Logo";
+import PageSwitcher from "@/components/PageSwitcher";
+import PaymentButton from "@/components/Payment/PaymentButton";
+import ImageWrapper from "@/components/Production/ImageWrapper";
+import ReLaunchButton from "@/components/ReLaunchButton";
+import { useToast } from "@/components/ui/use-toast";
+import { ERROR_DEFAULT_TITLE } from "@/constants/message";
+import { Tables } from "@/database.types";
+import { createClient } from "@/lib/supabase/client";
+import { ImageProps } from "@/types/image";
+import { PageStepType } from "@/types/status";
+
+export default function CreatePageClient() {
+  const [contentsData, setContentsData] = useState<Tables<"contents">>(null);
+  const [images, setImages] = useState<ImageProps[]>([]);
+  const [tableName, setTableName] = useState<string | null>(null);
+  const [contentsClientData, setContentsClientData] = useAtom(contentsAtom);
+  const [preview, setPreview] = useAtom(previewAtom);
+  const { isAdding, isDeleting } = useImages();
+  const [globalLoader, setGlobalLoader] = useAtom(globalLoaderAtom);
+  const supabase = createClient();
+  const { toast } = useToast();
+  const [user, setUser] = useState<User | null>(null);
+  const { count: paymentCount } = usePayment({ userId: user?.id || "" });
+  const { pricing } = usePricing();
+
+  const searchFunc = useSearchParams();
+  const contentId = searchFunc.get("id");
+  const paramsIsTemplate = searchFunc.get("isTemplate");
+
+  const getUser = async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (session?.user) {
+      setUser(session.user);
+    } else {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        setUser(user);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  useEffect(() => {
+    if (paramsIsTemplate === "true") {
+      setTableName("templates");
+      setContentsClientData({
+        ...contentsClientData,
+        tableName: "templates",
+      });
+    } else {
+      setTableName("contents");
+      setContentsClientData({
+        ...contentsClientData,
+        tableName: "contents",
+      });
+    }
+  }, [paramsIsTemplate]);
+
+  const init = async () => {
+    if (!tableName) return;
+
+    try {
+      setGlobalLoader({ isActive: true, message: "Fetching data..." });
+
+      const { data, error } = await supabase
+        .from(tableName as "contents" | "templates")
+        .select("*")
+        .eq("id", contentId)
+        .single();
+
+      setContentsData(data);
+
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: ERROR_DEFAULT_TITLE,
+          description: error.message,
+        });
+        return;
+      }
+
+      const { result: fullImages } = await getBlurUrls({
+        contentId: contentId,
+        tableName: tableName,
+        images: data?.images || [],
+      });
+      setImages(fullImages);
+    } catch (error) {
+    } finally {
+      setGlobalLoader({ isActive: false, message: "" });
+    }
+  };
+
+  useEffect(() => {
+    if (!contentId) return;
+    init();
+  }, [contentId, paramsIsTemplate, tableName]);
+
+  if (globalLoader.isActive && !contentsData) return null;
+
+  if (!contentsData) return <p>Cannot find data</p>;
+
+  const handlePage = (direction: "prev" | "next") => {
+    setPreview({
+      ...preview,
+      stage: direction === "prev" ? PageStepType.MAIN : PageStepType.AFTER_YES,
+    });
+  };
+
+  return (
+    <ImageWrapper images={images}>
+      <nav className="fixed z-40 left-0 top-0 flex items-center w-full h-20 bg-neutral-900 py-4 border-b border-neutral-500 overflow-x-auto">
+        <div className="flex justify-between items-center w-full px-5">
+          <div className="flex items-center space-x-16">
+            <Link href="/dashboard">
+              <Logo className="h-auto w-12 md:w-20 mr-4" />
+            </Link>
+          </div>
+          <div className="flex items-center space-x-2 pr-5">
+            <SaveButton
+              contentId={contentId}
+              isImageLoading={isAdding || isDeleting}
+            />
+            <PreviewButton contentId={contentId} />
+            {contentsData.status === "draft" && (
+              <PaymentButton
+                contentId={contentId}
+                user={user}
+                isFirstOrder={paymentCount === 0}
+                pricing={pricing}
+              />
+            )}
+            {contentsData.status === "inactive" && (
+              <ReLaunchButton contentId={contentId} />
+            )}
+          </div>
+        </div>
+      </nav>
+      <div className="w-80 h-screen overflow-y-auto bg-neutral-900 justify-between fixed z-30 left-0 top-0 hidden md:flex">
+        <MenuContent contentId={contentId} className="mt-20" />
+      </div>
+      <div className="md:ml-80 mt-20">
+        <CreateContainer contentId={contentId} contentsData={contentsData} />
+      </div>
+      <MobileMenu contentId={contentId} className="fixed left-4 bottom-4" />
+      <PageSwitcher className="fixed right-4 bottom-4" onClick={handlePage} />
+    </ImageWrapper>
+  );
+}
