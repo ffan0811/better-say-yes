@@ -10,14 +10,17 @@ import {
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { getLocale } from "next-intl/server";
+import { getLocalizedPath } from "@/lib/utils/link";
 
 export default async function WelcomePage() {
   const supabase = createClient();
+  const locale = (await getLocale()) as "en" | "ko";
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) return redirect("/");
+  if (!user) return redirect(getLocalizedPath("/", locale));
 
   return (
     <Layout hasGap>

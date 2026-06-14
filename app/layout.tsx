@@ -3,9 +3,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 // import Navigation from "@/components/Navigation";
-import SessionProvider from "@/components/session-provider";
-import { FontProvider } from "@/components/font-provider";
-import { ColorProvider } from "@/components/color-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import ProgressBarProvider from "@/components/progress-bar-provider";
 import { GlobalLoaderProvider } from "@/components/global-loader-provider";
@@ -17,6 +14,8 @@ import {
   openGraphDefault,
 } from "./shared-metadata";
 import CookieSetting from "@/components/CookieSetting";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
@@ -39,31 +38,42 @@ export const metadata = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Load messages for the current locale
+  let messages = {};
+  try {
+    const locale = await getLocale();
+    messages = await getMessages();
+  } catch (importError) {
+    console.error("Error loading messages:", importError);
+    // Fallback to English if there's an error
+    try {
+      messages = (await import(`../messages/en.json`)).default;
+    } catch (fallbackError) {
+      console.error("Error loading fallback messages:", fallbackError);
+    }
+  }
+
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="bg-neutral-900 text-foreground">
-        <ProgressBarProvider>
-          <SessionProvider>
-            <ColorProvider>
-              <FontProvider>
-                <ThemeProvider attribute="class" defaultTheme="dark">
-                  <GlobalLoaderProvider>
-                    <TooltipProvider delayDuration={100}>
-                      {children}
-                      <CookieSetting />
-                    </TooltipProvider>
-                    <Toaster />
-                  </GlobalLoaderProvider>
-                </ThemeProvider>
-              </FontProvider>
-            </ColorProvider>
-          </SessionProvider>
-        </ProgressBarProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ProgressBarProvider>
+            <ThemeProvider attribute="class" defaultTheme="dark">
+              <GlobalLoaderProvider>
+                <TooltipProvider delayDuration={100}>
+                  {children}
+                  <CookieSetting />
+                </TooltipProvider>
+                <Toaster />
+              </GlobalLoaderProvider>
+            </ThemeProvider>
+          </ProgressBarProvider>
+        </NextIntlClientProvider>
         <SpeedInsights />
       </body>
     </html>

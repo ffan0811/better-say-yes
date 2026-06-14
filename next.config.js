@@ -1,5 +1,24 @@
+const createNextIntlPlugin = require('next-intl/plugin');
+ 
+const withNextIntl = createNextIntlPlugin('./i18n.ts');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    optimizePackageImports: [
+      "framer-motion",
+      "lucide-react",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-alert-dialog",
+      "@radix-ui/react-checkbox",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-popover",
+      "@radix-ui/react-select",
+      "@radix-ui/react-switch",
+      "@radix-ui/react-toast",
+      "@radix-ui/react-tooltip",
+    ],
+  },
   images: {
     remotePatterns: [
       {
@@ -11,15 +30,14 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
-
+// First apply next-intl, then Sentry
+let config = withNextIntl(nextConfig);
 
 // Injected content via Sentry wizard below
-
 const { withSentryConfig } = require("@sentry/nextjs");
 
-module.exports = withSentryConfig(
-  module.exports,
+config = withSentryConfig(
+  config,
   {
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options
@@ -55,3 +73,5 @@ module.exports = withSentryConfig(
     automaticVercelMonitors: true,
   }
 );
+
+module.exports = config;

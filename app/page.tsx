@@ -4,12 +4,13 @@ import ImageRotator from "@/components/ImageRotator";
 // import { createClient } from "@/lib/supabase/server";
 // import { redirect } from "next/navigation";
 import { DESCRIPTION } from "./shared-metadata";
-import UseCasesSection from "@/components/LandingPage/UseCasesSection";
 import SmoothScroll from "@/components/SmoothScroll";
-import TrySection from "@/components/LandingPage/TrySection";
-import CTASection from "@/components/LandingPage/CTASection";
-import SecondarySection from "@/components/LandingPage/SecondarySection";
-import Link from "next/link";
+import {
+  DeferredCTASection,
+  DeferredSecondarySection,
+  DeferredTrySection,
+  DeferredUseCasesSection,
+} from "@/components/LandingPage/DeferredSections";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -53,16 +54,16 @@ export default function Index() {
           </div>
         </section>
         <section className="h-screen mb-40 -mt-40">
-          <SecondarySection />
+          <DeferredSecondarySection />
         </section>
         <section className="">
           {/* <SecondarySection /> */}
-          <UseCasesSection />
+          <DeferredUseCasesSection />
         </section>
         <section className="w-full h-full mb-16 md:mb-32 ">
-          <TrySection />
+          <DeferredTrySection />
         </section>
-        <CTASection className="w-full h-screen flex flex-col items-center justify-center px-4" />
+        <DeferredCTASection className="w-full h-screen flex flex-col items-center justify-center px-4" />
       </Layout>
     </SmoothScroll>
   );

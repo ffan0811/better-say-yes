@@ -1,5 +1,6 @@
 import ContentItem from "@/components/ContentItem";
 import Layout from "@/components/Layout";
+import ProductionProviders from "@/components/ProductionProviders";
 import { EXTERNAL_SHOWCASE_SUBMISSION_FORM } from "@/constants";
 import { createClient } from "@/lib/supabase/server";
 import { Metadata } from "next";
@@ -39,26 +40,29 @@ export default async function ShowcasePage() {
       <div className="container space-y-8 py-20">
         {/* <TemplatesContainer data={data} isFetching={false} isShowcase />
         <ShowcaseContainer /> */}
-        <div className="px-4 grid md:grid-cols-3 gap-4 md:px-0">
-          {data.map((ele, idx) => (
-            <div>
-              <ContentItem
-                key={ele.id}
-                backgroundColor={ele.background_color}
-                themeColor={ele.theme_color}
-                fontFamily={ele.font_family}
-                type="link"
-                title={ele?.name || `Draft ${idx}`}
-                href={`/my/templates/${ele.id}`}
-                target="_blank"
-              />
-              <div className="text-right mt-1">
-                <p className="text-neutral-200 md:truncate">{ele.question}</p>
-                <p className="text-sm text-neutral-400">BetterSayYes</p>
+        <ProductionProviders>
+          <div className="px-4 grid md:grid-cols-3 gap-4 md:px-0">
+            {data.map((ele, idx) => (
+              <div key={ele.id}>
+                <ContentItem
+                  backgroundColor={ele.background_color}
+                  themeColor={ele.theme_color}
+                  fontFamily={ele.font_family}
+                  type="link"
+                  title={ele?.name || `Draft ${idx}`}
+                  href={`/my/templates/${ele.id}`}
+                  target="_blank"
+                />
+                <div className="text-right mt-1">
+                  <p className="text-neutral-200 md:truncate">
+                    {ele.question}
+                  </p>
+                  <p className="text-sm text-neutral-400">BetterSayYes</p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </ProductionProviders>
       </div>
     </Layout>
   );

@@ -5,6 +5,7 @@ import {
 } from "@/app/shared-metadata";
 import Footer from "@/components/Production/Footer";
 import ImageWrapper from "@/components/Production/ImageWrapper";
+import ProductionProviders from "@/components/ProductionProviders";
 import { ImageProvider } from "@/components/image-provider";
 import LoaderEntirePage from "@/components/loaderEntirePage";
 import { Tables } from "@/database.types";
@@ -71,12 +72,14 @@ export default async function ContentPageLayout({
   });
   return (
     <Suspense fallback={<LoaderEntirePage />}>
-      <ImageProvider contentId={params.contentId}>
-        <ImageWrapper images={results}>
-          {children}
-          <Footer themeColor={data.theme_color} />
-        </ImageWrapper>
-      </ImageProvider>
+      <ProductionProviders>
+        <ImageProvider contentId={params.contentId}>
+          <ImageWrapper images={results}>
+            {children}
+            <Footer themeColor={data.theme_color} />
+          </ImageWrapper>
+        </ImageProvider>
+      </ProductionProviders>
     </Suspense>
   );
 }

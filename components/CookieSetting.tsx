@@ -7,7 +7,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import { getCookie, setCookie } from "@/actions/cookie";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
@@ -18,6 +17,13 @@ import { Label } from "@radix-ui/react-label";
 import { Switch } from "./ui/switch";
 import { useToast } from "./ui/use-toast";
 import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const GoogleAnalytics = dynamic(
+  () =>
+    import("@next/third-parties/google").then((mod) => mod.GoogleAnalytics),
+  { ssr: false }
+);
 
 const cookies = [
   {

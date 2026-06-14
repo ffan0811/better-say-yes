@@ -12,30 +12,33 @@ import GradientText from "../GradientText";
 import { CircleArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 import { Button, buttonVariants } from "../ui/button";
-
-const contents = [
-  {
-    title: "Step 1",
-    description: "Think of a question you want a 'yes' for.",
-    // href: "/showcase",
-  },
-  {
-    title: "Step 2",
-    description: "Upload images to share after they say 'yes'.",
-    // href: "/showcase",
-  },
-  {
-    title: "Step 3",
-    description:
-      "Launch your customized page,\nshare it with your loved ones, and make them happy!",
-  },
-  // {
-  //   title: "Check out demos",
-  //   href: "/showcase",
-  // },
-];
+import { useTranslations, useLocale } from "next-intl";
+import { getLocalizedPath } from "@/lib/utils/link";
 
 export default function UseCasesSection() {
+  const t = useTranslations("landing.useCases");
+  const locale = useLocale() as "en" | "ko";
+
+  const contents = [
+    {
+      title: t("step1.title"),
+      description: t("step1.description"),
+      // href: "/showcase",
+    },
+    {
+      title: t("step2.title"),
+      description: t("step2.description"),
+      // href: "/showcase",
+    },
+    {
+      title: t("step3.title"),
+      description: t("step3.description"),
+    },
+    // {
+    //   title: "Check out demos",
+    //   href: "/showcase",
+    // },
+  ];
   const container = useRef(null);
   const textContainer = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -53,10 +56,7 @@ export default function UseCasesSection() {
     <div ref={container}>
       <div ref={textContainer} className="sticky top-[20vh]">
         <motion.div style={{ scale }}>
-          <GradientText className="">
-            The Best Way to <br className="lg:hidden" />
-            Get a 'Yes'
-          </GradientText>
+          <GradientText className="">{t("title")}</GradientText>
         </motion.div>
       </div>
 
@@ -70,6 +70,7 @@ export default function UseCasesSection() {
             progress={scrollYProgress}
             range={[i * (1 / contents.length), 1]}
             targetScale={targetScale}
+            isLast={i === contents.length - 1}
           />
         );
       })}
@@ -85,6 +86,7 @@ function Card({
   progress,
   range,
   targetScale,
+  isLast,
 }: {
   title: string;
   description?: string;
@@ -93,7 +95,10 @@ function Card({
   progress: MotionValue<number>;
   range: [number, number];
   targetScale: number;
+  isLast: boolean;
 }) {
+  const t = useTranslations("landing.useCases");
+  const locale = useLocale() as "en" | "ko";
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
     target: container,
@@ -144,14 +149,14 @@ function Card({
               {description}
             </p>
           )}
-          {index === contents.length - 1 && (
+          {isLast && (
             <Link
-              href="/showcase"
+              href={getLocalizedPath("/showcase", locale)}
               className={`mt-4 md:text-lg md:px-8 md:py-6 ${buttonVariants({
                 variant: "default",
               })}`}
             >
-              Check out our demos
+              {t("checkDemos")}
             </Link>
           )}
         </div>

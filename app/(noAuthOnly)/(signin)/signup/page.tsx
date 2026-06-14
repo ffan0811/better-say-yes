@@ -1,24 +1,28 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function SignUp() {
+  const t = useTranslations("auth");
+
   return (
     <>
       <p className="text-center text-neutral-400 text-xs mt-3">
-        By clicking &quot;Create account&quot;,
+        {t("termsAgreement")}
         <br />
-        you agree to the{" "}
         <Link target="_blank" href="/terms" className="text-white">
-          Terms of Use
+          {t("termsOfUse")}
         </Link>{" "}
-        and{" "}
+        {t("and")}{" "}
         <Link target="_blank" href="/privacy" className="text-white">
-          Privacy Policy.
+          {t("privacyPolicy")}
         </Link>
       </p>
       <p className="text-center mt-4">
-        Already have an account?{" "}
+        {t("alreadyHaveAccount")}{" "}
         <Link className="text-white underline" href="/login">
-          Log in
+          {t("logIn")}
         </Link>
       </p>
     </>

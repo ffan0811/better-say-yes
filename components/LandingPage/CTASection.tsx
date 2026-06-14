@@ -6,8 +6,12 @@ import MainContents, {
   ANSWER_BUTTON_COMMON_CLASSES,
 } from "../Production/MainContents";
 import { useRef } from "react";
+import { useTranslations, useLocale } from "next-intl";
+import { getLocalizedPath } from "@/lib/utils/link";
 
 export default function CTASection({ className = "" }: { className: string }) {
+  const t = useTranslations("landing.cta");
+  const locale = useLocale() as "en" | "ko";
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
     target: container,
@@ -24,17 +28,15 @@ export default function CTASection({ className = "" }: { className: string }) {
         <Slider left="-25%" progress={scrollYProgress} direction="right" />
       </div>
       <MainContents
-        title={
-          <p className="text-6xl font-bold">Are you ready to get a yes?</p>
-        }
+        title={<p className="text-6xl font-bold">{t("title")}</p>}
         themeColor="rgb(255,255,255)"
       >
         <DefaultLink
           themeColor="rgb(255,255,255)"
-          href="/login"
+          href={getLocalizedPath("/login", locale)}
           className={ANSWER_BUTTON_COMMON_CLASSES}
         >
-          Yes
+          {t("button")}
         </DefaultLink>
       </MainContents>
     </section>

@@ -1,6 +1,7 @@
 "use client";
 import { previewAtom } from "@/atoms/preview";
 import { ImageProvider } from "@/components/image-provider";
+import ProductionProviders from "@/components/ProductionProviders";
 import { PageStepType } from "@/types/status";
 import { useAtom } from "jotai";
 import { useSearchParams } from "next/navigation";
@@ -12,16 +13,18 @@ export default function CreateLayout({ children }: { children: ReactNode }) {
   const paramsId = searchFunc.get("id");
 
   return (
-    <ImageProvider contentId={paramsId}>
-      <div
-        className={` ${
-          preview.stage === PageStepType.AFTER_YES
-            ? "h-[calc(100vh-5rem)]"
-            : "h-screen overflow-y-hidden "
-        }`}
-      >
-        {children}
-      </div>
-    </ImageProvider>
+    <ProductionProviders>
+      <ImageProvider contentId={paramsId}>
+        <div
+          className={` ${
+            preview.stage === PageStepType.AFTER_YES
+              ? "h-[calc(100vh-5rem)]"
+              : "h-screen overflow-y-hidden "
+          }`}
+        >
+          {children}
+        </div>
+      </ImageProvider>
+    </ProductionProviders>
   );
 }

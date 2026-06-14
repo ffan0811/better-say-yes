@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { EXTERNAL_CONTACT } from "@/constants";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const links = [
   {
@@ -45,7 +46,8 @@ export default function Footer({ isReversed }: FooterProps) {
               ))}
             </ul>
           ) : null}
-          <div className="flex mt-6 md:mt-0 space-x-2 items-center justify-center">
+          <div className="flex mt-6 md:mt-0 space-x-4 items-center justify-center">
+            <LanguageSwitcher />
             <p>© {new Date().getFullYear()} BetterSayYes</p>
             {/* <ThemeToggle /> */}
           </div>
